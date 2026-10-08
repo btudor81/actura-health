@@ -1,5 +1,7 @@
 ---
+import Arcs from './Arcs.astro';
 import CapabilityLink from './CapabilityLink.astro';
+import Icon from './Icon.astro';
 import { getHomepage, getSite } from '../lib/content';
 import { flag, headline } from '../lib/text';
 
@@ -8,101 +10,116 @@ const site = await getSite();
 const ctaHref = site.bookingUrl || '#contact';
 ---
 
-<section class="hero on-navy" data-nav="dark" aria-labelledby="hero-title">
-  <picture class="hero__media">
-    <source srcset="/img/photo-hero.webp" type="image/webp" />
-    <img src="/img/photo-hero.jpg" alt="" width="2400" height="1590" fetchpriority="high" decoding="async" />
-  </picture>
+<section class="hero" data-nav="light" aria-labelledby="hero-title">
+  <Arcs class="hero__arcs" />
 
-  <div class="wrap hero__inner">
-    <div class="hero__copy">
-      <p class="hero__eyebrow">{hero.eyebrow}</p>
-      <h1 id="hero-title" set:html={headline(hero.headline)} />
-      <p class="hero__sub" set:html={flag(hero.sub)} />
-      <div class="hero__cta">
-        <a class="btn btn--gold" href={ctaHref} data-event="booking_click">{site.primaryCta}</a>
-        <CapabilityLink variant="ghost-light" />
-      </div>
+  <div class="wrap hero__copy">
+    <p class="eyebrow">{hero.eyebrow}</p>
+    <h1 id="hero-title" set:html={headline(hero.headline)} />
+    <p class="hero__sub" set:html={flag(hero.sub)} />
+    <div class="hero__cta">
+      <a class="btn btn--primary" href={ctaHref} data-event="booking_click">{site.primaryCta}</a>
+      <CapabilityLink />
     </div>
+  </div>
+
+  <div class="wrap hero__foot">
+    <ul role="list" class="hero__chips">
+      {
+        hero.chips.map((chip) => (
+          <li>
+            <span class="tile">
+              <Icon name={chip.icon} size={22} />
+            </span>
+            {chip.text}
+          </li>
+        ))
+      }
+    </ul>
   </div>
 </section>
 
 <style>
   .hero {
     position: relative;
-    display: grid;
-    align-items: center;
+    display: flex;
+    flex-direction: column;
     min-height: 100vh;
-    min-height: min(100dvh, 920px);
-    padding-block: calc(var(--nav-h) + 14px + clamp(48px, 6vw, 80px)) clamp(56px, 7vw, 96px);
+    min-height: min(100dvh, 880px);
+    padding-top: calc(var(--nav-h) + 14px);
     overflow: hidden;
-    background: var(--navy);
-    color: var(--on-navy-soft);
+    background: linear-gradient(180deg, var(--surface) 0%, var(--tint) 46%, var(--tint-2) 100%);
   }
 
-  /* Photo holds the right side; the reviewer's hands stay clear of the headline. */
-  .hero__media {
+  .hero :global(.hero__arcs) {
     position: absolute;
-    inset: 0 0 0 30%;
-  }
-
-  .hero__media img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: 0% 42%;
-  }
-
-  .hero::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      90deg,
-      var(--navy) 0%,
-      var(--navy) 32%,
-      rgba(15, 0, 104, 0.9) 50%,
-      rgba(15, 0, 104, 0.4) 70%,
-      rgba(15, 0, 104, 0.1) 100%
-    );
-    pointer-events: none;
-  }
-
-  .hero__inner {
-    position: relative;
-    z-index: 1;
+    bottom: 0;
+    left: 0;
+    height: 44%;
   }
 
   .hero__copy {
-    max-width: 800px;
+    position: relative;
+    display: grid;
+    flex: 1;
+    align-content: center;
+    justify-items: center;
+    padding-block: clamp(48px, 6vw, 80px);
+    text-align: center;
   }
 
-  .hero__eyebrow {
-    display: inline-block;
+  .hero__copy .eyebrow {
+    justify-self: center;
     margin-bottom: 24px;
-    padding: 6px 14px;
-    border: 1px solid rgba(216, 155, 0, 0.3);
-    border-radius: 999px;
-    background: rgba(10, 0, 71, 0.55);
-    color: var(--on-navy);
-    font-size: var(--fs-small);
-    line-height: 1.4;
-  }
-
-  h1 {
-    color: var(--on-navy);
   }
 
   .hero__sub {
-    max-width: 50ch;
+    max-width: 52ch;
     margin-top: 24px;
+    color: var(--muted);
   }
 
   .hero__cta {
     display: flex;
     flex-wrap: wrap;
-    gap: 14px;
+    justify-content: center;
+    gap: 12px;
     margin-top: 36px;
+  }
+
+  .hero__foot {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    padding-bottom: clamp(32px, 4vw, 56px);
+  }
+
+  /* Three promises on a glass bar, sitting on the arcs. */
+  .hero__chips {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px 36px;
+    padding: 12px 28px 12px 12px;
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    border-radius: var(--r-md);
+    background: rgba(255, 255, 255, 0.55);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    box-shadow: var(--shadow-float);
+  }
+
+  .hero__chips li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--ink);
+    line-height: 1.3;
+  }
+
+  .hero__chips .tile {
+    width: 40px;
+    height: 40px;
   }
 
   @media (min-width: 1024px) {
@@ -114,25 +131,23 @@ const ctaHref = site.bookingUrl || '#contact';
   @media (max-width: 1023px) {
     .hero {
       min-height: 0;
-      padding-bottom: clamp(220px, 44vw, 380px);
     }
+  }
 
-    /* Photo drops to the lower half and fades up into the navy. */
-    .hero__media {
-      inset: auto 0 0 0;
-      height: clamp(260px, 56vw, 460px);
-    }
-
-    .hero__media img {
-      object-position: 60% 40%;
-    }
-
-    .hero::after {
-      background: linear-gradient(180deg, var(--navy) 0%, var(--navy) 52%, rgba(15, 0, 104, 0.35) 100%);
+  @media (max-width: 767px) {
+    .hero__chips {
+      flex-direction: column;
+      align-items: flex-start;
+      width: 100%;
+      padding: 12px;
     }
   }
 
   @media (max-width: 599px) {
+    .hero__cta {
+      width: 100%;
+    }
+
     .hero__cta :global(.btn) {
       width: 100%;
     }

@@ -1,4 +1,5 @@
 ---
+import Arcs from './Arcs.astro';
 import Icon from './Icon.astro';
 import { getHomepage, getSite } from '../lib/content';
 
@@ -8,11 +9,11 @@ const services = home.services.clusters.flatMap((cluster) => cluster.items);
 const year = new Date().getFullYear();
 ---
 
-<footer class="footer on-navy" data-nav="dark">
+<footer class="footer" data-nav="light">
   <div class="wrap footer__grid">
     <div class="footer__brand">
       <a class="brand" href="/" aria-label={`${site.name}, home`}>
-        <img src="/img/logo-mark-light.png" alt="" width="183" height="192" loading="lazy" />
+        <img src="/img/logo-mark.png" alt="" width="183" height="192" loading="lazy" />
         <span>{site.name}</span>
       </a>
       <p>{site.positioning}</p>
@@ -59,13 +60,18 @@ const year = new Date().getFullYear();
     <p>© {year} {site.name}</p>
     <p>{site.disclaimer}</p>
   </div>
+
+  <div class="footer__end" aria-hidden="true">
+    <Arcs class="footer__arcs" />
+    <p class="footer__word">{site.name}</p>
+  </div>
 </footer>
 
 <style>
   .footer {
-    padding-block: 72px 32px;
-    background: var(--navy-deep);
-    color: var(--on-navy-soft);
+    padding-top: 72px;
+    border-top: 1px solid var(--line);
+    color: var(--muted);
   }
 
   .footer__grid {
@@ -74,11 +80,12 @@ const year = new Date().getFullYear();
     gap: 48px;
   }
 
+  /* The wordmark repeats the logo, which is set in Outfit SemiBold. */
   .brand {
     display: inline-flex;
     align-items: center;
     gap: 12px;
-    color: var(--on-navy);
+    color: var(--ink);
     font-size: 1.25rem;
     font-weight: 600;
     letter-spacing: 0.01em;
@@ -97,12 +104,9 @@ const year = new Date().getFullYear();
   }
 
   .footer__label {
-    margin-bottom: 16px;
-    color: var(--on-navy);
-    font-size: var(--fs-small);
+    margin-bottom: 12px;
+    color: var(--ink);
     font-weight: var(--fw-medium);
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
   }
 
   .footer ul {
@@ -115,8 +119,14 @@ const year = new Date().getFullYear();
     display: inline-flex;
     align-items: center;
     min-height: 44px;
+    text-decoration: none;
   }
 
+  .footer li a:hover {
+    color: var(--ink);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
 
   .footer .footer__services {
     gap: 10px;
@@ -124,21 +134,39 @@ const year = new Date().getFullYear();
     line-height: 1.5;
   }
 
-  .footer a {
-    text-decoration: none;
-  }
-
-  .footer a:hover {
-    color: var(--on-navy);
-    text-decoration: underline;
-    text-underline-offset: 4px;
-  }
-
   .footer__icon-link {
-    display: inline-flex;
-    align-items: center;
     gap: 10px;
     white-space: nowrap;
+  }
+
+  /* Closing band: arcs with a faint oversized wordmark rising out of them. */
+  .footer__end {
+    position: relative;
+    height: clamp(120px, 19vw, 280px);
+    overflow: hidden;
+  }
+
+  .footer__end :global(.footer__arcs) {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 100%;
+  }
+
+  .footer__word {
+    position: absolute;
+    bottom: -0.18em;
+    left: 50%;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.55);
+    font-size: clamp(64px, 15.5vw, 250px);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    white-space: nowrap;
+    transform: translateX(-50%);
+    pointer-events: none;
+    user-select: none;
   }
 
   .footer__base {
@@ -147,8 +175,8 @@ const year = new Date().getFullYear();
     justify-content: space-between;
     gap: 8px 32px;
     margin-top: 56px;
-    padding-top: 24px;
-    border-top: 1px solid var(--line-on-navy);
+    padding-block: 24px;
+    border-top: 1px solid var(--line);
   }
 
   @media (max-width: 1023px) {
@@ -161,6 +189,11 @@ const year = new Date().getFullYear();
     .footer__grid {
       grid-template-columns: 1fr;
       gap: 40px;
+    }
+
+    .footer__icon-link {
+      white-space: normal;
+      overflow-wrap: anywhere;
     }
   }
 </style>

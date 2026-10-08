@@ -1,0 +1,28 @@
+---
+// Nested arcs rising from the bottom edge. Echoes the orbit in the logo mark.
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<svg
+  class:list={['arcs', className]}
+  viewBox="0 0 1440 400"
+  preserveAspectRatio="none"
+  aria-hidden="true"
+  focusable="false"
+>
+  <ellipse cx="720" cy="560" rx="1280" ry="470" fill="var(--tint-2)"></ellipse>
+  <ellipse cx="720" cy="590" rx="1060" ry="400" fill="var(--tint-3)"></ellipse>
+  <ellipse cx="720" cy="620" rx="860" ry="330" fill="#cbd6f6"></ellipse>
+</svg>
+
+<style>
+  .arcs {
+    display: block;
+    width: 100%;
+    pointer-events: none;
+  }
+</style>

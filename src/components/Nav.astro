@@ -8,7 +8,7 @@ interface Props {
   theme?: 'dark' | 'light';
 }
 
-const { theme = 'dark' } = Astro.props;
+const { theme = 'light' } = Astro.props;
 const site = await getSite();
 const ctaHref = site.bookingUrl || '/#contact';
 ---
@@ -27,7 +27,7 @@ const ctaHref = site.bookingUrl || '/#contact';
       </ul>
     </nav>
 
-    <a class="btn btn--sm nav__cta" href={ctaHref} data-event="booking_click">{site.primaryCta}</a>
+    <a class="btn btn--primary btn--sm nav__cta" href={ctaHref} data-event="booking_click">{site.primaryCta}</a>
 
     <details class="nav__menu">
       <summary>
@@ -37,7 +37,7 @@ const ctaHref = site.bookingUrl || '/#contact';
       <nav aria-label="Primary, mobile">
         <ul role="list">
           {site.nav.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
-          <li><a class="btn nav__cta" href={ctaHref} data-event="booking_click">{site.primaryCta}</a></li>
+          <li><a class="btn btn--primary nav__cta" href={ctaHref} data-event="booking_click">{site.primaryCta}</a></li>
         </ul>
       </nav>
     </details>
@@ -122,8 +122,9 @@ const ctaHref = site.bookingUrl || '/#contact';
   }
 
   .nav--light .nav__bar {
-    border-color: var(--line);
-    background: rgba(255, 255, 255, 0.9);
+    border-color: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.72);
+    box-shadow: 0 0 0 1px var(--line), var(--shadow-float);
     color: var(--ink);
   }
 
@@ -182,24 +183,6 @@ const ctaHref = site.bookingUrl || '/#contact';
   .nav--light .nav__links a:hover,
   .nav--light .nav__menu[open] summary {
     background: var(--tint);
-  }
-
-  .nav__cta {
-    background: var(--gold);
-    color: var(--navy);
-  }
-
-  .nav__cta:hover {
-    background: var(--gold-hover);
-  }
-
-  .nav--light .nav__cta {
-    background: var(--navy);
-    color: var(--on-navy);
-  }
-
-  .nav--light .nav__cta:hover {
-    background: var(--navy-panel);
   }
 
   .nav__menu {

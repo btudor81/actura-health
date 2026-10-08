@@ -7,7 +7,7 @@ import { flag, headline } from '../lib/text';
 const { problem } = await getHomepage();
 ---
 
-<section class="section section--tint problem" data-nav="light" aria-labelledby="problem-title">
+<section class="section problem" data-nav="light" aria-labelledby="problem-title">
   <div class="wrap problem__grid">
     <div>
       <div class="section__head">
@@ -19,7 +19,7 @@ const { problem } = await getHomepage();
         {
           problem.items.map((item, index) => (
             <li class="reveal" style={`--i:${index}`}>
-              <span class="tile tile--on-tint">
+              <span class="tile">
                 <Icon name={item.icon} />
               </span>
               <div>
@@ -37,7 +37,7 @@ const { problem } = await getHomepage();
       </p>
     </div>
 
-    <div class="problem__visual">
+    <div class="panel panel--rings problem__visual">
       <Scorecard />
     </div>
   </div>
@@ -54,6 +54,7 @@ const { problem } = await getHomepage();
   .problem__visual {
     position: sticky;
     top: calc(var(--nav-h) + 56px);
+    padding: clamp(20px, 3vw, 40px) clamp(20px, 3vw, 40px) clamp(16px, 2vw, 24px);
   }
 
   li {
@@ -98,8 +99,10 @@ const { problem } = await getHomepage();
       grid-template-columns: 1fr;
     }
 
+    /* relative, not static: the panel's ring texture is positioned against it */
     .problem__visual {
-      position: static;
+      position: relative;
+      top: auto;
     }
   }
 

@@ -7,6 +7,20 @@
     "eyebrow": "Correctional healthcare consulting",
     "headline": "Independent oversight for\njail and prison healthcare",
     "sub": "We audit and monitor your healthcare vendor and prepare you for NCCHC accreditation, using your own data, not theirs.",
+    "chips": [
+      {
+        "icon": "link-off",
+        "text": "No vendor conflicts"
+      },
+      {
+        "icon": "database",
+        "text": "Built on your own data"
+      },
+      {
+        "icon": "receipt",
+        "text": "Fixed-scope pricing"
+      }
+    ],
     "scorecard": {
       "title": "Sample monitoring summary",
       "columns": [

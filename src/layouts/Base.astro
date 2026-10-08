@@ -14,7 +14,7 @@ interface Props {
   navTheme?: 'dark' | 'light';
 }
 
-const { title, description, path = '/', noindex = false, jsonLd = [], navTheme = 'dark' } = Astro.props;
+const { title, description, path = '/', noindex = false, jsonLd = [], navTheme = 'light' } = Astro.props;
 const site = await getSite();
 const canonical = new URL(path, site.url).href;
 const ogImage = new URL('/og.png', site.url).href;

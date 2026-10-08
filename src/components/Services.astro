@@ -8,38 +8,30 @@ import { flag, headline } from '../lib/text';
 
 const { services } = await getHomepage();
 const TILE: Record<string, string> = {
-  oversight: 'tile--on-tint',
-  accreditation: 'tile--on-navy',
-  procurement: 'tile--on-tint',
-  systems: 'tile--on-tint',
+  oversight: '',
+  accreditation: '',
+  procurement: '',
+  systems: '',
 };
 ---
 
 <section id="services" class="section services" data-nav="light" aria-labelledby="services-title">
   <div class="wrap">
-    <div class="section__head">
+    <div class="section__head section__head--center">
       <p class="eyebrow">{services.eyebrow}</p>
       <h2 id="services-title" set:html={headline(services.headline)} />
-      <div class="services__lead">
-        <p class="lead" set:html={flag(services.sub)} />
-        <CapabilityLink />
-      </div>
+      <p class="lead" set:html={flag(services.sub)} />
+      <CapabilityLink />
     </div>
 
     <div class="services__grid">
       {
         services.clusters.map((cluster, index) => (
           <section
-            class:list={['cluster', `cluster--${cluster.key}`, 'reveal', { 'on-navy': cluster.key === 'accreditation' }]}
+            class:list={['panel', 'cluster', `cluster--${cluster.key}`, 'reveal', { 'panel--rings': cluster.key === 'accreditation' }]}
             style={`--i:${index}`}
             aria-labelledby={`cluster-${cluster.key}`}
           >
-            {cluster.key === 'accreditation' && (
-              <picture class="cluster__media">
-                <source srcset="/img/photo-accreditation.webp" type="image/webp" />
-                <img src="/img/photo-accreditation.jpg" alt="" width="1200" height="900" loading="lazy" decoding="async" />
-              </picture>
-            )}
             <h3 id={`cluster-${cluster.key}`}>{cluster.title}</h3>
             <ul role="list">
               {cluster.items.map((item) => (
@@ -52,7 +44,7 @@ const TILE: Record<string, string> = {
                     <p set:html={flag(item.text)} />
                   </div>
                   {'points' in item && (
-                    <ul role="list" class="points">
+                    <ul role="list" class="mock points">
                       {item.points.map((point) => (
                         <li>
                           <Icon name="check" size={22} stroke={2} />
@@ -72,15 +64,8 @@ const TILE: Record<string, string> = {
 </section>
 
 <style>
-  .services__lead {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 24px 48px;
-  }
-
-  .services__lead :global(.btn) {
-    flex: none;
+  .section__head :global(.btn) {
+    margin-top: 8px;
   }
 
   .services__grid {
@@ -90,15 +75,7 @@ const TILE: Record<string, string> = {
   }
 
   .cluster {
-    position: relative;
     padding: clamp(24px, 3vw, 40px);
-    overflow: hidden;
-    border-radius: var(--r-lg);
-    background: var(--tint);
-  }
-
-  .cluster > :not(.cluster__media) {
-    position: relative;
   }
 
   .cluster h3 {
@@ -135,39 +112,7 @@ const TILE: Record<string, string> = {
     display: flex;
     flex-direction: column;
     grid-column: span 4;
-    background: var(--navy);
-  }
-
-  /* Photo as texture under a navy veil, so the text keeps full contrast. */
-  .cluster__media {
-    position: absolute;
-    inset: 0;
-  }
-
-  .cluster__media img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .cluster__media::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(180deg, rgba(15, 0, 104, 0.9) 0%, rgba(15, 0, 104, 0.7) 55%, rgba(10, 0, 71, 0.88) 100%);
-  }
-
-  .cluster--accreditation h3 {
-    border-color: var(--line-on-navy);
-    color: var(--on-navy);
-  }
-
-  .cluster--accreditation h4 {
-    color: var(--on-navy);
-  }
-
-  .cluster--accreditation h4 + p {
-    color: var(--on-navy-soft);
+    background: linear-gradient(180deg, var(--tint-2) 0%, var(--tint-3) 100%);
   }
 
   .cluster--accreditation > ul {
@@ -178,10 +123,12 @@ const TILE: Record<string, string> = {
     grid-template-rows: auto auto 1fr;
   }
 
+  /* The readiness checklist, drawn as a small document card. */
   .cluster .points {
     align-self: end;
     gap: 0;
     margin-top: 12px;
+    padding: 4px 20px;
   }
 
   .cluster .points li {
@@ -189,17 +136,17 @@ const TILE: Record<string, string> = {
     align-items: center;
     gap: 12px;
     padding-block: 16px;
-    border-top: 1px solid var(--line-on-navy);
-    color: var(--on-navy);
+    border-top: 1px solid var(--line);
+    color: var(--ink);
   }
 
-  .cluster .points li:last-child {
-    padding-bottom: 0;
+  .cluster .points li:first-child {
+    border-top: 0;
   }
 
   .points :global(.icon) {
     flex: none;
-    color: var(--gold);
+    color: var(--navy);
   }
 
   .cluster--procurement,
@@ -214,11 +161,6 @@ const TILE: Record<string, string> = {
   }
 
   @media (max-width: 1023px) {
-    .services__lead {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-
     .cluster--oversight,
     .cluster--accreditation,
     .cluster--procurement,
@@ -232,8 +174,5 @@ const TILE: Record<string, string> = {
       grid-template-columns: 1fr;
     }
 
-    .services__lead :global(.btn) {
-      width: 100%;
-    }
   }
 </style>
