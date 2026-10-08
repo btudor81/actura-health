@@ -1,0 +1,18 @@
+{
+  "name": "Actura Health",
+  "url": "https://www.acturahealth.com",
+  "positioning": "Independent correctional healthcare consulting.",
+  "disclaimer": "Actura Health does not provide medical care.",
+  "contactEmail": "connect@acturahealth.com",
+  "linkedinUrl": "",
+  "bookingUrl": "",
+  "capabilityStatementUrl": "",
+  "primaryCta": "Book a conversation",
+  "secondaryCta": "Download capability statement",
+  "nav": [
+    { "label": "Services", "href": "/#services" },
+    { "label": "About", "href": "/#about" },
+    { "label": "Team", "href": "/#team" },
+    { "label": "Contact", "href": "/#contact" }
+  ]
+}

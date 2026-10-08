@@ -1,0 +1,213 @@
+---
+// Nine services in four clusters. Stage 1: items are plain blocks. Once the
+// service pages exist each item becomes a link to /services/[slug].
+import CapabilityLink from './CapabilityLink.astro';
+import Icon from './Icon.astro';
+import { getHomepage } from '../lib/content';
+import { flag, headline } from '../lib/text';
+
+const { services } = await getHomepage();
+const TILE: Record<string, string> = {
+  oversight: 'tile--on-white',
+  accreditation: 'tile--on-navy',
+  procurement: 'tile--on-wash',
+  systems: 'tile--on-white',
+};
+---
+
+<section id="services" class="section services" aria-labelledby="services-title">
+  <div class="wrap">
+    <div class="section__head">
+      <p class="eyebrow">{services.eyebrow}</p>
+      <h2 id="services-title" set:html={headline(services.headline)} />
+      <div class="services__lead">
+        <p class="lead" set:html={flag(services.sub)} />
+        <CapabilityLink />
+      </div>
+    </div>
+
+    <div class="services__grid">
+      {
+        services.clusters.map((cluster, index) => (
+          <section
+            class:list={['cluster', `cluster--${cluster.key}`, 'reveal', { 'on-navy': cluster.key === 'accreditation' }]}
+            style={`--i:${index}`}
+            aria-labelledby={`cluster-${cluster.key}`}
+          >
+            <h3 id={`cluster-${cluster.key}`}>{cluster.title}</h3>
+            <ul role="list">
+              {cluster.items.map((item) => (
+                <li>
+                  <span class={`tile ${TILE[cluster.key]}`}>
+                    <Icon name={item.icon} />
+                  </span>
+                  <div>
+                    <h4>{item.title}</h4>
+                    <p set:html={flag(item.text)} />
+                  </div>
+                  {'points' in item && (
+                    <ul role="list" class="points">
+                      {item.points.map((point) => (
+                        <li>
+                          <Icon name="check" size={22} stroke={2} />
+                          {point}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .services__lead {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px 48px;
+  }
+
+  .services__grid {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 20px;
+  }
+
+  .cluster {
+    padding: clamp(24px, 3vw, 40px);
+    border-radius: var(--r-lg);
+  }
+
+  .cluster h3 {
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .cluster ul {
+    display: grid;
+    gap: 36px 40px;
+    margin-top: 28px;
+  }
+
+  .cluster ul > li {
+    display: grid;
+    align-content: start;
+    gap: 18px;
+  }
+
+  .cluster h4 + p {
+    margin-top: 10px;
+    color: var(--muted);
+  }
+
+  .cluster--oversight {
+    grid-column: span 8;
+    border: 1px solid var(--line);
+    background: var(--card);
+  }
+
+  .cluster--oversight ul {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .cluster--accreditation {
+    display: flex;
+    flex-direction: column;
+    grid-column: span 4;
+    background:
+      radial-gradient(120% 80% at 100% 100%, var(--navy-glow), transparent 70%),
+      var(--navy);
+  }
+
+  .cluster--accreditation h3 {
+    border-color: var(--line-on-navy);
+    color: var(--on-navy);
+  }
+
+  .cluster--accreditation h4 {
+    color: var(--on-navy);
+  }
+
+  .cluster--accreditation h4 + p {
+    color: var(--on-navy-soft);
+  }
+
+  .cluster--accreditation > ul {
+    flex: 1;
+  }
+
+  .cluster--accreditation > ul > li {
+    grid-template-rows: auto auto 1fr;
+  }
+
+  .cluster .points {
+    align-self: end;
+    gap: 0;
+    margin-top: 12px;
+  }
+
+  .cluster .points li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-block: 16px;
+    border-top: 1px solid var(--line-on-navy);
+    color: var(--on-navy);
+    font-weight: 500;
+  }
+
+  .cluster .points li:last-child {
+    padding-bottom: 0;
+  }
+
+  .points :global(.icon) {
+    flex: none;
+    color: var(--gold);
+  }
+
+  .cluster--procurement {
+    grid-column: span 6;
+    background: var(--gold-wash);
+  }
+
+  .cluster--systems {
+    grid-column: span 6;
+    background: var(--paper-tint);
+  }
+
+  .cluster--procurement ul > li,
+  .cluster--systems ul > li {
+    grid-template-columns: auto 1fr;
+    gap: 20px;
+  }
+
+  @media (max-width: 1023px) {
+    .services__lead {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .cluster--oversight,
+    .cluster--accreditation,
+    .cluster--procurement,
+    .cluster--systems {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (max-width: 699px) {
+    .cluster--oversight ul {
+      grid-template-columns: 1fr;
+    }
+
+    .services__lead :global(.btn) {
+      width: 100%;
+    }
+  }
+</style>

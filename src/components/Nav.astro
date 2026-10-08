@@ -1,0 +1,202 @@
+---
+import Icon from './Icon.astro';
+import { getSite } from '../lib/content';
+
+const site = await getSite();
+const ctaHref = site.bookingUrl || '/#contact';
+---
+
+<header class="nav">
+  <div class="wrap nav__bar">
+    <a class="brand" href="/" aria-label={`${site.name}, home`}>
+      <img src="/img/logo-mark.png" alt="" width="183" height="192" />
+      <span>{site.name}</span>
+    </a>
+
+    <nav class="nav__links" aria-label="Primary">
+      <ul role="list">
+        {site.nav.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+      </ul>
+    </nav>
+
+    <a class="btn btn--primary btn--sm nav__cta" href={ctaHref} data-event="booking_click">{site.primaryCta}</a>
+
+    <details class="nav__menu">
+      <summary>
+        <Icon name="menu-2" size={26} />
+        <span class="visually-hidden">Menu</span>
+      </summary>
+      <nav aria-label="Primary, mobile">
+        <ul role="list">
+          {site.nav.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+          <li><a class="btn btn--primary" href={ctaHref} data-event="booking_click">{site.primaryCta}</a></li>
+        </ul>
+      </nav>
+    </details>
+  </div>
+</header>
+
+<script>
+  // Close the mobile menu after a link is chosen. Without JS the menu still works.
+  const menu = document.querySelector<HTMLDetailsElement>('.nav__menu');
+  menu?.addEventListener('click', (event) => {
+    if ((event.target as HTMLElement).closest('a')) menu.open = false;
+  });
+</script>
+
+<style>
+  .nav {
+    position: fixed;
+    top: 14px;
+    left: 0;
+    right: 0;
+    z-index: var(--z-nav);
+    pointer-events: none;
+  }
+
+  .nav__bar {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    min-height: var(--nav-h);
+    padding: 10px 12px 10px 24px;
+    border: 1px solid var(--line);
+    border-radius: var(--r-md);
+    background: var(--paper);
+    box-shadow: var(--shadow-float);
+    pointer-events: auto;
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 44px;
+    color: var(--ink);
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    text-decoration: none;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .brand img {
+    width: auto;
+    height: 44px;
+  }
+
+  .nav__links {
+    margin-inline: auto;
+  }
+
+  .nav__links ul {
+    display: flex;
+    gap: 8px;
+  }
+
+  .nav__links a {
+    display: block;
+    padding: 10px 16px;
+    border-radius: var(--r-sm);
+    color: var(--ink);
+    font-weight: 500;
+    text-decoration: none;
+    transition: background-color 0.2s var(--ease);
+  }
+
+  .nav__links a:hover {
+    background: var(--paper-tint);
+  }
+
+  .nav__menu {
+    display: none;
+  }
+
+  .nav__menu summary {
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    border-radius: var(--r-sm);
+    color: var(--ink);
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .nav__menu summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .nav__menu[open] summary {
+    background: var(--paper-tint);
+  }
+
+  .nav__menu nav {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
+    padding: 12px;
+    border: 1px solid var(--line);
+    border-radius: var(--r-md);
+    background: var(--paper);
+    box-shadow: 0 18px 40px -20px rgba(10, 0, 71, 0.5);
+  }
+
+  .nav__menu ul {
+    display: grid;
+    gap: 4px;
+  }
+
+  .nav__menu a:not(.btn) {
+    display: block;
+    padding: 14px 16px;
+    border-radius: var(--r-sm);
+    color: var(--ink);
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  .nav__menu .btn {
+    width: 100%;
+    margin-top: 8px;
+  }
+
+  @media (max-width: 1023px) {
+    .nav__links {
+      display: none;
+    }
+
+    .nav__cta {
+      margin-left: auto;
+    }
+
+    .nav__menu {
+      display: block;
+    }
+  }
+
+  @media (max-width: 599px) {
+    .nav__bar {
+      padding-left: 16px;
+    }
+
+    .nav__cta {
+      display: none;
+    }
+
+    .nav__menu {
+      margin-left: auto;
+    }
+
+    .brand {
+      font-size: 1.125rem;
+    }
+
+    .brand img {
+      height: 38px;
+    }
+  }
+</style>

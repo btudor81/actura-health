@@ -1,0 +1,29 @@
+---
+// "Download capability statement" button. Until the client supplies the PDF it
+// renders as a flagged, non-clickable state so a dead link cannot ship.
+import Icon from './Icon.astro';
+import { getSite } from '../lib/content';
+
+interface Props {
+  variant?: 'ghost' | 'ghost-light';
+}
+
+const { variant = 'ghost' } = Astro.props;
+const site = await getSite();
+const url = site.capabilityStatementUrl;
+---
+
+{
+  url ? (
+    <a class={`btn btn--${variant}`} href="/capability-statement" data-event="capability_download">
+      <Icon name="download" size={22} />
+      {site.secondaryCta}
+    </a>
+  ) : (
+    <span class={`btn btn--${variant} is-pending`}>
+      <Icon name="download" size={22} />
+      {site.secondaryCta}
+      <mark class="confirm">Pending</mark>
+    </span>
+  )
+}

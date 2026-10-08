@@ -1,0 +1,34 @@
+---
+// Inline icon from the Tabler outline set (one family, one stroke weight site-wide).
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
+
+interface Props {
+  name: string;
+  size?: number;
+  stroke?: number;
+  class?: string;
+}
+
+const { name, size = 26, stroke = 1.5, class: className } = Astro.props;
+const file = join(process.cwd(), 'node_modules/@tabler/icons/icons/outline', `${name}.svg`);
+const inner = readFileSync(file, 'utf8')
+  .replace(/<svg[\s\S]*?>/, '')
+  .replace('</svg>', '')
+  .trim();
+---
+
+<svg
+  class:list={['icon', className]}
+  width={size}
+  height={size}
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width={stroke}
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+  focusable="false"
+  set:html={inner}
+/>

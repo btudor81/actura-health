@@ -1,0 +1,64 @@
+/* Design tokens. Contrast ratios noted beside every text pair (WCAG 2.1 AA). */
+:root {
+  /* Brand */
+  --navy: #0f0068;
+  --navy-deep: #0a0047;
+  --navy-panel: #1b0c7a;
+  --gold: #d89b00; /* 7.05:1 on navy. 2.28:1 on paper: graphic use only on light. */
+  --gold-ink: #8a6100; /* gold for text on light: 5.18 paper, 4.74 tint, 5.54 white */
+  --gold-wash: #f6ebcb;
+  --gold-hover: #e9ab12; /* 8.3:1 with navy text */
+  --navy-glow: rgba(72, 52, 190, 0.5);
+
+  /* Surfaces */
+  --paper: #faf7f0;
+  --paper-tint: #f2ede0;
+  --card: #ffffff;
+
+  /* Text */
+  --ink: #0f0068; /* headings: 16.09 on paper */
+  --body: #231f4d; /* 14.28 on paper */
+  --muted: #55507a; /* 6.97 paper, 6.38 tint, 7.46 white, 6.28 gold wash */
+  --on-navy: #ffffff; /* 17.21 */
+  --on-navy-soft: #cdc9e8; /* 10.75 navy, 9.5 navy panel, 11.88 navy deep */
+
+  /* Lines */
+  --line: rgba(15, 0, 104, 0.14);
+  --line-strong: #8582a6; /* form borders: 3.66 on white */
+  --line-on-navy: rgba(255, 255, 255, 0.18);
+
+  /* Status (always paired with an icon and a text label) */
+  --ok: #1f6b3b; /* 6.51 on white */
+  --bad: #a3261b; /* 7.37 on white */
+  --bad-wash: #fff4f2;
+
+  /* Type: one family, one body size */
+  --font: 'Outfit', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  --fs-body: 1.25rem; /* 20px, older audience */
+  --fs-small: 1rem; /* captions and meta, floor 16px */
+  --fs-h1: clamp(2.125rem, 4.5vw, 4rem);
+  --fs-h2: clamp(1.875rem, 3vw, 2.5rem);
+  --fs-h3: 1.625rem;
+  --fs-h4: 1.375rem;
+  --lh-body: 1.6;
+  --tracking-head: -0.03em;
+
+  /* Layout */
+  --maxw: 1280px;
+  --gutter: clamp(24px, 5vw, 80px);
+  --section: clamp(72px, 9vw, 128px);
+  --nav-h: 72px;
+
+  /* Shape: inputs and buttons 10, cards 16, panels 24 */
+  --r-sm: 10px;
+  --r-md: 16px;
+  --r-lg: 24px;
+
+  --shadow-panel: 0 30px 60px -30px rgba(4, 0, 40, 0.7); /* light panel on navy */
+  --shadow-float: 0 10px 30px -18px rgba(10, 0, 71, 0.45);
+
+  /* Layers */
+  --z-nav: 50;
+  --z-skip: 60;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}

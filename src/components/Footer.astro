@@ -1,0 +1,166 @@
+---
+import Icon from './Icon.astro';
+import { getHomepage, getSite } from '../lib/content';
+
+const site = await getSite();
+const home = await getHomepage();
+const services = home.services.clusters.flatMap((cluster) => cluster.items);
+const year = new Date().getFullYear();
+---
+
+<footer class="footer on-navy">
+  <div class="wrap footer__grid">
+    <div class="footer__brand">
+      <a class="brand" href="/" aria-label={`${site.name}, home`}>
+        <img src="/img/logo-mark-light.png" alt="" width="183" height="192" loading="lazy" />
+        <span>{site.name}</span>
+      </a>
+      <p>{site.positioning}</p>
+    </div>
+
+    <nav aria-label="Footer">
+      <p class="footer__label">Explore</p>
+      <ul role="list">
+        {site.nav.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+      </ul>
+    </nav>
+
+    <div>
+      <p class="footer__label">Services</p>
+      <ul role="list" class="footer__services">
+        {services.map((service) => <li>{service.title}</li>)}
+      </ul>
+    </div>
+
+    <div>
+      <p class="footer__label">Contact</p>
+      <ul role="list">
+        <li>
+          <a class="footer__icon-link" href={`mailto:${site.contactEmail}`}>
+            <Icon name="mail" size={22} />
+            {site.contactEmail}
+          </a>
+        </li>
+        {
+          site.linkedinUrl && (
+            <li>
+              <a class="footer__icon-link" href={site.linkedinUrl} rel="noopener">
+                <Icon name="brand-linkedin" size={22} />
+                LinkedIn
+              </a>
+            </li>
+          )
+        }
+      </ul>
+    </div>
+  </div>
+
+  <div class="wrap footer__base small">
+    <p>© {year} {site.name}</p>
+    <p>{site.disclaimer}</p>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    padding-block: 72px 32px;
+    background: var(--navy-deep);
+    color: var(--on-navy-soft);
+  }
+
+  .footer__grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.6fr 1.3fr auto;
+    gap: 48px;
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--on-navy);
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .brand img {
+    width: auto;
+    height: 48px;
+  }
+
+  .footer__brand p {
+    max-width: 24ch;
+    margin-top: 20px;
+  }
+
+  .footer__label {
+    margin-bottom: 16px;
+    color: var(--on-navy);
+    font-size: var(--fs-small);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .footer ul {
+    display: grid;
+    gap: 2px;
+  }
+
+  /* 44px minimum pointer target */
+  .footer li a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+
+
+  .footer .footer__services {
+    gap: 10px;
+    font-size: var(--fs-small);
+    line-height: 1.5;
+  }
+
+  .footer a {
+    text-decoration: none;
+  }
+
+  .footer a:hover {
+    color: var(--on-navy);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  .footer__icon-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    white-space: nowrap;
+  }
+
+  .footer__base {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px 32px;
+    margin-top: 56px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line-on-navy);
+  }
+
+  @media (max-width: 1023px) {
+    .footer__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 599px) {
+    .footer__grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+  }
+</style>

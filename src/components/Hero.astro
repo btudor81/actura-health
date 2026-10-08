@@ -1,0 +1,125 @@
+---
+import CapabilityLink from './CapabilityLink.astro';
+import Scorecard from './Scorecard.astro';
+import { getHomepage, getSite } from '../lib/content';
+import { flag, headline } from '../lib/text';
+
+const { hero } = await getHomepage();
+const site = await getSite();
+const ctaHref = site.bookingUrl || '#contact';
+---
+
+<section class="hero on-navy" aria-labelledby="hero-title">
+  <svg class="hero__orbit" viewBox="0 0 900 900" fill="none" aria-hidden="true" focusable="false">
+    <ellipse cx="450" cy="450" rx="430" ry="250" transform="rotate(-24 450 450)" stroke="currentColor" stroke-width="1.5"></ellipse>
+    <ellipse cx="450" cy="450" rx="330" ry="170" transform="rotate(-24 450 450)" stroke="currentColor" stroke-width="1.5"></ellipse>
+  </svg>
+
+  <div class="wrap hero__grid">
+    <div class="hero__copy">
+      <p class="hero__eyebrow">{hero.eyebrow}</p>
+      <h1 id="hero-title" set:html={headline(hero.headline)} />
+      <p class="hero__sub" set:html={flag(hero.sub)} />
+      <div class="hero__cta">
+        <a class="btn btn--gold" href={ctaHref} data-event="booking_click">{site.primaryCta}</a>
+        <CapabilityLink variant="ghost-light" />
+      </div>
+    </div>
+
+    <Scorecard />
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    display: grid;
+    align-items: center;
+    min-height: 100vh;
+    min-height: min(100dvh, 920px);
+    padding-block: calc(var(--nav-h) + 14px + clamp(48px, 6vw, 80px)) clamp(56px, 7vw, 96px);
+    overflow: hidden;
+    background:
+      radial-gradient(60% 70% at 82% 46%, var(--navy-glow), transparent 70%),
+      var(--navy);
+    color: var(--on-navy-soft);
+  }
+
+  /* Echo of the orbit in the logo mark */
+  .hero__orbit {
+    position: absolute;
+    top: 50%;
+    right: -6%;
+    width: min(64vw, 920px);
+    color: rgba(255, 255, 255, 0.09);
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+
+  .hero__grid {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+    align-items: center;
+    gap: clamp(32px, 4vw, 56px);
+  }
+
+  .hero__eyebrow {
+    display: inline-block;
+    margin-bottom: 24px;
+    padding: 6px 14px;
+    border: 1px solid rgba(216, 155, 0, 0.3);
+    border-radius: 999px;
+    background: rgba(10, 0, 71, 0.55);
+    color: var(--on-navy);
+    font-size: var(--fs-small);
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  h1 {
+    color: var(--on-navy);
+  }
+
+  .hero__sub {
+    max-width: 50ch;
+    margin-top: 24px;
+  }
+
+  .hero__cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-top: 36px;
+  }
+
+  @media (min-width: 1024px) {
+    h1 :global(.row) {
+      white-space: nowrap;
+    }
+  }
+
+  @media (max-width: 1023px) {
+    .hero {
+      min-height: 0;
+    }
+
+    .hero__grid {
+      grid-template-columns: 1fr;
+      gap: 48px;
+    }
+
+    .hero__orbit {
+      top: auto;
+      bottom: -10%;
+      width: 120vw;
+      transform: none;
+    }
+  }
+
+  @media (max-width: 599px) {
+    .hero__cta :global(.btn) {
+      width: 100%;
+    }
+  }
+</style>

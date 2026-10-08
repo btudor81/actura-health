@@ -1,0 +1,41 @@
+---
+// Landing page after the contact form is submitted.
+import Base from '../../layouts/Base.astro';
+import { getSite } from '../../lib/content';
+
+const site = await getSite();
+---
+
+<Base
+  title={`Message received | ${site.name}`}
+  description="Your message has been sent to Actura Health."
+  path="/contact/thanks/"
+  noindex
+>
+  <section class="thanks" aria-labelledby="thanks-title">
+    <div class="wrap">
+      <h1 id="thanks-title">Thank you. Your message is on its way.</h1>
+      <p class="lead">
+        A senior member of the team will reply to the email address you gave us. If it is urgent, write to
+        <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a>.
+      </p>
+      <a class="btn btn--primary" href="/">Back to the homepage</a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .thanks {
+    padding-block: calc(var(--nav-h) + 14px + clamp(72px, 10vw, 140px)) var(--section);
+  }
+
+  .thanks .wrap {
+    display: grid;
+    justify-items: start;
+    gap: 24px;
+  }
+
+  h1 {
+    max-width: 18ch;
+  }
+</style>

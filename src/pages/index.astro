@@ -1,0 +1,42 @@
+---
+import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
+import TrustBar from '../components/TrustBar.astro';
+import Problem from '../components/Problem.astro';
+import Services from '../components/Services.astro';
+import Benefits from '../components/Benefits.astro';
+import Team from '../components/Team.astro';
+import About from '../components/About.astro';
+import Contact from '../components/Contact.astro';
+import { getHomepage, getSite } from '../lib/content';
+
+const home = await getHomepage();
+const site = await getSite();
+
+const organization = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  '@id': `${site.url}/#organization`,
+  name: site.name,
+  url: site.url,
+  logo: `${site.url}/img/logo-mark.png`,
+  image: `${site.url}/og.png`,
+  description: home.seo.description,
+  email: site.contactEmail,
+  slogan: 'Where Accountability Meets Action in Correctional Healthcare',
+  areaServed: { '@type': 'Country', name: 'United States' },
+  knowsAbout: home.services.clusters.flatMap((cluster) => cluster.items.map((item) => item.title)),
+  ...(site.linkedinUrl ? { sameAs: [site.linkedinUrl] } : {}),
+};
+---
+
+<Base title={home.seo.title} description={home.seo.description} path="/" jsonLd={[organization]}>
+  <Hero />
+  <TrustBar />
+  <Problem />
+  <Services />
+  <Benefits />
+  <Team />
+  <About />
+  <Contact />
+</Base>

@@ -1,0 +1,185 @@
+---
+import Icon from './Icon.astro';
+import { getHomepage } from '../lib/content';
+import { flag, headline } from '../lib/text';
+
+const { about } = await getHomepage();
+const { diagram } = about;
+---
+
+<section id="about" class="section section--tint about" aria-labelledby="about-title">
+  <div class="wrap">
+    <div class="section__head">
+      <p class="eyebrow">{about.eyebrow}</p>
+      <h2 id="about-title" set:html={headline(about.headline)} />
+    </div>
+
+    <div class="about__grid">
+      <div class="about__body">
+        {about.body.map((paragraph) => <p set:html={flag(paragraph)} />)}
+      </div>
+
+      <figure class="layers reveal">
+        <ol role="list">
+          <li class="layers__node">
+            <span class="tile tile--on-white"><Icon name="building-community" /></span>
+            <p><strong>{diagram.agency.title}</strong>{diagram.agency.text}</p>
+          </li>
+          <li class="layers__link">
+            <Icon name="arrows-vertical" size={22} />
+            {diagram.linkTop}
+          </li>
+          <li class="layers__node layers__node--actura">
+            <span class="tile tile--on-navy"><Icon name="scale" /></span>
+            <p><strong>{diagram.actura.title}</strong>{diagram.actura.text}</p>
+          </li>
+          <li class="layers__link">
+            <Icon name="arrow-narrow-down" size={22} />
+            {diagram.linkBottom}
+          </li>
+          <li class="layers__node">
+            <span class="tile tile--on-white"><Icon name="stethoscope" /></span>
+            <p><strong>{diagram.vendor.title}</strong>{diagram.vendor.text}</p>
+          </li>
+        </ol>
+        <figcaption class="small">
+          <Icon name="link-off" size={20} />
+          {diagram.caption}
+        </figcaption>
+      </figure>
+    </div>
+
+    <ul role="list" class="values">
+      {
+        about.values.map((value) => (
+          <li>
+            <Icon name={value.icon} size={30} />
+            <h3>{value.title}</h3>
+            <p set:html={flag(value.text)} />
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .about__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: start;
+    gap: clamp(40px, 6vw, 96px);
+  }
+
+  .about__body {
+    display: grid;
+    gap: 24px;
+    max-width: 62ch;
+  }
+
+  .layers {
+    margin: 0;
+    padding: clamp(20px, 2.6vw, 32px);
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    background: var(--paper);
+  }
+
+  .layers ol {
+    display: grid;
+  }
+
+  .layers__node {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 18px;
+    padding: 18px 20px;
+    border: 1px solid var(--line);
+    border-radius: var(--r-md);
+    background: var(--card);
+    color: var(--muted);
+    line-height: 1.35;
+  }
+
+  .layers__node strong {
+    display: block;
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  .layers__node--actura {
+    border-color: var(--navy);
+    background: var(--navy);
+    color: var(--on-navy-soft);
+  }
+
+  .layers__node--actura strong {
+    color: var(--on-navy);
+  }
+
+  .layers__link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 0 12px 34px;
+    color: var(--ink);
+    font-size: var(--fs-small);
+    font-weight: 500;
+  }
+
+  .layers__link :global(.icon) {
+    color: var(--gold-ink);
+  }
+
+  figcaption {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+  }
+
+  .values {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 40px;
+    margin-top: clamp(48px, 6vw, 80px);
+    padding-top: clamp(36px, 4vw, 48px);
+    border-top: 1px solid var(--line);
+  }
+
+  .values li {
+    display: grid;
+    align-content: start;
+    gap: 10px;
+  }
+
+  .values :global(.icon) {
+    margin-bottom: 6px;
+    color: var(--gold-ink);
+  }
+
+  .values h3 {
+    font-size: var(--fs-h4);
+  }
+
+  .values p {
+    color: var(--muted);
+  }
+
+  @media (max-width: 1023px) {
+    .about__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .values {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+  }
+</style>

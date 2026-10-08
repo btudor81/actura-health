@@ -1,0 +1,98 @@
+---
+// Roles and credentials only. Names and photos stay off the public site.
+import Icon from './Icon.astro';
+import { getHomepage } from '../lib/content';
+import { flag, headline } from '../lib/text';
+
+const { team } = await getHomepage();
+---
+
+<section id="team" class="section team" aria-labelledby="team-title">
+  <div class="wrap">
+    <div class="section__head">
+      <h2 id="team-title" set:html={headline(team.headline)} />
+      <p class="lead" set:html={flag(team.sub)} />
+    </div>
+
+    <ul role="list" class="team__grid">
+      {
+        team.members.map((member, index) => (
+          <li class="reveal" style={`--i:${index % 3}`}>
+            <span class="tile tile--on-white">
+              <Icon name={member.icon} />
+            </span>
+            <h3>{member.role}</h3>
+            <ul role="list" class="team__creds">
+              {member.credentials.map((credential) => (
+                <li>
+                  <Icon name="check" size={20} stroke={2} />
+                  <span set:html={flag(credential)} />
+                </li>
+              ))}
+            </ul>
+          </li>
+        ))
+      }
+    </ul>
+
+    <p class="team__note small" set:html={flag(team.note)} />
+  </div>
+</section>
+
+<style>
+  .team__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+  }
+
+  .team__grid > li {
+    display: grid;
+    align-content: start;
+    gap: 16px;
+    padding: clamp(24px, 2.6vw, 32px);
+    border: 1px solid var(--line);
+    border-radius: var(--r-md);
+    background: var(--card);
+  }
+
+  h3 {
+    font-size: var(--fs-h4);
+    line-height: 1.25;
+  }
+
+  .team__creds {
+    display: grid;
+    gap: 10px;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+
+  .team__creds li {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 10px;
+  }
+
+  .team__creds :global(.icon) {
+    margin-top: 4px;
+    color: var(--gold-ink);
+  }
+
+  .team__note {
+    margin-top: 28px;
+    color: var(--muted);
+  }
+
+  @media (max-width: 1023px) {
+    .team__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 699px) {
+    .team__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
