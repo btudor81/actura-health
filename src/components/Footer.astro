@@ -8,7 +8,7 @@ const services = home.services.clusters.flatMap((cluster) => cluster.items);
 const year = new Date().getFullYear();
 ---
 
-<footer class="footer on-navy">
+<footer class="footer on-navy" data-nav="dark">
   <div class="wrap footer__grid">
     <div class="footer__brand">
       <a class="brand" href="/" aria-label={`${site.name}, home`}>
@@ -100,7 +100,7 @@ const year = new Date().getFullYear();
     margin-bottom: 16px;
     color: var(--on-navy);
     font-size: var(--fs-small);
-    font-weight: 600;
+    font-weight: var(--fw-medium);
     letter-spacing: 0.06em;
     text-transform: uppercase;
   }

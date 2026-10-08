@@ -10,7 +10,7 @@ const site = await getSite();
 const { form } = contact;
 ---
 
-<section id="contact" class="section section--navy on-navy contact" aria-labelledby="contact-title">
+<section id="contact" class="section section--navy on-navy contact" data-nav="dark" aria-labelledby="contact-title">
   <div class="wrap contact__grid">
     <div class="contact__copy">
       <h2 id="contact-title" set:html={headline(contact.headline)} />
@@ -132,7 +132,6 @@ const { form } = contact;
     gap: 12px;
     min-height: 44px;
     color: var(--on-navy);
-    font-weight: 500;
     text-decoration: underline;
     text-decoration-color: rgba(255, 255, 255, 0.4);
     text-underline-offset: 5px;
@@ -173,7 +172,7 @@ const { form } = contact;
 
   label {
     color: var(--ink);
-    font-weight: 500;
+    font-weight: var(--fw-medium);
   }
 
   input,

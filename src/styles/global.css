@@ -22,7 +22,7 @@ html {
 
 body {
   margin: 0;
-  background: var(--paper);
+  background: var(--surface);
   color: var(--body);
   font-family: var(--font);
   font-size: var(--fs-body);
@@ -46,7 +46,7 @@ h3,
 h4 {
   margin: 0;
   color: var(--ink);
-  font-weight: 600;
+  font-weight: var(--fw-medium);
   letter-spacing: var(--tracking-head);
   text-wrap: balance;
 }
@@ -118,7 +118,7 @@ a {
 }
 
 .section--tint {
-  background: var(--paper-tint);
+  background: var(--tint);
 }
 
 .section--navy {
@@ -166,7 +166,7 @@ a {
   background: var(--card);
   color: var(--ink);
   font-size: var(--fs-small);
-  font-weight: 500;
+  font-weight: var(--fw-medium);
   line-height: 1.4;
 }
 
@@ -186,7 +186,7 @@ a {
   border: 2px solid transparent;
   border-radius: var(--r-sm);
   font: inherit;
-  font-weight: 600;
+  font-weight: var(--fw-medium);
   line-height: 1.2;
   text-decoration: none;
   white-space: nowrap;
@@ -266,7 +266,7 @@ a {
   border-color: rgba(255, 255, 255, 0.45);
 }
 
-/* Icon tile: desaturated surface close to the card, one style everywhere. */
+/* Icon tile: quiet surface one step off its ground, one style everywhere. */
 .tile {
   display: grid;
   place-items: center;
@@ -274,21 +274,17 @@ a {
   width: 52px;
   height: 52px;
   border-radius: var(--r-sm);
-  background: var(--paper-tint);
+  background: var(--tint);
   color: var(--navy);
 }
 
-.tile--on-white {
-  background: var(--paper);
+.tile--on-tint {
+  background: var(--card);
 }
 
 .tile--on-navy {
   background: rgba(255, 255, 255, 0.1);
   color: var(--gold);
-}
-
-.tile--on-wash {
-  background: rgba(255, 255, 255, 0.6);
 }
 
 /* Unconfirmed fact marker, see src/lib/text.ts */
@@ -300,7 +296,7 @@ a {
   background: var(--bad-wash);
   color: var(--bad);
   font-size: var(--fs-small);
-  font-weight: 500;
+  font-weight: var(--fw-medium);
   line-height: 1.4;
   white-space: nowrap;
 }
@@ -326,7 +322,7 @@ a {
   border-radius: var(--r-sm);
   background: var(--gold);
   color: var(--navy);
-  font-weight: 600;
+  font-weight: var(--fw-medium);
   transform: translateY(-200%);
 }
 

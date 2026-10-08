@@ -10,9 +10,11 @@ interface Props {
   path?: string;
   noindex?: boolean;
   jsonLd?: Record<string, unknown>[];
+  /** Ground under the nav at the top of the page. */
+  navTheme?: 'dark' | 'light';
 }
 
-const { title, description, path = '/', noindex = false, jsonLd = [] } = Astro.props;
+const { title, description, path = '/', noindex = false, jsonLd = [], navTheme = 'dark' } = Astro.props;
 const site = await getSite();
 const canonical = new URL(path, site.url).href;
 const ogImage = new URL('/og.png', site.url).href;
@@ -53,7 +55,7 @@ const indexable = import.meta.env.PUBLIC_INDEXABLE === 'true' && !noindex;
       document.documentElement.classList.add('js');
     </script>
     <a class="skip-link" href="#main">Skip to main content</a>
-    <Nav />
+    <Nav theme={navTheme} />
     <main id="main">
       <slot />
     </main>

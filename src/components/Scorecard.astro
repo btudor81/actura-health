@@ -1,6 +1,6 @@
 ---
-// Hero visual: a sample monitoring summary that sets the vendor's own report
-// beside an independent review of the same indicators. Statuses only, no figures.
+// Custom data visual: a sample monitoring summary that sets the vendor's own
+// report beside an independent review of the same indicators. Statuses only, no figures.
 import Icon from './Icon.astro';
 import { getHomepage } from '../lib/content';
 
@@ -15,8 +15,8 @@ const STATUS = {
 type StatusKey = keyof typeof STATUS;
 ---
 
-<figure class="scorecard">
-  <div class="scorecard__sheet on-light">
+<figure class="scorecard reveal">
+  <div class="scorecard__sheet">
     <table>
       <caption>{scorecard.title}</caption>
       <thead>
@@ -36,8 +36,8 @@ type StatusKey = keyof typeof STATUS;
                   <span class="status status--vendor">{vendor.label}</span>
                 </td>
                 <td>
-                  <span class={`status status--${row.review}`} style={`--i:${index}`}>
-                    <Icon name={review.icon} size={18} stroke={2.25} />
+                  <span class={`status status--review status--${row.review}`} style={`--i:${index}`}>
+                    <Icon name={review.icon} size={18} stroke={2} />
                     {review.label}
                   </span>
                 </td>
@@ -62,17 +62,18 @@ type StatusKey = keyof typeof STATUS;
     content: '';
     position: absolute;
     inset: 18px -14px 46px 14px;
-    border: 1px solid var(--line-on-navy);
+    border: 1px solid var(--line);
     border-radius: var(--r-lg);
-    background: rgba(255, 255, 255, 0.07);
+    background: rgba(255, 255, 255, 0.6);
   }
 
   .scorecard__sheet {
     position: relative;
-    padding: 24px 24px 12px;
+    padding: 28px 28px 14px;
+    border: 1px solid var(--line);
     border-radius: var(--r-lg);
     background: var(--card);
-    box-shadow: var(--shadow-panel);
+    box-shadow: 0 24px 48px -32px rgba(15, 0, 104, 0.35);
     color: var(--body);
   }
 
@@ -84,10 +85,10 @@ type StatusKey = keyof typeof STATUS;
   }
 
   caption {
-    padding-bottom: 16px;
+    padding-bottom: 18px;
     color: var(--ink);
     font-size: var(--fs-h4);
-    font-weight: 600;
+    font-weight: var(--fw-medium);
     letter-spacing: var(--tracking-head);
     text-align: left;
   }
@@ -95,7 +96,7 @@ type StatusKey = keyof typeof STATUS;
   thead th {
     padding: 0 0 10px;
     color: var(--muted);
-    font-weight: 500;
+    font-weight: var(--fw-body);
     text-align: left;
     vertical-align: bottom;
   }
@@ -110,14 +111,10 @@ type StatusKey = keyof typeof STATUS;
     white-space: nowrap;
   }
 
-  .status :global(.icon) {
-    flex: none;
-  }
-
   tbody th {
-    padding: 14px 0;
+    padding: 15px 0;
     color: var(--ink);
-    font-weight: 500;
+    font-weight: var(--fw-body);
     text-align: left;
   }
 
@@ -129,46 +126,46 @@ type StatusKey = keyof typeof STATUS;
     display: inline-flex;
     align-items: center;
     gap: 5px;
-    font-weight: 600;
+    color: var(--ink);
+    font-weight: var(--fw-medium);
+  }
+
+  .status :global(.icon) {
+    flex: none;
   }
 
   .status--vendor {
     color: var(--muted);
-    font-weight: 500;
+    font-weight: var(--fw-body);
   }
 
-  .status--met {
-    color: var(--ok);
-  }
-
+  /* One alert color: only a finding that disagrees with the vendor is red. */
   .status--not-met {
     color: var(--bad);
   }
 
-  .status--partial {
-    color: var(--gold-ink);
-  }
-
   figcaption {
     position: relative;
-    margin-top: 14px;
+    margin-top: 16px;
     padding-left: 4px;
-    color: var(--on-navy-soft);
+    color: var(--muted);
     font-size: var(--fs-small);
   }
 
-  /* The independent findings arrive one by one, after the vendor column. */
+  /* The independent findings arrive one by one once the card is in view. */
   @media (prefers-reduced-motion: no-preference) {
-    :global(html.js) .status:not(.status--vendor) {
-      animation: status-in 0.5s var(--ease) both;
-      animation-delay: calc(0.6s + var(--i) * 0.18s);
-    }
-  }
-
-  @keyframes status-in {
-    from {
+    :global(html.js) .scorecard .status--review {
       opacity: 0;
       transform: translateX(-6px);
+      transition:
+        opacity 0.5s var(--ease),
+        transform 0.5s var(--ease);
+      transition-delay: calc(0.35s + var(--i) * 0.16s);
+    }
+
+    :global(html.js) .scorecard.is-in .status--review {
+      opacity: 1;
+      transform: none;
     }
   }
 

@@ -8,14 +8,14 @@ import { flag, headline } from '../lib/text';
 
 const { services } = await getHomepage();
 const TILE: Record<string, string> = {
-  oversight: 'tile--on-white',
+  oversight: 'tile--on-tint',
   accreditation: 'tile--on-navy',
-  procurement: 'tile--on-wash',
-  systems: 'tile--on-white',
+  procurement: 'tile--on-tint',
+  systems: 'tile--on-tint',
 };
 ---
 
-<section id="services" class="section services" aria-labelledby="services-title">
+<section id="services" class="section services" data-nav="light" aria-labelledby="services-title">
   <div class="wrap">
     <div class="section__head">
       <p class="eyebrow">{services.eyebrow}</p>
@@ -34,6 +34,12 @@ const TILE: Record<string, string> = {
             style={`--i:${index}`}
             aria-labelledby={`cluster-${cluster.key}`}
           >
+            {cluster.key === 'accreditation' && (
+              <picture class="cluster__media">
+                <source srcset="/img/photo-accreditation.webp" type="image/webp" />
+                <img src="/img/photo-accreditation.jpg" alt="" width="1200" height="900" loading="lazy" decoding="async" />
+              </picture>
+            )}
             <h3 id={`cluster-${cluster.key}`}>{cluster.title}</h3>
             <ul role="list">
               {cluster.items.map((item) => (
@@ -73,6 +79,10 @@ const TILE: Record<string, string> = {
     gap: 24px 48px;
   }
 
+  .services__lead :global(.btn) {
+    flex: none;
+  }
+
   .services__grid {
     display: grid;
     grid-template-columns: repeat(12, minmax(0, 1fr));
@@ -80,8 +90,15 @@ const TILE: Record<string, string> = {
   }
 
   .cluster {
+    position: relative;
     padding: clamp(24px, 3vw, 40px);
+    overflow: hidden;
     border-radius: var(--r-lg);
+    background: var(--tint);
+  }
+
+  .cluster > :not(.cluster__media) {
+    position: relative;
   }
 
   .cluster h3 {
@@ -108,8 +125,6 @@ const TILE: Record<string, string> = {
 
   .cluster--oversight {
     grid-column: span 8;
-    border: 1px solid var(--line);
-    background: var(--card);
   }
 
   .cluster--oversight ul {
@@ -120,9 +135,26 @@ const TILE: Record<string, string> = {
     display: flex;
     flex-direction: column;
     grid-column: span 4;
-    background:
-      radial-gradient(120% 80% at 100% 100%, var(--navy-glow), transparent 70%),
-      var(--navy);
+    background: var(--navy);
+  }
+
+  /* Photo as texture under a navy veil, so the text keeps full contrast. */
+  .cluster__media {
+    position: absolute;
+    inset: 0;
+  }
+
+  .cluster__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .cluster__media::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(15, 0, 104, 0.9) 0%, rgba(15, 0, 104, 0.7) 55%, rgba(10, 0, 71, 0.88) 100%);
   }
 
   .cluster--accreditation h3 {
@@ -159,7 +191,6 @@ const TILE: Record<string, string> = {
     padding-block: 16px;
     border-top: 1px solid var(--line-on-navy);
     color: var(--on-navy);
-    font-weight: 500;
   }
 
   .cluster .points li:last-child {
@@ -171,14 +202,9 @@ const TILE: Record<string, string> = {
     color: var(--gold);
   }
 
-  .cluster--procurement {
-    grid-column: span 6;
-    background: var(--gold-wash);
-  }
-
+  .cluster--procurement,
   .cluster--systems {
     grid-column: span 6;
-    background: var(--paper-tint);
   }
 
   .cluster--procurement ul > li,

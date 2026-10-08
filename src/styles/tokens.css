@@ -4,21 +4,19 @@
   --navy: #0f0068;
   --navy-deep: #0a0047;
   --navy-panel: #1b0c7a;
-  --gold: #d89b00; /* 7.05:1 on navy. 2.28:1 on paper: graphic use only on light. */
-  --gold-ink: #8a6100; /* gold for text on light: 5.18 paper, 4.74 tint, 5.54 white */
-  --gold-wash: #f6ebcb;
+  --gold: #d89b00; /* 7.05:1 on navy. 2.3:1 on white, so gold is used on navy only. */
   --gold-hover: #e9ab12; /* 8.3:1 with navy text */
   --navy-glow: rgba(72, 52, 190, 0.5);
 
-  /* Surfaces */
-  --paper: #faf7f0;
-  --paper-tint: #f2ede0;
+  /* Surfaces: white, plus one faint navy tint for alternate bands, panels and tiles */
+  --surface: #ffffff;
+  --tint: #f4f4fa;
   --card: #ffffff;
 
   /* Text */
-  --ink: #0f0068; /* headings: 16.09 on paper */
-  --body: #231f4d; /* 14.28 on paper */
-  --muted: #55507a; /* 6.97 paper, 6.38 tint, 7.46 white, 6.28 gold wash */
+  --ink: #0f0068; /* headings: 17.2 on white, 15.7 on tint */
+  --body: #231f4d; /* 15.3 on white, 13.9 on tint */
+  --muted: #55507a; /* 7.46 on white, 6.8 on tint */
   --on-navy: #ffffff; /* 17.21 */
   --on-navy-soft: #cdc9e8; /* 10.75 navy, 9.5 navy panel, 11.88 navy deep */
 
@@ -28,11 +26,12 @@
   --line-on-navy: rgba(255, 255, 255, 0.18);
 
   /* Status (always paired with an icon and a text label) */
-  --ok: #1f6b3b; /* 6.51 on white */
   --bad: #a3261b; /* 7.37 on white */
   --bad-wash: #fff4f2;
 
-  /* Type: one family, one body size */
+  /* Type: one family, one body size. Regular for body, Medium for headings and buttons. */
+  --fw-body: 400;
+  --fw-medium: 500;
   --font: 'Outfit', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
   --fs-body: 1.25rem; /* 20px, older audience */
   --fs-small: 1rem; /* captions and meta, floor 16px */

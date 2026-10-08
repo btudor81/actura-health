@@ -7,7 +7,12 @@ const { benefits } = await getHomepage();
 const { commitments } = benefits;
 ---
 
-<section class="section section--navy on-navy benefits" aria-labelledby="benefits-title">
+<section class="section section--navy on-navy benefits" data-nav="dark" aria-labelledby="benefits-title">
+  <picture class="benefits__media">
+    <source srcset="/img/photo-lines.webp" type="image/webp" />
+    <img src="/img/photo-lines.jpg" alt="" width="2400" height="1350" loading="lazy" decoding="async" />
+  </picture>
+
   <div class="wrap benefits__grid">
     <div>
       <div class="section__head">
@@ -54,12 +59,25 @@ const { commitments } = benefits;
 
 <style>
   .benefits {
-    background:
-      radial-gradient(50% 60% at 0% 100%, var(--navy-glow), transparent 70%),
-      var(--navy);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .benefits__media {
+    position: absolute;
+    inset: 0;
+    opacity: 0.55;
+  }
+
+  .benefits__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 100%;
   }
 
   .benefits__grid {
+    position: relative;
     display: grid;
     grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
     align-items: start;
@@ -90,7 +108,7 @@ const { commitments } = benefits;
   .commit {
     padding: clamp(28px, 3vw, 40px);
     border-radius: var(--r-lg);
-    background: var(--paper);
+    background: var(--card);
     color: var(--body);
     box-shadow: var(--shadow-panel);
   }

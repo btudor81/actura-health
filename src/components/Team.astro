@@ -7,7 +7,7 @@ import { flag, headline } from '../lib/text';
 const { team } = await getHomepage();
 ---
 
-<section id="team" class="section team" aria-labelledby="team-title">
+<section id="team" class="section team" data-nav="light" aria-labelledby="team-title">
   <div class="wrap">
     <div class="section__head">
       <h2 id="team-title" set:html={headline(team.headline)} />
@@ -18,7 +18,7 @@ const { team } = await getHomepage();
       {
         team.members.map((member, index) => (
           <li class="reveal" style={`--i:${index % 3}`}>
-            <span class="tile tile--on-white">
+            <span class="tile tile--on-tint">
               <Icon name={member.icon} />
             </span>
             <h3>{member.role}</h3>
@@ -51,9 +51,8 @@ const { team } = await getHomepage();
     align-content: start;
     gap: 16px;
     padding: clamp(24px, 2.6vw, 32px);
-    border: 1px solid var(--line);
     border-radius: var(--r-md);
-    background: var(--card);
+    background: var(--tint);
   }
 
   h3 {
@@ -76,7 +75,7 @@ const { team } = await getHomepage();
 
   .team__creds :global(.icon) {
     margin-top: 4px;
-    color: var(--gold-ink);
+    color: var(--ink);
   }
 
   .team__note {

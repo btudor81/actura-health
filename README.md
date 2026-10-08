@@ -63,6 +63,23 @@ Plain HTML form handled by Netlify Forms (`data-netlify="true"`, honeypot field 
 
 Build target: Chrome and Edge 90, Firefox 91, Safari 14. Every page renders fully with JavaScript off. WCAG 2.1 AA: axe reports zero violations on the homepage at desktop and mobile widths. Body text is 20px for an older audience.
 
+## Photos and visuals
+
+Stock photos are from Unsplash (free license, no credit required), graded to the navy palette with PIL so the page stays on white, navy and gold. Source IDs, in case one needs to be re-exported or replaced:
+
+| File | Used in | Unsplash photo ID |
+|---|---|---|
+| `public/img/photo-hero.*` (mirrored) | Hero background | `photo-1693683223469-e3da9e2a723d` |
+| `public/img/photo-accreditation.*` | Services, Accreditation panel | `photo-1668282690278-8127bc0b9e00` |
+| `public/img/photo-lines.*` | Benefits band texture | `photo-1672750771479-5ea73e9439ce` |
+| `public/img/photo-about.*` | About | `photo-1758691462814-485c3672e447` |
+
+One photo per slot, never reused. No bars, cuffs, jumpsuits or identifiable people. Custom data visuals: `Scorecard.astro` (sample monitoring summary) and the three-party diagram in `About.astro`.
+
+## Nav
+
+The bar takes a color close to the ground under it: navy glass over navy sections, white over light ones. Every top-level section sets `data-nav="dark"` or `data-nav="light"`; a new section must set it too. Without JavaScript the bar sits at the top of the page and does not follow the scroll.
+
 ## Icons
 
 Tabler outline icons, read from `node_modules/@tabler/icons` at build time by `src/components/Icon.astro`. Use Tabler names (`<Icon name="scale" />`), stroke 1.5.
