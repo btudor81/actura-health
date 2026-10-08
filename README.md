@@ -67,9 +67,9 @@ Build target: Chrome and Edge 90, Firefox 91, Safari 14. Every page renders full
 
 Light, airy style: white page, pale blue tint panels (`--tint`, `--tint-2`, `--tint-3`), navy reserved for buttons, key marks and the Actura node in the diagram. Brand gold stays in the logo only (2.3:1 on white, so it cannot carry text or controls).
 
-- Buttons are lit from above: inner highlight on the top edge, inner shade on the bottom edge, short tinted drop shadow. `.btn--primary` is the navy gradient, `.btn--ghost` the pale secondary.
-- `.panel` is the pale rounded container, `.panel--rings` adds the soft concentric texture, `.mock` is the white card that reads as a piece of interface or a document.
-- Custom visuals: `Arcs.astro` (hero and footer), `Scorecard.astro` (sample monitoring summary), the readiness checklist in the Accreditation panel, the commitments card, the three-party diagram in `About.astro`.
+- Buttons are lit from above: inner highlight on the top edge, inner shade on the bottom edge, short tinted drop shadow. `.btn--primary` is a soft navy gradient, `.btn--ghost` is the flat grey secondary.
+- `.panel` is the pale rounded container, `.panel--rings` adds the soft concentric texture (scorecard panel only), `.mock` is the white card that reads as a piece of interface or a document.
+- Custom visuals: `Arcs.astro` (hero top and bottom, footer), `Scorecard.astro` (sample monitoring summary), the readiness checklist in the Accreditation panel, the commitments card.
 - One photo: `public/img/photo-about.*`, Unsplash `photo-1758691462814-485c3672e447` (free license), desaturated and cooled with PIL.
 
 ## Nav

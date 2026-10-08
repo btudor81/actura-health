@@ -2,27 +2,29 @@
 :root {
   /* Brand navy: buttons, key marks and the Actura node. Never a page background. */
   --navy: #0f0068;
-  --navy-mid: #1a0f8a;
-  --navy-bright: #3226b4; /* top of the button gradient: 10.1 with white text */
+  --navy-soft: #23189a; /* top of the button gradient: 12.6 with white text */
+  --navy-base: #150a7a; /* bottom of the button gradient */
   --navy-deep: #0a0047;
   /* Brand gold lives in the logo only. At 2.3:1 on white it cannot carry text or controls. */
 
   /* Surfaces: white page, pale blue tints for panels, arcs and tiles */
   --surface: #ffffff;
-  --tint: #f4f6fd;
-  --tint-2: #e9eefb;
-  --tint-3: #dbe3f9;
+  --tint: #f3f8fe;
+  --tint-2: #e5f0fd;
+  --tint-3: #d3e5fb;
+  --tint-4: #c0d9f8; /* deepest arc only */
+  --grey: #eceef2; /* secondary button */
+  --grey-hover: #e1e4ea;
   --card: #ffffff;
 
   /* Text */
   --ink: #15134a; /* headings: 17.2 on white, 13.4 on tint-3 */
   --body: #2a2950; /* 14.3 on white, 11.8 on tint-2 */
-  --muted: #5a5980; /* 6.6 white, 6.1 tint, 5.7 tint-2, 5.2 tint-3 */
+  --muted: #5a5980; /* 6.6 white, 6.1 tint, 5.7 tint-2, 5.1 tint-3 */
   --on-navy: #ffffff; /* 17.2 on navy */
-  --on-navy-soft: #cdc9e8; /* 10.8 on navy */
 
   /* Lines */
-  --line: rgba(21, 19, 74, 0.1);
+  --line: rgba(20, 52, 110, 0.12);
   --line-strong: #8582a6; /* form borders: 3.66 on white */
 
   /* Status (always paired with an icon and a text label) */
@@ -54,9 +56,9 @@
   --r-lg: 24px;
 
   /* Depth: a lit top edge inside, a soft tinted shadow outside */
-  --shadow-card: inset 0 1px 0 #ffffff, 0 1px 2px rgba(21, 19, 74, 0.06), 0 18px 40px -24px rgba(21, 19, 74, 0.3);
-  --shadow-tile: inset 0 1px 0 #ffffff, inset 0 -2px 0 rgba(21, 19, 74, 0.04), 0 1px 2px rgba(21, 19, 74, 0.1);
-  --shadow-float: 0 10px 30px -18px rgba(21, 19, 74, 0.35);
+  --shadow-card: inset 0 1px 0 #ffffff, 0 1px 2px rgba(20, 52, 110, 0.06), 0 18px 40px -24px rgba(20, 52, 110, 0.3);
+  --shadow-tile: inset 0 1px 0 #ffffff, inset 0 -2px 0 rgba(20, 52, 110, 0.04), 0 1px 2px rgba(20, 52, 110, 0.1);
+  --shadow-float: 0 10px 30px -18px rgba(20, 52, 110, 0.35);
 
   /* Layers */
   --z-nav: 50;

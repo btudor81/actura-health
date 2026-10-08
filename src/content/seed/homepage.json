@@ -314,23 +314,6 @@
       "People in custody are owed constitutional-level care, and the agencies responsible for them need an objective way to know whether they are getting it. Actura Health exists to provide that.",
       "We are the independent layer between the jail or prison and its healthcare vendor. We do not deliver medical care, so we never audit a competitor or ourselves. We bring NCCHC-level clinical expertise together with health system operations and EHR experience, with particular depth in California: Title 15 and CalAIM Justice-Involved."
     ],
-    "diagram": {
-      "agency": {
-        "title": "Your agency",
-        "text": "Sheriff, county or department of corrections"
-      },
-      "linkTop": "Reports only to you",
-      "actura": {
-        "title": "Actura Health",
-        "text": "The independent layer"
-      },
-      "linkBottom": "Audits and monitors the care",
-      "vendor": {
-        "title": "Healthcare vendor",
-        "text": "Delivers the medical care"
-      },
-      "caption": "No financial ties to the vendor."
-    },
     "values": [
       {
         "icon": "scale",

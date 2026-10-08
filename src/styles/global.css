@@ -176,13 +176,13 @@ a {
 }
 
 .btn--primary {
-  border-color: var(--navy-deep);
-  background: linear-gradient(180deg, var(--navy-bright) 0%, var(--navy-mid) 52%, var(--navy) 100%);
+  border-color: var(--navy);
+  background: linear-gradient(180deg, var(--navy-soft) 0%, var(--navy-base) 100%);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.32),
-    inset 0 -2px 0 rgba(4, 0, 40, 0.35),
-    0 1px 2px rgba(15, 0, 104, 0.3),
-    0 10px 20px -10px rgba(15, 0, 104, 0.6);
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    inset 0 -1px 0 rgba(4, 0, 40, 0.25),
+    0 1px 2px rgba(15, 0, 104, 0.25),
+    0 8px 16px -10px rgba(15, 0, 104, 0.5);
   color: var(--on-navy);
 }
 
@@ -190,18 +190,15 @@ a {
   filter: brightness(1.14);
 }
 
+/* Secondary: plain grey, no gradient, no edge. */
 .btn--ghost {
-  border-color: rgba(21, 19, 74, 0.14);
-  background: linear-gradient(180deg, #ffffff 0%, var(--tint-2) 100%);
-  box-shadow:
-    inset 0 1px 0 #ffffff,
-    inset 0 -2px 0 rgba(21, 19, 74, 0.05),
-    0 1px 2px rgba(21, 19, 74, 0.08);
+  background: var(--grey);
   color: var(--ink);
+  transition: background-color 0.2s var(--ease), transform 0.2s var(--ease);
 }
 
 .btn--ghost:hover {
-  filter: brightness(0.97);
+  background: var(--grey-hover);
 }
 
 .btn--sm {
@@ -215,8 +212,8 @@ a {
   cursor: default;
 }
 
-.btn.is-pending:hover {
-  filter: none;
+.btn--ghost.is-pending:hover {
+  background: var(--grey);
 }
 
 @media (max-width: 599px) {
@@ -237,13 +234,6 @@ a {
   background: var(--card);
   box-shadow: var(--shadow-tile);
   color: var(--navy);
-}
-
-.tile--on-navy {
-  border-color: rgba(255, 255, 255, 0.16);
-  background: rgba(255, 255, 255, 0.12);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
-  color: var(--on-navy);
 }
 
 /* Pale panel that holds a visual or a group of cards. */

@@ -28,7 +28,7 @@ const TILE: Record<string, string> = {
       {
         services.clusters.map((cluster, index) => (
           <section
-            class:list={['panel', 'cluster', `cluster--${cluster.key}`, 'reveal', { 'panel--rings': cluster.key === 'accreditation' }]}
+            class:list={['panel', 'cluster', `cluster--${cluster.key}`, 'reveal']}
             style={`--i:${index}`}
             aria-labelledby={`cluster-${cluster.key}`}
           >

@@ -4,7 +4,6 @@ import { getHomepage } from '../lib/content';
 import { flag, headline } from '../lib/text';
 
 const { about } = await getHomepage();
-const { diagram } = about;
 ---
 
 <section id="about" class="section about" data-nav="light" aria-labelledby="about-title">
@@ -28,35 +27,6 @@ const { diagram } = about;
         />
       </picture>
     </div>
-
-    <figure class="panel layers reveal">
-      <ol role="list">
-        <li class="layers__node">
-          <span class="tile"><Icon name="building-community" /></span>
-          <p><strong>{diagram.agency.title}</strong>{diagram.agency.text}</p>
-        </li>
-        <li class="layers__link">
-          <Icon name="arrow-narrow-left" size={24} />
-          {diagram.linkTop}
-        </li>
-        <li class="layers__node layers__node--actura">
-          <span class="tile tile--on-navy"><Icon name="scale" /></span>
-          <p><strong>{diagram.actura.title}</strong>{diagram.actura.text}</p>
-        </li>
-        <li class="layers__link">
-          {diagram.linkBottom}
-          <Icon name="arrow-narrow-right" size={24} />
-        </li>
-        <li class="layers__node">
-          <span class="tile"><Icon name="stethoscope" /></span>
-          <p><strong>{diagram.vendor.title}</strong>{diagram.vendor.text}</p>
-        </li>
-      </ol>
-      <figcaption class="small">
-        <Icon name="link-off" size={20} />
-        {diagram.caption}
-      </figcaption>
-    </figure>
 
     <ul role="list" class="values">
       {
@@ -103,81 +73,11 @@ const { diagram } = about;
     object-position: 46% 50%;
   }
 
-  /* Three parties in one row: who Actura reports to, and who it reviews. */
-  .layers {
-    margin: clamp(48px, 6vw, 80px) 0 0;
-    padding: clamp(20px, 3vw, 40px);
-  }
-
-  .layers ol {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
-    align-items: center;
-    gap: 16px;
-  }
-
-  .layers__node {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    align-items: center;
-    gap: 16px;
-    height: 100%;
-    padding: 20px 22px;
-    border: 1px solid var(--line);
-    border-radius: var(--r-md);
-    background: var(--card);
-    box-shadow: var(--shadow-card);
-    color: var(--muted);
-    line-height: 1.35;
-  }
-
-  .layers__node strong {
-    display: block;
-    color: var(--ink);
-    font-weight: var(--fw-medium);
-  }
-
-  .layers__node--actura {
-    border-color: var(--navy-deep);
-    background: linear-gradient(180deg, var(--navy-bright) 0%, var(--navy-mid) 52%, var(--navy) 100%);
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.3),
-      0 14px 28px -14px rgba(15, 0, 104, 0.6);
-    color: var(--on-navy-soft);
-  }
-
-  .layers__node--actura strong {
-    color: var(--on-navy);
-  }
-
-  .layers__link {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    max-width: 132px;
-    color: var(--ink);
-    font-size: var(--fs-small);
-    line-height: 1.3;
-  }
-
-  .layers__link :global(.icon) {
-    flex: none;
-  }
-
-  figcaption {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    margin-top: 20px;
-    color: var(--muted);
-  }
-
   .values {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 40px;
-    margin-top: clamp(40px, 5vw, 64px);
+    margin-top: clamp(48px, 6vw, 80px);
     padding-top: clamp(36px, 4vw, 48px);
     border-top: 1px solid var(--line);
   }
@@ -208,22 +108,6 @@ const { diagram } = about;
 
     .about__photo img {
       aspect-ratio: 16 / 10;
-    }
-
-    /* Stack the three parties; arrows turn to point up and down. */
-    .layers ol {
-      grid-template-columns: 1fr;
-      gap: 0;
-    }
-
-    .layers__link {
-      max-width: none;
-      padding: 12px 0 12px 34px;
-    }
-
-    .layers__link :global(.icon) {
-      order: -1;
-      transform: rotate(90deg);
     }
   }
 

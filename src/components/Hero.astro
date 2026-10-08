@@ -11,7 +11,8 @@ const ctaHref = site.bookingUrl || '#contact';
 ---
 
 <section class="hero" data-nav="light" aria-labelledby="hero-title">
-  <Arcs class="hero__arcs" />
+  <Arcs class="hero__arcs hero__arcs--top" flip />
+  <Arcs class="hero__arcs hero__arcs--bottom" />
 
   <div class="wrap hero__copy">
     <p class="eyebrow">{hero.eyebrow}</p>
@@ -45,16 +46,25 @@ const ctaHref = site.bookingUrl || '#contact';
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    min-height: min(100dvh, 880px);
+    min-height: 100dvh;
     padding-top: calc(var(--nav-h) + 14px);
     overflow: hidden;
-    background: linear-gradient(180deg, var(--surface) 0%, var(--tint) 46%, var(--tint-2) 100%);
+    background: var(--tint);
   }
 
   .hero :global(.hero__arcs) {
     position: absolute;
-    bottom: 0;
     left: 0;
+  }
+
+  /* Shallower at the top so the arcs sit behind the nav, not behind the headline. */
+  .hero :global(.hero__arcs--top) {
+    top: 0;
+    height: 26%;
+  }
+
+  .hero :global(.hero__arcs--bottom) {
+    bottom: 0;
     height: 44%;
   }
 
@@ -125,12 +135,6 @@ const ctaHref = site.bookingUrl || '#contact';
   @media (min-width: 1024px) {
     h1 :global(.row) {
       white-space: nowrap;
-    }
-  }
-
-  @media (max-width: 1023px) {
-    .hero {
-      min-height: 0;
     }
   }
 

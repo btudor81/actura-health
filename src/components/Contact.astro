@@ -12,7 +12,7 @@ const { form } = contact;
 
 <section id="contact" class="section contact" data-nav="light" aria-labelledby="contact-title">
   <div class="wrap">
-    <div class="panel panel--rings contact__panel">
+    <div class="panel contact__panel">
       <div class="contact__copy">
         <h2 id="contact-title" set:html={headline(contact.headline)} />
         <p class="lead" set:html={flag(contact.sub)} />
@@ -101,16 +101,6 @@ const { form } = contact;
     gap: clamp(32px, 5vw, 80px);
     padding: clamp(24px, 4.5vw, 64px);
     background: linear-gradient(160deg, var(--tint-2) 0%, var(--tint-3) 100%);
-  }
-
-  .contact__panel::before {
-    background: repeating-radial-gradient(
-      circle at 22% 30%,
-      rgba(255, 255, 255, 0) 0,
-      rgba(255, 255, 255, 0) 90px,
-      rgba(255, 255, 255, 0.55) 150px,
-      rgba(255, 255, 255, 0) 210px
-    );
   }
 
   .contact__copy {
