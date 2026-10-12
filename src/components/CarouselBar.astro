@@ -61,7 +61,7 @@ const { label, class: className } = Astro.props;
     content: '';
     height: 4px;
     border-radius: 2px;
-    background: var(--grey-hover);
+    background: var(--tint-4);
     transition: background-color 0.3s var(--ease);
   }
 
@@ -83,18 +83,21 @@ const { label, class: className } = Astro.props;
     width: 44px;
     height: 44px;
     padding: 0;
-    border: 0;
+    border: 1px solid var(--control-edge);
     border-radius: 50%;
-    background: var(--grey);
+    background: var(--control);
+    box-shadow: var(--shadow-control);
     color: var(--ink);
     cursor: pointer;
     transition:
       background-color 0.2s var(--ease),
+      border-color 0.2s var(--ease),
       opacity 0.2s var(--ease);
   }
 
   .carousel__btn:hover {
-    background: var(--grey-hover);
+    border-color: var(--control-edge-hover);
+    background: var(--control-hover);
   }
 
   .carousel__btn[aria-disabled='true'] {
@@ -103,6 +106,7 @@ const { label, class: className } = Astro.props;
   }
 
   .carousel__btn[aria-disabled='true']:hover {
-    background: var(--grey);
+    border-color: var(--control-edge);
+    background: var(--control);
   }
 </style>

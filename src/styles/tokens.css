@@ -15,10 +15,12 @@
   --tint-2: #e5f0fd;
   --tint-3: #d3e5fb;
   --tint-4: #c0d9f8; /* deepest arc only */
-  /* Secondary button and slider arrows: a see-through ink wash, so the control is
-     always the same step darker than whatever it sits on (white, tint or panel). */
-  --grey: rgba(20, 52, 110, 0.13);
-  --grey-hover: rgba(20, 52, 110, 0.2);
+  /* Secondary controls (ghost button, slider arrows, copy): clean white, a hairline
+     edge and a short shadow, so they read on white, on a tint and on a panel. */
+  --control: #ffffff;
+  --control-hover: #f3f8fe;
+  --control-edge: rgba(20, 52, 110, 0.16);
+  --control-edge-hover: rgba(20, 52, 110, 0.34);
   --card: #ffffff;
 
   /* Text */
@@ -63,6 +65,7 @@
   --shadow-card: inset 0 1px 0 #ffffff, 0 1px 2px rgba(20, 52, 110, 0.06), 0 18px 40px -24px rgba(20, 52, 110, 0.3);
   --shadow-tile: inset 0 1px 0 #ffffff, inset 0 -2px 0 rgba(20, 52, 110, 0.04), 0 1px 2px rgba(20, 52, 110, 0.1);
   --shadow-float: 0 10px 30px -18px rgba(20, 52, 110, 0.35);
+  --shadow-control: inset 0 -1px 0 rgba(20, 52, 110, 0.05), 0 1px 2px rgba(20, 52, 110, 0.1), 0 8px 16px -12px rgba(20, 52, 110, 0.45);
 
   /* Layers */
   --z-nav: 50;
