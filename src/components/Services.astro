@@ -88,34 +88,22 @@ const cards = services.clusters.flatMap((cluster, clusterIndex) =>
     object-fit: cover;
   }
 
-  /* Scrim under the copy: a long eased ramp instead of a dark band, over a blur
-     that calms the photo behind the type. 0.66 where the copy starts keeps white
-     text above 4.5:1 even on a white photo. */
-  .svc::before,
+  /* Scrim under the copy: one long eased ramp of deep ink blue. No blur.
+     0.74 where the copy starts keeps white text above 4.5:1 even on a white photo. */
   .svc::after {
     content: '';
     position: absolute;
     inset: 0;
     z-index: -1;
-  }
-
-  .svc::before {
-    -webkit-backdrop-filter: blur(14px);
-    backdrop-filter: blur(14px);
-    -webkit-mask-image: linear-gradient(180deg, transparent 38%, #000 62%);
-    mask-image: linear-gradient(180deg, transparent 38%, #000 62%);
-  }
-
-  .svc::after {
     background: linear-gradient(
       180deg,
-      rgba(13, 15, 38, 0) 18%,
-      rgba(13, 15, 38, 0.1) 30%,
-      rgba(13, 15, 38, 0.3) 41%,
-      rgba(13, 15, 38, 0.52) 50%,
-      rgba(13, 15, 38, 0.66) 58%,
-      rgba(13, 15, 38, 0.74) 72%,
-      rgba(13, 15, 38, 0.8) 100%
+      rgba(16, 14, 64, 0) 18%,
+      rgba(16, 14, 64, 0.1) 29%,
+      rgba(16, 14, 64, 0.32) 40%,
+      rgba(16, 14, 64, 0.56) 49%,
+      rgba(16, 14, 64, 0.74) 57%,
+      rgba(16, 14, 64, 0.84) 72%,
+      rgba(16, 14, 64, 0.9) 100%
     );
   }
 

@@ -33,12 +33,14 @@ Node 22.12 or newer.
 
 ## Options under review (remove before launch)
 
-The homepage currently stacks three heroes and three Team layouts so one of each can be picked. Each carries a dashed `.option-tag` label.
+The homepage currently stacks the benefit cards three times so one background for the illustrations can be picked. Each copy carries a dashed `.option-tag` label.
 
-- `Hero.astro` prop `variant`: `gradient` (A), `motion` (B, animated), `arcs` (C, the earlier look). Copies after the first take `duplicate` so the page keeps one `h1`.
-- `Team.astro` prop `variant`: `slider` (A), `split` (B), `roster` (C). Copies after the first take `anchor={false}` so `#team` stays unique.
+- `Benefits.astro` prop `stage`: `photo` (A, clinical photo behind a white plate), `lines` (B, rings and dashed guides), `window` (C, a larger app window behind).
+- Copies after the first take `duplicate` (no section heading). Only the last copy shows the commitments panel (`commitments={false}` on the others).
 
-Once chosen: keep one `<Hero />` and one `<Team />` in `src/pages/index.astro`, delete the unused branches, the `option` / `duplicate` / `anchor` props and `.option-tag` in `global.css`.
+Once chosen: keep one `<Benefits stage="..." />` in `src/pages/index.astro`, delete the unused stage rules, the `option` / `duplicate` / `commitments` props and `.option-tag` in `global.css`. If `photo` loses, delete `public/img/benefit-*`.
+
+Settled earlier, do not bring back: hero = circles (gradient and animated versions dropped, grain texture rejected); Team = ruled list (both slider layouts dropped).
 
 ## Content rules
 
@@ -83,6 +85,7 @@ Light, airy style: white page, pale blue tint panels (`--tint`, `--tint-2`, `--t
 - `.panel` is the pale rounded container, `.panel--rings` adds the soft concentric texture (scorecard panel only), `.mock` is the white card that reads as a piece of interface or a document.
 - Custom visuals: `Arcs.astro` (hero top and bottom, footer), `Scorecard.astro` (sample monitoring summary), the readiness checklist in the Accreditation panel, the commitments card.
 - About photo: `public/img/photo-about.*`, Unsplash `photo-1758691462814-485c3672e447` (free license), desaturated and cooled with PIL.
+- Benefit stage photos (option A only): `public/img/benefit-[kind].*`, Pexels, cropped 2:1, desaturated and washed with the panel tint. IDs: read 5327654, path 10827916, contract 8428076, record 7088483.
 - Service card photos: `public/img/service-[slug].*`, Pexels (free license), cropped 4:5 and lightly cooled with PIL. One photo per service, never reused. Pexels IDs: quality-assurance 7578799, continuous-quality-improvement 5452193, contract-performance-monitoring 5327916, behavioral-health 14797769, ncchc-accreditation 6129111, rfp-procurement 8470836, medicaid-1115-calaim 7579831, ehr-advisory 8376152, interim-leadership 6129507. Source URL: `https://images.pexels.com/photos/<id>/pexels-photo-<id>.jpeg`.
 
 ## Nav

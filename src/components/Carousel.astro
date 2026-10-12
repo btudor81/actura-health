@@ -3,36 +3,25 @@
 // scrollbar; with JS it gains arrows and a row of dashes (CarouselBar).
 // The parent passes the <li> slides and sets their width.
 //   bleed: the row runs past the wrap to both viewport edges, so the next card shows.
-//   split: an "aside" slot (heading) sits left with the controls, cards run off the right edge.
 import CarouselBar from './CarouselBar.astro';
 
 interface Props {
   /** Names the scrollable region for assistive tech, e.g. "Services". */
   label: string;
   bleed?: boolean;
-  split?: boolean;
 }
 
-const { label, bleed = false, split = false } = Astro.props;
+const { label, bleed = false } = Astro.props;
 ---
 
-<div class:list={['carousel', { 'carousel--bleed': bleed, 'carousel--split': split }]} data-carousel data-label={label}>
-  {
-    split && (
-      <div class="carousel__aside">
-        <slot name="aside" />
-        <CarouselBar label={label} />
-      </div>
-    )
-  }
-
+<div class:list={['carousel', { 'carousel--bleed': bleed }]} data-carousel data-label={label}>
   <div class="carousel__view" tabindex="0" role="region" aria-label={`${label}, scrollable`}>
     <ul role="list" class="carousel__track">
       <slot />
     </ul>
   </div>
 
-  {!split && <CarouselBar label={label} class={bleed ? 'wrap' : undefined} />}
+  <CarouselBar label={label} class={bleed ? 'wrap' : undefined} />
 </div>
 
 <script>
@@ -152,47 +141,5 @@ const { label, bleed = false, split = false } = Astro.props;
   .carousel--bleed .carousel__track {
     width: max-content;
     padding-inline: var(--edge);
-  }
-
-  /* Split: heading and controls hold the left column, cards leave by the right edge. */
-  .carousel--split {
-    display: grid;
-    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-    align-items: center;
-    gap: clamp(32px, 5vw, 72px);
-    padding-left: var(--edge);
-  }
-
-  .carousel--split .carousel__track {
-    width: max-content;
-    padding-right: var(--gutter);
-  }
-
-  .carousel--split .carousel__aside :global(.section__head) {
-    margin-bottom: 0;
-  }
-
-  .carousel--split .carousel__aside :global(.carousel__bar) {
-    justify-content: flex-start;
-  }
-
-  @media (max-width: 1099px) {
-    .carousel--split {
-      display: block;
-      padding-left: 0;
-    }
-
-    .carousel--split .carousel__aside {
-      margin-bottom: clamp(40px, 5vw, 64px);
-      padding-inline: var(--gutter);
-    }
-
-    .carousel--split .carousel__view {
-      scroll-padding-inline: var(--gutter);
-    }
-
-    .carousel--split .carousel__track {
-      padding-inline: var(--gutter);
-    }
   }
 </style>

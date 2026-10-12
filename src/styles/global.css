@@ -58,19 +58,9 @@ h4 {
   text-wrap: balance;
 }
 
-h1,
-.h1 {
+h1 {
   font-size: var(--fs-h1);
   line-height: 1.06;
-}
-
-/* Heading look without the heading role (review duplicates only). */
-.h1 {
-  margin: 0;
-  color: var(--ink);
-  font-weight: var(--fw-medium);
-  letter-spacing: var(--tracking-head);
-  text-wrap: balance;
 }
 
 h2 {

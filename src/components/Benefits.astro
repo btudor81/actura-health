@@ -1,25 +1,65 @@
 ---
+// REVIEW: three stage backgrounds are on the page so one can be chosen. Keep the
+// winner, delete the other two, the `option` / `duplicate` / `commitments` props
+// and the option tag.
+//   photo:  a clinical photo behind the illustration, which sits on a white plate
+//   lines:  concentric rings and dashed guide lines
+//   window: the illustration floats in front of a larger app window
 import BenefitVisual from './BenefitVisual.astro';
 import Icon from './Icon.astro';
 import { getHomepage } from '../lib/content';
 import { flag, headline } from '../lib/text';
 
+interface Props {
+  stage?: 'photo' | 'lines' | 'window';
+  /** Review label. */
+  option?: string;
+  /** A repeat of the card grid: no section heading. */
+  duplicate?: boolean;
+  /** Show the commitments panel under the cards. */
+  commitments?: boolean;
+}
+
+const { stage = 'lines', option, duplicate = false, commitments: showCommitments = true } = Astro.props;
 const { benefits } = await getHomepage();
 const { commitments } = benefits;
 ---
 
-<section class="section benefits" data-nav="light" aria-labelledby="benefits-title">
+<section
+  class:list={['section', 'benefits', `benefits--${stage}`, { 'benefits--repeat': duplicate, 'benefits--open': !showCommitments }]}
+  data-nav="light"
+  aria-labelledby={duplicate ? undefined : 'benefits-title'}
+  aria-label={duplicate ? option : undefined}
+>
   <div class="wrap">
-    <div class="section__head section__head--center">
-      <h2 id="benefits-title" set:html={headline(benefits.headline)} />
-      <p class="lead" set:html={flag(benefits.sub)} />
-    </div>
+    {
+      !duplicate && (
+        <div class="section__head section__head--center">
+          <h2 id="benefits-title" set:html={headline(benefits.headline)} />
+          <p class="lead" set:html={flag(benefits.sub)} />
+        </div>
+      )
+    }
+    {option && <p class="option-tag">{option}</p>}
 
     <ul role="list" class="benefits__list">
       {
         benefits.items.map((item, index) => (
           <li class="reveal" style={`--i:${index % 2}`}>
             <div class="benefit__visual">
+              {stage === 'photo' && (
+                <picture>
+                  <source srcset={`/img/benefit-${item.visual}.webp`} type="image/webp" />
+                  <img
+                    src={`/img/benefit-${item.visual}.jpg`}
+                    alt=""
+                    width="1280"
+                    height="640"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </picture>
+              )}
               <BenefitVisual kind={item.visual} />
             </div>
             <div class="benefit__copy">
@@ -31,31 +71,35 @@ const { commitments } = benefits;
       }
     </ul>
 
-    <div class="panel commit">
-      <div class="commit__copy">
-        <h3 id="commit-title">{commitments.title}</h3>
-        <p class="commit__note" set:html={flag(commitments.note)} />
-      </div>
+    {
+      showCommitments && (
+        <div class="panel commit">
+          <div class="commit__copy">
+            <h3 id="commit-title">{commitments.title}</h3>
+            <p class="commit__note" set:html={flag(commitments.note)} />
+          </div>
 
-      <ul role="list" class="mock commit__list reveal" aria-labelledby="commit-title">
-        {
-          commitments.items.map((item) => (
-            <li>
-              <span class="tile">
-                <Icon name={item.icon} />
-              </span>
-              <div>
-                <h4>{item.title}</h4>
-                <p set:html={flag(item.text)} />
-              </div>
-              <span class="tick commit__check">
-                <Icon name="check" size={16} stroke={2.5} />
-              </span>
-            </li>
-          ))
-        }
-      </ul>
-    </div>
+          <ul role="list" class="mock commit__list reveal" aria-labelledby="commit-title">
+            {
+              commitments.items.map((item) => (
+                <li>
+                  <span class="tile">
+                    <Icon name={item.icon} />
+                  </span>
+                  <div>
+                    <h4>{item.title}</h4>
+                    <p set:html={flag(item.text)} />
+                  </div>
+                  <span class="tick commit__check">
+                    <Icon name="check" size={16} stroke={2.5} />
+                  </span>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      )
+    }
   </div>
 </section>
 
@@ -78,12 +122,114 @@ const { commitments } = benefits;
     background: var(--card);
   }
 
+  .option-tag {
+    margin-bottom: 20px;
+  }
+
+  /* Review copies sit close under the one above. */
+  .benefits--open {
+    padding-bottom: 0;
+  }
+
+  .benefits--repeat {
+    padding-top: 56px;
+  }
+
   .benefit__visual {
+    position: relative;
     display: grid;
     place-items: center;
-    min-height: 300px;
-    padding: 36px clamp(20px, 4vw, 48px);
+    min-height: 340px;
+    padding: 40px clamp(20px, 4vw, 48px);
+    overflow: hidden;
     background: linear-gradient(180deg, var(--tint) 0%, var(--tint-2) 100%);
+    isolation: isolate;
+  }
+
+  .benefit__visual > :global(.bv) {
+    position: relative;
+    width: min(100%, 440px);
+  }
+
+  /* A. Photo: the stage is a real clinical scene, the illustration a white plate on it. */
+  .benefit__visual picture,
+  .benefit__visual img {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .benefits--photo .benefit__visual > :global(.bv) {
+    padding: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    border-radius: 22px;
+    background: rgba(255, 255, 255, 0.82);
+    box-shadow: 0 24px 48px -28px rgba(20, 52, 110, 0.6);
+  }
+
+  /* B. Lines: fine concentric rings fading outward, crossed by dashed guides. */
+  .benefits--lines .benefit__visual::before,
+  .benefits--lines .benefit__visual::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+  }
+
+  .benefits--lines .benefit__visual::before {
+    background:
+      repeating-radial-gradient(circle at 50% 50%, transparent 0 25px, rgba(255, 255, 255, 0.95) 25px 27px),
+      repeating-radial-gradient(circle at 50% 50%, transparent 0 51px, rgba(20, 52, 110, 0.07) 51px 52px);
+    -webkit-mask-image: radial-gradient(closest-side, #000 35%, transparent 100%);
+    mask-image: radial-gradient(closest-side, #000 35%, transparent 100%);
+  }
+
+  .benefits--lines .benefit__visual::after {
+    background:
+      repeating-linear-gradient(90deg, rgba(20, 52, 110, 0.2) 0 5px, transparent 5px 11px) center / 100% 1px no-repeat,
+      repeating-linear-gradient(180deg, rgba(20, 52, 110, 0.2) 0 5px, transparent 5px 11px) center / 1px 100% no-repeat;
+  }
+
+  /* C. Window: a larger app window runs off the right and bottom edges; the
+     illustration is the piece of it pulled forward. */
+  .benefits--window .benefit__visual {
+    padding: 76px 40px 40px 76px;
+    background: linear-gradient(160deg, var(--tint-2) 0%, var(--tint-3) 100%);
+  }
+
+  .benefits--window .benefit__visual::before,
+  .benefits--window .benefit__visual::after {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    left: 36px;
+    right: -2px;
+  }
+
+  .benefits--window .benefit__visual::before {
+    top: 36px;
+    bottom: -2px;
+    border: 1px solid #ffffff;
+    border-radius: var(--r-md) 0 0 0;
+    background:
+      radial-gradient(circle, rgba(20, 52, 110, 0.16) 1px, transparent 1.5px) 0 0 / 20px 20px,
+      rgba(255, 255, 255, 0.62);
+    box-shadow: -16px -16px 40px -28px rgba(20, 52, 110, 0.4);
+  }
+
+  .benefits--window .benefit__visual::after {
+    top: 37px;
+    height: 38px;
+    border-bottom: 1px solid var(--line);
+    border-radius: var(--r-md) 0 0 0;
+    background:
+      radial-gradient(circle at 22px 50%, var(--tint-4) 4.5px, transparent 5px),
+      radial-gradient(circle at 40px 50%, var(--tint-4) 4.5px, transparent 5px),
+      radial-gradient(circle at 58px 50%, var(--tint-4) 4.5px, transparent 5px),
+      rgba(255, 255, 255, 0.85);
   }
 
   .benefit__copy {

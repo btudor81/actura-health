@@ -1,82 +1,24 @@
 ---
 // Roles and credentials only. Names and photos stay off the public site.
-// REVIEW: three layouts are on the page so one can be chosen. Keep the winner,
-// delete the other two branches and the option tags.
-//   slider: heading on top, cards run off both viewport edges
-//   split:  heading and controls left, cards leave by the right edge
-//   roster: no slider, every role on one row
-import Carousel from './Carousel.astro';
+// A ruled list, every role on one row: chosen over two slider layouts (2026-10-12).
 import Icon from './Icon.astro';
 import { getHomepage } from '../lib/content';
 import { flag, headline } from '../lib/text';
 
-interface Props {
-  variant?: 'slider' | 'split' | 'roster';
-  /** Review label. Also marks every copy after the first, which must not repeat the #team anchor. */
-  option?: string;
-  anchor?: boolean;
-}
-
-const { variant = 'slider', option, anchor = true } = Astro.props;
 const { team } = await getHomepage();
-const titleId = `team-title-${variant}`;
-// Each copy needs its own region name while more than one is on the page.
-const sliderLabel = anchor ? 'Team roles' : `Team roles, ${variant} layout`;
 ---
 
-<section
-  id={anchor ? 'team' : undefined}
-  class:list={['section', 'team', `team--${variant}`]}
-  data-nav="light"
-  aria-labelledby={anchor ? titleId : undefined}
-  aria-label={anchor ? undefined : option}
->
-  {
-    variant === 'slider' && (
-      <>
-        <div class="wrap">
-          {option && <p class="option-tag">{option}</p>}
-          <div class="section__head">
-            <h2 id={titleId} set:html={headline(team.headline)} />
-            <p class="lead" set:html={flag(team.sub)} />
-          </div>
-        </div>
-        <div class="reveal">
-          <Carousel label={sliderLabel} bleed>
-            {team.members.map((member) => (
-              <li class="member">
-                <span class="tile">
-                  <Icon name={member.icon} />
-                </span>
-                <h3>{member.role}</h3>
-                <ul role="list" class="creds">
-                  {member.credentials.map((credential) => (
-                    <li>
-                      <span class="tick">
-                        <Icon name="check" size={14} stroke={2.5} />
-                      </span>
-                      <span set:html={flag(credential)} />
-                    </li>
-                  ))}
-                </ul>
-              </li>
-            ))}
-          </Carousel>
-        </div>
-      </>
-    )
-  }
+<section id="team" class="section team" data-nav="light" aria-labelledby="team-title">
+  <div class="wrap">
+    <div class="section__head">
+      <h2 id="team-title" set:html={headline(team.headline)} />
+      <p class="lead" set:html={flag(team.sub)} />
+    </div>
 
-  {
-    variant === 'split' && (
-      <Carousel label={sliderLabel} split>
-        <div slot="aside" class="section__head">
-          {option && <p class="option-tag">{option}</p>}
-          <h2 id={titleId} set:html={headline(team.headline)} />
-          <p class="lead" set:html={flag(team.sub)} />
-        </div>
-        {team.members.map((member) => (
-          <li class="member member--card">
+    <ul role="list" class="roster">
+      {
+        team.members.map((member, index) => (
+          <li class="reveal" style={`--i:${index % 3}`}>
             <span class="tile">
               <Icon name={member.icon} />
             </span>
@@ -92,52 +34,25 @@ const sliderLabel = anchor ? 'Team roles' : `Team roles, ${variant} layout`;
               ))}
             </ul>
           </li>
-        ))}
-      </Carousel>
-    )
-  }
-
-  {
-    variant === 'roster' && (
-      <div class="wrap">
-        {option && <p class="option-tag">{option}</p>}
-        <div class="section__head">
-          <h2 id={titleId} set:html={headline(team.headline)} />
-          <p class="lead" set:html={flag(team.sub)} />
-        </div>
-        <ul role="list" class="roster">
-          {team.members.map((member, index) => (
-            <li class="reveal" style={`--i:${index % 3}`}>
-              <span class="tile">
-                <Icon name={member.icon} />
-              </span>
-              <h3>{member.role}</h3>
-              <ul role="list" class="creds">
-                {member.credentials.map((credential) => (
-                  <li>
-                    <span class="tick">
-                      <Icon name="check" size={14} stroke={2.5} />
-                    </span>
-                    <span set:html={flag(credential)} />
-                  </li>
-                ))}
-              </ul>
-            </li>
-          ))}
-        </ul>
-      </div>
-    )
-  }
+        ))
+      }
+    </ul>
+  </div>
 </section>
 
 <style>
-  .option-tag {
-    margin-bottom: 20px;
+  .roster {
+    border-top: 1px solid var(--line);
   }
 
-  .section__head .option-tag {
-    justify-self: start;
-    margin-bottom: 0;
+  /* Role left, credentials right. */
+  .roster > li {
+    display: grid;
+    grid-template-columns: auto minmax(0, 4fr) minmax(0, 7fr);
+    align-items: center;
+    gap: 16px 24px;
+    padding-block: 24px;
+    border-bottom: 1px solid var(--line);
   }
 
   h3 {
@@ -146,8 +61,9 @@ const sliderLabel = anchor ? 'Team roles' : `Team roles, ${variant} layout`;
   }
 
   .creds {
-    display: grid;
-    gap: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 32px;
     color: var(--muted);
     line-height: 1.4;
   }
@@ -164,65 +80,13 @@ const sliderLabel = anchor ? 'Team roles' : `Team roles, ${variant} layout`;
     margin-top: 4px;
   }
 
-  /* Slider + split: one card per role. */
-  .member {
-    display: grid;
-    align-content: start;
-    gap: 16px;
-    width: clamp(280px, 27vw, 380px);
-    padding: clamp(24px, 2.6vw, 32px);
-    border: 1px solid var(--line);
-    border-radius: var(--r-md);
-    background: linear-gradient(180deg, var(--tint) 0%, var(--tint-2) 100%);
-    box-shadow: inset 0 1px 0 #ffffff;
-  }
-
-  /* Split: the section is a pale band, the cards are white. */
-  .team--split {
-    background: linear-gradient(180deg, var(--tint) 0%, var(--tint-2) 100%);
-  }
-
-  .member--card {
-    width: clamp(280px, 25vw, 340px);
-    min-height: 300px;
-    background: var(--card);
-    box-shadow: var(--shadow-card);
-  }
-
-  /* Roster: a ruled list, role left, credentials right. */
-  .roster {
-    border-top: 1px solid var(--line);
-  }
-
-  .roster > li {
-    display: grid;
-    grid-template-columns: auto minmax(0, 4fr) minmax(0, 7fr);
-    align-items: center;
-    gap: 16px 24px;
-    padding-block: 24px;
-    border-bottom: 1px solid var(--line);
-  }
-
-  .roster .creds {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px 32px;
-  }
-
   @media (max-width: 899px) {
     .roster > li {
       grid-template-columns: auto minmax(0, 1fr);
     }
 
-    .roster .creds {
+    .creds {
       grid-column: 2;
-    }
-  }
-
-  @media (max-width: 479px) {
-    .member,
-    .member--card {
-      width: 78vw;
     }
   }
 </style>

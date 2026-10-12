@@ -1,61 +1,22 @@
 ---
-// REVIEW: three backgrounds are on the page so one can be chosen. Keep the
-// winner, delete the other two branches, the `duplicate` prop and the option tag.
-//   gradient: soft top-to-bottom wash, with grain
-//   motion:   slow drifting color fields (still under reduced motion)
-//   arcs:     nested circles top and bottom, with grain
 import Arcs from './Arcs.astro';
 import CapabilityLink from './CapabilityLink.astro';
 import Icon from './Icon.astro';
 import { getHomepage, getSite } from '../lib/content';
 import { flag, headline } from '../lib/text';
 
-interface Props {
-  variant?: 'gradient' | 'motion' | 'arcs';
-  /** Review label shown in the corner. */
-  option?: string;
-  /** A repeat of the hero: its headline is not the page's h1. */
-  duplicate?: boolean;
-}
-
-const { variant = 'arcs', option, duplicate = false } = Astro.props;
 const { hero } = await getHomepage();
 const site = await getSite();
 const ctaHref = site.bookingUrl || '#contact';
-const Title = duplicate ? 'p' : 'h1';
-const titleId = duplicate ? `hero-title-${variant}` : 'hero-title';
 ---
 
-<section
-  class:list={['hero', `hero--${variant}`]}
-  data-nav="light"
-  aria-labelledby={duplicate ? undefined : titleId}
-  aria-label={duplicate ? option : undefined}
->
-  {
-    variant === 'arcs' && (
-      <>
-        <Arcs class="hero__arcs hero__arcs--top" flip />
-        <Arcs class="hero__arcs hero__arcs--bottom" />
-      </>
-    )
-  }
-  {
-    variant === 'motion' && (
-      <div class="hero__fields" aria-hidden="true">
-        <i />
-        <i />
-        <i />
-        <i />
-      </div>
-    )
-  }
-
-  {variant !== 'motion' && <div class="hero__grain" aria-hidden="true" />}
+<section class="hero" data-nav="light" aria-labelledby="hero-title">
+  <Arcs class="hero__arcs hero__arcs--top" flip />
+  <Arcs class="hero__arcs hero__arcs--bottom" />
 
   <div class="wrap hero__copy">
     <p class="eyebrow">{hero.eyebrow}</p>
-    <Title id={titleId} class="h1 hero__title" set:html={headline(hero.headline)} />
+    <h1 id="hero-title" set:html={headline(hero.headline)} />
     <p class="hero__sub" set:html={flag(hero.sub)} />
     <div class="hero__cta">
       <a class="btn btn--primary" href={ctaHref} data-event="booking_click">{site.primaryCta}</a>
@@ -76,7 +37,6 @@ const titleId = duplicate ? `hero-title-${variant}` : 'hero-title';
         ))
       }
     </ul>
-    {option && <p class="option-tag">{option}</p>}
   </div>
 </section>
 
@@ -92,121 +52,7 @@ const titleId = duplicate ? `hero-title-${variant}` : 'hero-title';
     background: var(--tint);
   }
 
-  /* A: one soft wash, sky at the top, clearing to the white page below. */
-  .hero--gradient {
-    background: linear-gradient(180deg, var(--tint-3) 0%, var(--tint-2) 30%, var(--tint) 64%, var(--surface) 100%);
-  }
-
-  /* B: four soft color fields that drift and breathe, fading to white at the foot. */
-  .hero--motion {
-    background: var(--surface);
-  }
-
-  .hero__fields {
-    position: absolute;
-    inset: 0;
-    -webkit-mask-image: linear-gradient(180deg, #000 55%, transparent 100%);
-    mask-image: linear-gradient(180deg, #000 55%, transparent 100%);
-  }
-
-  .hero__fields i {
-    position: absolute;
-    border-radius: 50%;
-    will-change: transform;
-  }
-
-  .hero__fields i:nth-child(1) {
-    top: -38%;
-    left: -12%;
-    width: 68%;
-    aspect-ratio: 1;
-    background: radial-gradient(closest-side, var(--tint-4) 0%, rgba(192, 217, 248, 0) 100%);
-  }
-
-  .hero__fields i:nth-child(2) {
-    top: -30%;
-    right: -16%;
-    width: 62%;
-    aspect-ratio: 1;
-    background: radial-gradient(closest-side, #b9c9f7 0%, rgba(185, 201, 247, 0) 100%);
-    opacity: 0.8;
-  }
-
-  .hero__fields i:nth-child(3) {
-    top: 18%;
-    left: 22%;
-    width: 56%;
-    aspect-ratio: 1.3;
-    background: radial-gradient(closest-side, var(--tint-3) 0%, rgba(211, 229, 251, 0) 100%);
-  }
-
-  .hero__fields i:nth-child(4) {
-    top: 30%;
-    right: 4%;
-    width: 40%;
-    aspect-ratio: 1;
-    background: radial-gradient(closest-side, #cfeaf8 0%, rgba(207, 234, 248, 0) 100%);
-    opacity: 0.9;
-  }
-
-  @media (prefers-reduced-motion: no-preference) {
-    .hero__fields i:nth-child(1) {
-      animation: drift-a 22s ease-in-out infinite alternate;
-    }
-
-    .hero__fields i:nth-child(2) {
-      animation: drift-b 26s ease-in-out infinite alternate;
-    }
-
-    .hero__fields i:nth-child(3) {
-      animation: drift-c 30s ease-in-out infinite alternate;
-    }
-
-    .hero__fields i:nth-child(4) {
-      animation: drift-a 19s ease-in-out infinite alternate-reverse;
-    }
-
-    @keyframes drift-a {
-      from {
-        transform: translate3d(0, 0, 0) scale(1);
-      }
-      to {
-        transform: translate3d(22%, 14%, 0) scale(1.18);
-      }
-    }
-
-    @keyframes drift-b {
-      from {
-        transform: translate3d(0, 0, 0) scale(1.1);
-      }
-      to {
-        transform: translate3d(-26%, 18%, 0) scale(0.9);
-      }
-    }
-
-    @keyframes drift-c {
-      from {
-        transform: translate3d(-18%, 6%, 0) scale(0.92);
-      }
-      to {
-        transform: translate3d(20%, -12%, 0) scale(1.15);
-      }
-    }
-  }
-
-  /* A + C: paper grain over the color, so the soft fields do not read as flat fills.
-     Two speckle layers, ink and white, so the surface roughens without getting darker. */
-  .hero__grain {
-    position: absolute;
-    inset: 0;
-    background-image:
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' seed='11' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 1.3 0 0 0 -0.48'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' seed='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.08 0 0 0 0 0.2 0 0 0 0 0.43 0.8 0 0 0 -0.3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    background-size: 240px 240px;
-    pointer-events: none;
-  }
-
-  /* C: arcs stay a whisper behind the copy. */
+  /* Arcs stay a whisper behind the copy. No grain or other texture on top (rejected). */
   .hero :global(.hero__arcs) {
     position: absolute;
     left: 0;
@@ -260,13 +106,7 @@ const titleId = duplicate ? `hero-title-${variant}` : 'hero-title';
     padding-bottom: clamp(32px, 4vw, 56px);
   }
 
-  .hero__foot .option-tag {
-    position: absolute;
-    bottom: 16px;
-    left: 0;
-  }
-
-  /* Three promises on a glass bar. */
+  /* Three promises on a glass bar, sitting on the arcs. */
   .hero__chips {
     display: flex;
     flex-wrap: wrap;
@@ -279,14 +119,6 @@ const titleId = duplicate ? `hero-title-${variant}` : 'hero-title';
     -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
     box-shadow: var(--shadow-float);
-  }
-
-  /* On the pale foot of A and B the glass needs its own outline. */
-  .hero--gradient .hero__chips,
-  .hero--motion .hero__chips {
-    box-shadow:
-      0 0 0 1px var(--line),
-      var(--shadow-float);
   }
 
   .hero__chips li {
@@ -303,20 +135,8 @@ const titleId = duplicate ? `hero-title-${variant}` : 'hero-title';
   }
 
   @media (min-width: 1024px) {
-    .hero__title :global(.row) {
+    h1 :global(.row) {
       white-space: nowrap;
-    }
-  }
-
-  @media (max-width: 1023px) {
-    .hero__foot {
-      flex-direction: column;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .hero__foot .option-tag {
-      position: static;
     }
   }
 
