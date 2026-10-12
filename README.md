@@ -26,7 +26,9 @@ Node 22.12 or newer.
 | `src/styles/tokens.css` | Colors, type scale, spacing, radii. Contrast ratio noted beside every text color |
 | `src/styles/global.css` | Base styles, buttons, focus ring, reveal on scroll |
 | `src/layouts/Base.astro` | Head tags, SEO, JSON-LD, nav, footer |
-| `src/components/` | One file per homepage section, plus `Icon`, `Scorecard`, `CapabilityLink` |
+| `src/components/` | One file per homepage section, plus `Icon`, `Scorecard` (sample monitoring summary), `Carousel` (Services + Team rows), `CapabilityLink` |
+| `public/files/` | Capability statement PDF |
+| `public/img/service-[slug].*` | One photo per service card (880x1100, webp + jpg) |
 | `PRODUCT.md` | Audience, purpose, brand personality, design principles |
 
 ## Content rules
@@ -41,8 +43,9 @@ Node 22.12 or newer.
 Set in `src/content/seed/site.json`:
 
 - `bookingUrl`: Google appointment schedule link. Empty = "Book a conversation" scrolls to the contact form.
-- `capabilityStatementUrl`: PDF. Empty = the download button shows a "Pending" chip and is not clickable.
 - `linkedinUrl`: empty = LinkedIn links are hidden.
+
+Set already: `capabilityStatementUrl` = `/files/actura-health-capability-statement.pdf` (v6, supplied 2026-10-12). To replace it, overwrite that file. `/capability-statement` redirects to it on Netlify. Empty value = the button shows a "Pending" chip and is not clickable.
 
 Logo: `public/img/logo-mark*.png` are cropped from the lockup on the current live site. Replace with the official files when supplied.
 
@@ -70,7 +73,8 @@ Light, airy style: white page, pale blue tint panels (`--tint`, `--tint-2`, `--t
 - Buttons are lit from above: inner highlight on the top edge, inner shade on the bottom edge, short tinted drop shadow. `.btn--primary` is a soft navy gradient, `.btn--ghost` is the flat grey secondary.
 - `.panel` is the pale rounded container, `.panel--rings` adds the soft concentric texture (scorecard panel only), `.mock` is the white card that reads as a piece of interface or a document.
 - Custom visuals: `Arcs.astro` (hero top and bottom, footer), `Scorecard.astro` (sample monitoring summary), the readiness checklist in the Accreditation panel, the commitments card.
-- One photo: `public/img/photo-about.*`, Unsplash `photo-1758691462814-485c3672e447` (free license), desaturated and cooled with PIL.
+- About photo: `public/img/photo-about.*`, Unsplash `photo-1758691462814-485c3672e447` (free license), desaturated and cooled with PIL.
+- Service card photos: `public/img/service-[slug].*`, Pexels (free license), cropped 4:5 and lightly cooled with PIL. One photo per service, never reused. Pexels IDs: quality-assurance 7578799, continuous-quality-improvement 5452193, contract-performance-monitoring 5327916, behavioral-health 14797769, ncchc-accreditation 6129111, rfp-procurement 8470836, medicaid-1115-calaim 7579831, ehr-advisory 8376152, interim-leadership 6129507. Source URL: `https://images.pexels.com/photos/<id>/pexels-photo-<id>.jpeg`.
 
 ## Nav
 

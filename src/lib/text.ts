@@ -29,6 +29,15 @@ export function headline(value: string): string {
     .join(' <br class="br-d">');
 }
 
+// Short labels store a fixed break as "\n", so a row of them sets on the same
+// number of lines.
+export function rows(value: string): string {
+  return value
+    .split('\n')
+    .map((line) => flag(line.trim()))
+    .join(' <br>');
+}
+
 export function plain(value: string): string {
   return value.replace(/\s*\n\s*/g, ' ');
 }

@@ -55,7 +55,23 @@
           "review": "not-met"
         }
       ],
-      "footnote": "Illustrative example. Not client data."
+      "views": {
+        "vendor": {
+          "label": "Vendor report",
+          "source": "Vendor self-report",
+          "sourceNote": "Its data, its definitions",
+          "status": "Self-reported",
+          "caption": "By the vendor's own count"
+        },
+        "review": {
+          "label": "Independent review",
+          "source": "Your own records",
+          "sourceNote": "Monthly record review",
+          "status": "Independent",
+          "caption": "Against your own records"
+        }
+      },
+      "measure": "Indicators confirmed"
     }
   },
   "trust": {
@@ -63,23 +79,23 @@
     "items": [
       {
         "icon": "clipboard-check",
-        "text": "Active NCCHC surveyor"
+        "text": "Active NCCHC\nsurveyor"
       },
       {
         "icon": "certificate",
-        "text": "Certified Correctional Health Professionals (CCHP)"
+        "text": "CCHP-certified\nadvisors"
       },
       {
         "icon": "stethoscope",
-        "text": "Former CCHCS Deputy Medical Executive"
+        "text": "Former CCHCS Deputy\nMedical Executive"
       },
       {
         "icon": "building-skyscraper",
-        "text": "Hospital C-suite leadership"
+        "text": "Hospital C-suite\nleadership"
       },
       {
         "icon": "presentation",
-        "text": "Returning NCCHC conference presenters"
+        "text": "Returning NCCHC\nconference presenters"
       }
     ]
   },
@@ -158,12 +174,7 @@
             "slug": "ncchc-accreditation-readiness",
             "icon": "award",
             "title": "NCCHC accreditation readiness",
-            "text": "Everything in order before the surveyors arrive.",
-            "points": [
-              "Gap analysis",
-              "Mock surveys",
-              "Policy and procedure review"
-            ]
+            "text": "Gap analysis, mock surveys and policy review, so everything is in order before the surveyors arrive."
           }
         ]
       },
@@ -304,29 +315,24 @@
           "Reporting design"
         ]
       }
-    ],
-    "note": "We introduce the team by name once we are in conversation."
+    ]
   },
   "about": {
     "eyebrow": "About Actura Health",
     "headline": "Where accountability meets action\nin correctional healthcare",
     "body": [
-      "People in custody are owed constitutional-level care, and the agencies responsible for them need an objective way to know whether they are getting it. Actura Health exists to provide that.",
-      "We are the independent layer between the jail or prison and its healthcare vendor. We do not deliver medical care, so we never audit a competitor or ourselves. We bring NCCHC-level clinical expertise together with health system operations and EHR experience, with particular depth in California: Title 15 and CalAIM Justice-Involved."
+      "People in custody are owed constitutional-level care, and the agencies responsible for them need an objective way to know whether they are getting it. We are the independent layer between the jail or prison and its healthcare vendor."
     ],
     "values": [
       {
-        "icon": "scale",
         "title": "Independent",
         "text": "No care, staffing or software revenue from the companies we review."
       },
       {
-        "icon": "rosette-discount-check",
         "title": "Credible",
         "text": "Findings come from surveyors, physicians and executives who have held the roles."
       },
       {
-        "icon": "users",
         "title": "Collaborative",
         "text": "We work alongside custody staff, health staff and your vendor to fix what the data shows."
       }
@@ -341,8 +347,7 @@
       "agency": "Agency or organization",
       "email": "Work email",
       "message": "How can we help?",
-      "submit": "Send message",
-      "note": "Your message goes to connect@acturahealth.com."
+      "submit": "Send message"
     }
   }
 }

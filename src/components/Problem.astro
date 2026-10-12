@@ -37,7 +37,7 @@ const { problem } = await getHomepage();
       </p>
     </div>
 
-    <div class="panel panel--rings problem__visual">
+    <div class="problem__visual">
       <Scorecard />
     </div>
   </div>
@@ -54,7 +54,6 @@ const { problem } = await getHomepage();
   .problem__visual {
     position: sticky;
     top: calc(var(--nav-h) + 56px);
-    padding: clamp(20px, 3vw, 40px) clamp(20px, 3vw, 40px) clamp(16px, 2vw, 24px);
   }
 
   li {
@@ -99,10 +98,8 @@ const { problem } = await getHomepage();
       grid-template-columns: 1fr;
     }
 
-    /* relative, not static: the panel's ring texture is positioned against it */
     .problem__visual {
-      position: relative;
-      top: auto;
+      position: static;
     }
   }
 

@@ -1,6 +1,6 @@
 ---
-// "Download capability statement" button. Until the client supplies the PDF it
-// renders as a flagged, non-clickable state so a dead link cannot ship.
+// "Download capability statement" button: saves the PDF from public/files.
+// With no file set it renders as a flagged, non-clickable state so a dead link cannot ship.
 import Icon from './Icon.astro';
 import { getSite } from '../lib/content';
 
@@ -10,7 +10,7 @@ const url = site.capabilityStatementUrl;
 
 {
   url ? (
-    <a class="btn btn--ghost" href="/capability-statement" data-event="capability_download">
+    <a class="btn btn--ghost" href={url} download="Actura-Health-Capability-Statement.pdf" data-event="capability_download">
       <Icon name="download" size={22} />
       {site.secondaryCta}
     </a>

@@ -1,0 +1,187 @@
+---
+// Horizontal card row. Without JS it is a plain scrollable list with a native
+// scrollbar; with JS it gains arrow buttons and a progress bar.
+// The parent passes the <li> slides and sets their width.
+import Icon from './Icon.astro';
+
+interface Props {
+  /** Names the scrollable region for assistive tech, e.g. "Services". */
+  label: string;
+  /** Run the row out to the viewport edges instead of clipping it at the wrap. */
+  bleed?: boolean;
+}
+
+const { label, bleed = false } = Astro.props;
+---
+
+<div class:list={['carousel', { 'carousel--bleed': bleed }]} data-carousel>
+  <div class="carousel__view" tabindex="0" role="region" aria-label={`${label}, scrollable`}>
+    <ul role="list" class="carousel__track">
+      <slot />
+    </ul>
+  </div>
+
+  <div class:list={['carousel__bar', { wrap: bleed }]}>
+    <div class="carousel__progress" aria-hidden="true"><span></span></div>
+    <div class="carousel__nav">
+      <button type="button" class="carousel__btn" data-dir="-1" aria-label={`Previous ${label.toLowerCase()}`}>
+        <Icon name="arrow-left" size={22} />
+      </button>
+      <button type="button" class="carousel__btn" data-dir="1" aria-label={`Next ${label.toLowerCase()}`}>
+        <Icon name="arrow-right" size={22} />
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const calm = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  document.querySelectorAll<HTMLElement>('[data-carousel]').forEach((root) => {
+    const view = root.querySelector<HTMLElement>('.carousel__view');
+    const track = root.querySelector<HTMLElement>('.carousel__track');
+    const thumb = root.querySelector<HTMLElement>('.carousel__progress span');
+    const buttons = root.querySelectorAll<HTMLButtonElement>('.carousel__btn');
+    if (!view || !track || !thumb) return;
+
+    const step = () => {
+      const slide = track.firstElementChild;
+      if (!slide) return view.clientWidth;
+      return slide.getBoundingClientRect().width + (parseFloat(getComputedStyle(track).columnGap) || 0);
+    };
+
+    const update = () => {
+      const max = view.scrollWidth - view.clientWidth;
+      const share = view.clientWidth / view.scrollWidth;
+      const done = max > 0 ? view.scrollLeft / max : 0;
+      thumb.style.width = `${share * 100}%`;
+      thumb.style.transform = `translateX(${done * (1 / share - 1) * 100}%)`;
+      root.classList.toggle('is-static', max <= 1);
+      buttons.forEach((button) => {
+        const back = button.dataset.dir === '-1';
+        const end = back ? view.scrollLeft <= 1 : view.scrollLeft >= max - 1;
+        button.setAttribute('aria-disabled', String(end));
+      });
+    };
+
+    buttons.forEach((button) => {
+      button.addEventListener('click', () => {
+        if (button.getAttribute('aria-disabled') === 'true') return;
+        view.scrollBy({ left: Number(button.dataset.dir) * step(), behavior: calm.matches ? 'auto' : 'smooth' });
+      });
+    });
+
+    view.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  });
+</script>
+
+<style>
+  .carousel__view {
+    /* Room for card shadows and the focus ring inside the scroll box. */
+    margin-block: -12px;
+    padding-block: 12px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .carousel__view:focus-visible {
+    outline-offset: -3px;
+    border-radius: var(--r-md);
+  }
+
+  .carousel__track {
+    display: flex;
+    gap: 20px;
+  }
+
+  .carousel__track > :global(li) {
+    flex: none;
+    scroll-snap-align: start;
+  }
+
+  /* Bleed: the first card lines up with the wrap, the row runs off both edges. */
+  .carousel--bleed .carousel__view {
+    scroll-padding-inline: max(var(--gutter), calc((100% - var(--maxw)) / 2));
+  }
+
+  .carousel--bleed .carousel__track {
+    width: max-content;
+    padding-inline: max(var(--gutter), calc((100% - var(--maxw)) / 2));
+  }
+
+  .carousel__bar {
+    display: none;
+    align-items: center;
+    gap: 32px;
+    margin-top: 28px;
+  }
+
+  :global(html.js) .carousel__bar {
+    display: flex;
+  }
+
+  :global(html.js) .carousel.is-static .carousel__bar {
+    display: none;
+  }
+
+  :global(html.js) .carousel__view {
+    scrollbar-width: none;
+  }
+
+  :global(html.js) .carousel__view::-webkit-scrollbar {
+    display: none;
+  }
+
+  .carousel__progress {
+    flex: 1;
+    height: 3px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: var(--tint-3);
+  }
+
+  .carousel__progress span {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+    background: var(--navy);
+  }
+
+  .carousel__nav {
+    display: flex;
+    gap: 8px;
+  }
+
+  .carousel__btn {
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    border: 0;
+    border-radius: var(--r-sm);
+    background: var(--grey);
+    color: var(--ink);
+    cursor: pointer;
+    transition:
+      background-color 0.2s var(--ease),
+      opacity 0.2s var(--ease);
+  }
+
+  .carousel__btn:hover {
+    background: var(--grey-hover);
+  }
+
+  .carousel__btn[aria-disabled='true'] {
+    opacity: 0.4;
+    cursor: default;
+  }
+
+  .carousel__btn[aria-disabled='true']:hover {
+    background: var(--grey);
+  }
+</style>

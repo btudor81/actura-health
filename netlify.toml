@@ -5,6 +5,12 @@
 [build.environment]
   NODE_VERSION = "22"
 
+# Stable public address for the capability statement PDF.
+[[redirects]]
+  from = "/capability-statement"
+  to = "/files/actura-health-capability-statement.pdf"
+  status = 302
+
 # Preview stage: keep every response out of search. Remove this block at launch
 # and set PUBLIC_INDEXABLE=true in the Netlify environment.
 [[headers]]

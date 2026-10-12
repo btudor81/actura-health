@@ -47,7 +47,9 @@ const { commitments } = benefits;
                 <h4>{item.title}</h4>
                 <p set:html={flag(item.text)} />
               </div>
-              <Icon name="check" size={22} stroke={2} class="commit__check" />
+              <span class="tick commit__check">
+                <Icon name="check" size={16} stroke={2.5} />
+              </span>
             </li>
           ))
         }
@@ -143,9 +145,8 @@ const { commitments } = benefits;
     color: var(--muted);
   }
 
-  .commit__list :global(.commit__check) {
+  .commit__check {
     margin-top: 4px;
-    color: var(--navy);
   }
 
   @media (max-width: 1099px) {
@@ -170,7 +171,7 @@ const { commitments } = benefits;
       gap: 16px;
     }
 
-    .commit__list :global(.commit__check) {
+    .commit__check {
       display: none;
     }
   }

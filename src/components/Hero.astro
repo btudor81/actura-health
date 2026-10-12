@@ -52,9 +52,11 @@ const ctaHref = site.bookingUrl || '#contact';
     background: var(--tint);
   }
 
+  /* Arcs stay a whisper behind the copy. */
   .hero :global(.hero__arcs) {
     position: absolute;
     left: 0;
+    opacity: 0.4;
   }
 
   /* Shallower at the top so the arcs sit behind the nav, not behind the headline. */

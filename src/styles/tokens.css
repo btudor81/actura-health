@@ -5,7 +5,9 @@
   --navy-soft: #23189a; /* top of the button gradient: 12.6 with white text */
   --navy-base: #150a7a; /* bottom of the button gradient */
   --navy-deep: #0a0047;
-  /* Brand gold lives in the logo only. At 2.3:1 on white it cannot carry text or controls. */
+  /* Brand gold: icon glyphs, tick discs and data marks. At 2.3:1 on white it never
+     carries text or a control on its own; navy on gold is 7.6:1. */
+  --gold: #d89b00;
 
   /* Surfaces: white page, pale blue tints for panels, arcs and tiles */
   --surface: #ffffff;

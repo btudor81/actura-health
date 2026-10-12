@@ -1,5 +1,6 @@
 ---
 // Roles and credentials only. Names and photos stay off the public site.
+import Carousel from './Carousel.astro';
 import Icon from './Icon.astro';
 import { getHomepage } from '../lib/content';
 import { flag, headline } from '../lib/text';
@@ -14,39 +15,37 @@ const { team } = await getHomepage();
       <p class="lead" set:html={flag(team.sub)} />
     </div>
 
-    <ul role="list" class="team__grid">
-      {
-        team.members.map((member, index) => (
-          <li class="reveal" style={`--i:${index % 3}`}>
-            <span class="tile">
-              <Icon name={member.icon} />
-            </span>
-            <h3>{member.role}</h3>
-            <ul role="list" class="team__creds">
-              {member.credentials.map((credential) => (
-                <li>
-                  <Icon name="check" size={20} stroke={2} />
-                  <span set:html={flag(credential)} />
-                </li>
-              ))}
-            </ul>
-          </li>
-        ))
-      }
-    </ul>
-
-    <p class="team__note small" set:html={flag(team.note)} />
+    <div class="reveal">
+      <Carousel label="Team roles">
+        {
+          team.members.map((member) => (
+            <li class="member">
+              <span class="tile">
+                <Icon name={member.icon} />
+              </span>
+              <h3>{member.role}</h3>
+              <ul role="list" class="team__creds">
+                {member.credentials.map((credential) => (
+                  <li>
+                    <span class="tick">
+                      <Icon name="check" size={14} stroke={2.5} />
+                    </span>
+                    <span set:html={flag(credential)} />
+                  </li>
+                ))}
+              </ul>
+            </li>
+          ))
+        }
+      </Carousel>
+    </div>
   </div>
 </section>
 
 <style>
-  .team__grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 20px;
-  }
-
-  .team__grid > li {
+  /* Three roles in view, the rest one arrow away. */
+  .member {
+    width: calc((100% - 40px) / 3);
     display: grid;
     align-content: start;
     gap: 16px;
@@ -75,25 +74,21 @@ const { team } = await getHomepage();
     gap: 10px;
   }
 
-  .team__creds :global(.icon) {
+  .team__creds .tick {
+    width: 20px;
+    height: 20px;
     margin-top: 4px;
-    color: var(--ink);
-  }
-
-  .team__note {
-    margin-top: 28px;
-    color: var(--muted);
   }
 
   @media (max-width: 1023px) {
-    .team__grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+    .member {
+      width: calc((100% - 20px) / 2);
     }
   }
 
   @media (max-width: 699px) {
-    .team__grid {
-      grid-template-columns: 1fr;
+    .member {
+      width: 86%;
     }
   }
 </style>

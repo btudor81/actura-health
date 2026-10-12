@@ -1,18 +1,17 @@
 ---
-// Nine services in four clusters. Stage 1: items are plain blocks. Once the
-// service pages exist each item becomes a link to /services/[slug].
+// Nine services as photo cards in one row. Stage 1: cards are plain blocks.
+// Once the service pages exist each card becomes a link to /services/[slug].
+// Photos: public/img/service-[slug].{webp,jpg}, one per service, never reused.
 import CapabilityLink from './CapabilityLink.astro';
+import Carousel from './Carousel.astro';
 import Icon from './Icon.astro';
 import { getHomepage } from '../lib/content';
 import { flag, headline } from '../lib/text';
 
 const { services } = await getHomepage();
-const TILE: Record<string, string> = {
-  oversight: '',
-  accreditation: '',
-  procurement: '',
-  systems: '',
-};
+const cards = services.clusters.flatMap((cluster, clusterIndex) =>
+  cluster.items.map((item) => ({ ...item, cluster: cluster.title, clusterIndex })),
+);
 ---
 
 <section id="services" class="section services" data-nav="light" aria-labelledby="services-title">
@@ -23,43 +22,41 @@ const TILE: Record<string, string> = {
       <p class="lead" set:html={flag(services.sub)} />
       <CapabilityLink />
     </div>
+  </div>
 
-    <div class="services__grid">
+  <div class="reveal">
+    <Carousel label="Services" bleed>
       {
-        services.clusters.map((cluster, index) => (
-          <section
-            class:list={['panel', 'cluster', `cluster--${cluster.key}`, 'reveal']}
-            style={`--i:${index}`}
-            aria-labelledby={`cluster-${cluster.key}`}
-          >
-            <h3 id={`cluster-${cluster.key}`}>{cluster.title}</h3>
-            <ul role="list">
-              {cluster.items.map((item) => (
-                <li>
-                  <span class={`tile ${TILE[cluster.key]}`}>
-                    <Icon name={item.icon} />
-                  </span>
-                  <div>
-                    <h4>{item.title}</h4>
-                    <p set:html={flag(item.text)} />
-                  </div>
-                  {'points' in item && (
-                    <ul role="list" class="mock points">
-                      {item.points.map((point) => (
-                        <li>
-                          <Icon name="check" size={22} stroke={2} />
-                          {point}
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </li>
-              ))}
-            </ul>
-          </section>
+        cards.map((card) => (
+          <li class="svc">
+            <picture>
+              <source srcset={`/img/service-${card.slug}.webp`} type="image/webp" />
+              <img
+                src={`/img/service-${card.slug}.jpg`}
+                alt=""
+                width="880"
+                height="1100"
+                loading="lazy"
+                decoding="async"
+              />
+            </picture>
+            <span class="tile svc__icon">
+              <Icon name={card.icon} />
+            </span>
+            <div class="svc__body">
+              <p class="svc__meta">
+                {card.cluster}
+                <span class="svc__dashes" aria-hidden="true">
+                  {services.clusters.map((_, index) => <i class:list={{ 'is-on': index === card.clusterIndex }} />)}
+                </span>
+              </p>
+              <h3>{card.title}</h3>
+              <p class="svc__text" set:html={flag(card.text)} />
+            </div>
+          </li>
         ))
       }
-    </div>
+    </Carousel>
   </div>
 </section>
 
@@ -68,111 +65,110 @@ const TILE: Record<string, string> = {
     margin-top: 8px;
   }
 
-  .services__grid {
-    display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    gap: 20px;
-  }
-
-  .cluster {
-    padding: clamp(24px, 3vw, 40px);
-  }
-
-  .cluster h3 {
-    padding-bottom: 20px;
-    border-bottom: 1px solid var(--line);
-  }
-
-  .cluster ul {
-    display: grid;
-    gap: 36px 40px;
-    margin-top: 28px;
-  }
-
-  .cluster ul > li {
-    display: grid;
-    align-content: start;
-    gap: 18px;
-  }
-
-  .cluster h4 + p {
-    margin-top: 10px;
-    color: var(--muted);
-  }
-
-  .cluster--oversight {
-    grid-column: span 8;
-  }
-
-  .cluster--oversight ul {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .cluster--accreditation {
+  .svc {
+    position: relative;
     display: flex;
-    flex-direction: column;
-    grid-column: span 4;
-    background: linear-gradient(180deg, var(--tint-2) 0%, var(--tint-3) 100%);
+    align-items: flex-end;
+    width: clamp(280px, 78vw, 400px);
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    border-radius: var(--r-md);
+    background: var(--tint-3);
+    color: #ffffff;
+    isolation: isolate;
   }
 
-  .cluster--accreditation > ul {
-    flex: 1;
+  .svc picture,
+  .svc img {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 
-  .cluster--accreditation > ul > li {
-    grid-template-rows: auto auto 1fr;
+  /* Near-black blue scrim under the copy. Holds white text at 4.5:1 even on a white photo. */
+  .svc::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(
+      180deg,
+      rgba(13, 15, 38, 0) 30%,
+      rgba(13, 15, 38, 0.72) 57%,
+      rgba(13, 15, 38, 0.92) 100%
+    );
   }
 
-  /* The readiness checklist, drawn as a small document card. */
-  .cluster .points {
-    align-self: end;
-    gap: 0;
-    margin-top: 12px;
-    padding: 4px 20px;
+  .svc__icon {
+    position: absolute;
+    top: 16px;
+    left: 16px;
   }
 
-  .cluster .points li {
+  .svc__body {
+    width: 100%;
+    padding: 24px;
+  }
+
+  .svc__meta {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding-block: 16px;
-    border-top: 1px solid var(--line);
-    color: var(--ink);
+    justify-content: space-between;
+    gap: 16px;
+    color: rgba(255, 255, 255, 0.82);
+    font-size: var(--fs-small);
+    line-height: 1.4;
   }
 
-  .cluster .points li:first-child {
-    border-top: 0;
+  /* One dash per service group, the card's own group lit in gold. */
+  .svc__dashes {
+    display: flex;
+    gap: 5px;
   }
 
-  .points :global(.icon) {
-    flex: none;
-    color: var(--navy);
+  .svc__dashes i {
+    width: 12px;
+    height: 3px;
+    border-radius: 2px;
+    background: rgba(255, 255, 255, 0.4);
   }
 
-  .cluster--procurement,
-  .cluster--systems {
-    grid-column: span 6;
+  .svc__dashes i.is-on {
+    background: var(--gold);
   }
 
-  .cluster--procurement ul > li,
-  .cluster--systems ul > li {
-    grid-template-columns: auto 1fr;
-    gap: 20px;
+  /* Two title rows and three text rows reserved, so the rule sits level on every card. */
+  .svc h3 {
+    display: flex;
+    align-items: flex-end;
+    min-height: 2.5em;
+    margin-top: 10px;
+    color: #ffffff;
+    font-size: var(--fs-h4);
+    line-height: 1.25;
   }
 
-  @media (max-width: 1023px) {
-    .cluster--oversight,
-    .cluster--accreditation,
-    .cluster--procurement,
-    .cluster--systems {
-      grid-column: 1 / -1;
+  .svc__text {
+    min-height: 4.5em;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.24);
+    box-sizing: content-box;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: var(--fs-small);
+    line-height: 1.5;
+  }
+
+  @media (max-width: 479px) {
+    .svc {
+      aspect-ratio: 3 / 4;
     }
-  }
 
-  @media (max-width: 699px) {
-    .cluster--oversight ul {
-      grid-template-columns: 1fr;
+    .svc__body {
+      padding: 20px;
     }
-
   }
 </style>

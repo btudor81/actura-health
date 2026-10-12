@@ -20,6 +20,13 @@ html {
   scroll-padding-top: calc(var(--nav-h) + 40px);
 }
 
+/* In-page links (nav, "Book a conversation") glide to their section. */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
 body {
   margin: 0;
   background: var(--surface);
@@ -222,7 +229,7 @@ a {
   }
 }
 
-/* Icon tile: white, softly raised, one style everywhere. */
+/* Icon tile: white, softly raised, one style everywhere. The glyph carries the brand gold. */
 .tile {
   display: grid;
   place-items: center;
@@ -233,6 +240,18 @@ a {
   border-radius: var(--r-sm);
   background: var(--card);
   box-shadow: var(--shadow-tile);
+  color: var(--gold);
+}
+
+/* Tick: gold disc, navy check. Marks a benefit, a credential or a commitment. */
+.tick {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--gold);
   color: var(--navy);
 }
 
@@ -248,21 +267,6 @@ a {
 
 .panel > * {
   position: relative;
-}
-
-/* Soft concentric rings, as a quiet texture behind a visual. */
-.panel--rings::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: repeating-radial-gradient(
-    circle at 50% 50%,
-    rgba(255, 255, 255, 0) 0,
-    rgba(255, 255, 255, 0) 70px,
-    rgba(255, 255, 255, 0.6) 120px,
-    rgba(255, 255, 255, 0) 170px
-  );
-  pointer-events: none;
 }
 
 /* White card that reads as a piece of interface or a document. */
