@@ -1,11 +1,9 @@
 ---
 import Arcs from './Arcs.astro';
 import Icon from './Icon.astro';
-import { getHomepage, getSite } from '../lib/content';
+import { getSite } from '../lib/content';
 
 const site = await getSite();
-const home = await getHomepage();
-const services = home.services.clusters.flatMap((cluster) => cluster.items);
 const year = new Date().getFullYear();
 ---
 
@@ -25,13 +23,6 @@ const year = new Date().getFullYear();
         {site.nav.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
       </ul>
     </nav>
-
-    <div>
-      <p class="footer__label">Services</p>
-      <ul role="list" class="footer__services">
-        {services.map((service) => <li>{service.title}</li>)}
-      </ul>
-    </div>
 
     <div>
       <p class="footer__label">Contact</p>
@@ -76,8 +67,8 @@ const year = new Date().getFullYear();
 
   .footer__grid {
     display: grid;
-    grid-template-columns: 1.2fr 0.6fr 1.3fr auto;
-    gap: 48px;
+    grid-template-columns: 1fr auto auto;
+    gap: 48px clamp(48px, 8vw, 120px);
   }
 
   /* The wordmark repeats the logo, which is set in Outfit SemiBold. */
@@ -126,12 +117,6 @@ const year = new Date().getFullYear();
     color: var(--ink);
     text-decoration: underline;
     text-underline-offset: 4px;
-  }
-
-  .footer .footer__services {
-    gap: 10px;
-    font-size: var(--fs-small);
-    line-height: 1.5;
   }
 
   .footer__icon-link {

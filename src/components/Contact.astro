@@ -31,11 +31,14 @@ const { form } = contact;
         <p class="contact__friction" set:html={flag(contact.friction)} />
 
         <ul role="list" class="contact__direct">
-          <li>
-            <a href={`mailto:${site.contactEmail}`}>
-              <Icon name="mail" size={24} />
-              {site.contactEmail}
-            </a>
+          <li class="contact__email">
+            <Icon name="mail" size={24} />
+            <span>{site.contactEmail}</span>
+            <button type="button" class="copy" data-copy={site.contactEmail} aria-label="Copy email address">
+              <Icon name="copy" size={20} class="copy__idle" />
+              <Icon name="check" size={20} stroke={2} class="copy__done" />
+            </button>
+            <span class="visually-hidden" role="status"></span>
           </li>
           {
             site.linkedinUrl && (
@@ -86,6 +89,28 @@ const { form } = contact;
     </div>
   </div>
 </section>
+
+<script>
+  // Copy the address, show a check for a moment, tell assistive tech.
+  document.querySelectorAll<HTMLButtonElement>('button[data-copy]').forEach((button) => {
+    const status = button.parentElement?.querySelector<HTMLElement>('[role="status"]');
+    let timer = 0;
+    button.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(button.dataset.copy ?? '');
+      } catch {
+        return;
+      }
+      button.classList.add('is-copied');
+      if (status) status.textContent = 'Email address copied';
+      window.clearTimeout(timer);
+      timer = window.setTimeout(() => {
+        button.classList.remove('is-copied');
+        if (status) status.textContent = '';
+      }, 2000);
+    });
+  });
+</script>
 
 <style>
   .contact {
@@ -147,10 +172,58 @@ const { form } = contact;
     color: var(--navy);
   }
 
+  .contact__email {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 44px;
+    color: var(--ink);
+  }
+
+  .contact__email > span:not(.visually-hidden) {
+    overflow-wrap: anywhere;
+  }
+
+  /* Needs JS (clipboard), so it only appears once JS has marked the document. */
+  .copy {
+    display: none;
+    place-items: center;
+    flex: none;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: 0;
+    border-radius: var(--r-sm);
+    background: var(--grey);
+    cursor: pointer;
+    transition: background-color 0.2s var(--ease);
+  }
+
+  :global(html.js) .copy {
+    display: grid;
+  }
+
+  .copy:hover {
+    background: var(--grey-hover);
+  }
+
+  .copy :global(.copy__done),
+  .copy.is-copied :global(.copy__idle) {
+    display: none;
+  }
+
+  .copy.is-copied :global(.copy__done) {
+    display: block;
+  }
+
+  /* The form sits in the panel's own color: a faint lift, not a white slab. */
   .form {
     display: grid;
     gap: 22px;
     padding: clamp(24px, 3vw, 40px);
+    border-color: rgba(255, 255, 255, 0.85);
+    background: rgba(255, 255, 255, 0.4);
+    box-shadow: none;
   }
 
   .form__trap {
@@ -212,6 +285,13 @@ const { form } = contact;
   @media (max-width: 1023px) {
     .contact__panel {
       grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  /* Phone: the copy button stands in for the envelope, so the address stays on one row. */
+  @media (max-width: 479px) {
+    .contact__email > :global(.icon) {
+      display: none;
     }
   }
 

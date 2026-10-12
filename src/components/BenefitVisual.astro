@@ -1,0 +1,375 @@
+---
+// Small coded illustrations for the benefit cards, one per benefit. They are
+// pictures, not content: the wrapper is aria-hidden and the card copy carries
+// the meaning. No figures anywhere, only labels and states.
+import Icon from './Icon.astro';
+
+interface Props {
+  kind: string;
+}
+
+const { kind } = Astro.props;
+---
+
+<div class={`bv bv--${kind}`} aria-hidden="true">
+  {
+    // What the vendor reports beside what the records show, with the gap marked.
+    kind === 'read' && (
+      <div class="mock read">
+        <p class="read__title">Sick call requests triaged on time</p>
+        <p class="read__label">As reported</p>
+        <div class="read__bar">
+          <i class="read__fill read__fill--reported" />
+        </div>
+        <p class="read__label">As found in the records</p>
+        <div class="read__bar">
+          <i class="read__fill read__fill--found" />
+          <span class="read__gap">Gap</span>
+        </div>
+      </div>
+    )
+  }
+
+  {
+    // Two steps done, the survey next.
+    kind === 'path' && (
+      <ol role="list" class="path">
+        <li class="mock">
+          <span class="tile">
+            <Icon name="zoom-check" size={22} />
+          </span>
+          Gap analysis
+          <span class="tick">
+            <Icon name="check" size={14} stroke={2.5} />
+          </span>
+        </li>
+        <li class="mock">
+          <span class="tile">
+            <Icon name="clipboard-check" size={22} />
+          </span>
+          Mock survey
+          <span class="tick">
+            <Icon name="check" size={14} stroke={2.5} />
+          </span>
+        </li>
+        <li class="path__link" />
+        <li class="mock">
+          <span class="tile">
+            <Icon name="award" size={22} />
+          </span>
+          Ready for the survey
+          <span class="path__ring" />
+        </li>
+      </ol>
+    )
+  }
+
+  {
+    // A contract page with the three clauses that matter pulled out of it.
+    kind === 'contract' && (
+      <div class="contract">
+        <div class="mock contract__sheet">
+          <i />
+          <i />
+          <i class="is-marked" />
+          <i />
+          <i class="is-marked" />
+          <i />
+          <i />
+          <i class="is-marked" />
+          <i />
+        </div>
+        <ul role="list" class="contract__pills">
+          <li>
+            <span>
+              <Icon name="ruler-measure" size={20} />
+            </span>
+            Measurable requirements
+          </li>
+          <li>
+            <span>
+              <Icon name="gavel" size={20} />
+            </span>
+            Real remedies
+          </li>
+          <li>
+            <span>
+              <Icon name="writing-sign" size={20} />
+            </span>
+            Enforceable terms
+          </li>
+        </ul>
+      </div>
+    )
+  }
+
+  {
+    // One finding, dated and sourced, feeding the three places it will be read.
+    kind === 'record' && (
+      <div class="record">
+        <div class="mock record__finding">
+          <span class="tile">
+            <Icon name="file-check" size={22} />
+          </span>
+          <p>
+            <strong>Finding</strong>
+            <span>Dated, source record attached</span>
+          </p>
+        </div>
+        <svg class="record__tree" viewBox="0 0 300 44" preserveAspectRatio="none" focusable="false">
+          <path d="M150 0V22M50 44V22H250V44M150 22V44" vector-effect="non-scaling-stroke" />
+        </svg>
+        <ul role="list" class="record__dest">
+          <li>
+            <span class="tile">
+              <Icon name="gavel" size={22} />
+            </span>
+            Litigation
+          </li>
+          <li>
+            <span class="tile">
+              <Icon name="file-certificate" size={22} />
+            </span>
+            Consent decree
+          </li>
+          <li>
+            <span class="tile">
+              <Icon name="eye-check" size={22} />
+            </span>
+            Oversight body
+          </li>
+        </ul>
+      </div>
+    )
+  }
+</div>
+
+<style>
+  .bv {
+    width: min(100%, 400px);
+    color: var(--ink);
+    font-size: var(--fs-small);
+    line-height: 1.35;
+  }
+
+  .bv .mock {
+    box-shadow: inset 0 1px 0 #ffffff, 0 1px 2px rgba(20, 52, 110, 0.06), 0 14px 28px -20px rgba(20, 52, 110, 0.3);
+  }
+
+  .bv .tile {
+    width: 40px;
+    height: 40px;
+  }
+
+  /* read */
+  .read {
+    display: grid;
+    gap: 8px;
+    padding: 22px 24px 24px;
+  }
+
+  .read__title {
+    margin-bottom: 6px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--line);
+    font-weight: var(--fw-medium);
+  }
+
+  .read__label {
+    margin-top: 4px;
+    color: var(--muted);
+  }
+
+  .read__bar {
+    display: flex;
+    gap: 4px;
+    height: 30px;
+  }
+
+  .read__fill {
+    border-radius: 6px;
+  }
+
+  .read__fill--reported {
+    flex: 1;
+    background: var(--tint-4);
+  }
+
+  .read__fill--found {
+    flex: 0 0 58%;
+    background: var(--gold);
+  }
+
+  .read__gap {
+    display: grid;
+    flex: 1;
+    place-items: center;
+    border: 1.5px dashed var(--line-strong);
+    border-radius: 6px;
+    color: var(--ink);
+    font-weight: var(--fw-medium);
+  }
+
+  /* path */
+  .path {
+    display: grid;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+  }
+
+  .path > .mock {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 16px 10px 10px;
+    font-weight: var(--fw-medium);
+  }
+
+  .path .tick {
+    width: 24px;
+    height: 24px;
+  }
+
+  .path__link {
+    justify-self: center;
+    width: 1.5px;
+    height: 20px;
+    background: var(--line-strong);
+    opacity: 0.6;
+  }
+
+  /* The open step: a ring, one quarter drawn in gold. */
+  .path__ring {
+    width: 24px;
+    height: 24px;
+    border: 2.5px solid var(--tint-3);
+    border-top-color: var(--gold);
+    border-radius: 50%;
+    transform: rotate(45deg);
+  }
+
+  /* contract */
+  .contract {
+    position: relative;
+    display: grid;
+    align-items: center;
+    min-height: 216px;
+  }
+
+  .contract__sheet {
+    display: grid;
+    align-content: center;
+    gap: 13px;
+    width: 58%;
+    height: 216px;
+    margin-left: auto;
+    padding: 22px;
+  }
+
+  .contract__sheet i {
+    height: 8px;
+    border-radius: 4px;
+    background: var(--tint-2);
+  }
+
+  .contract__sheet i:nth-child(3n + 2) {
+    width: 72%;
+  }
+
+  .contract__sheet i.is-marked {
+    background: var(--gold);
+    opacity: 0.55;
+  }
+
+  .contract__pills {
+    position: absolute;
+    left: 0;
+    display: grid;
+    gap: 10px;
+    justify-items: start;
+  }
+
+  .contract__pills li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 18px 6px 6px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--card);
+    box-shadow: 0 8px 20px -12px rgba(20, 52, 110, 0.4);
+    font-weight: var(--fw-medium);
+    white-space: nowrap;
+  }
+
+  .contract__pills span {
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--tint-2);
+    color: var(--navy);
+  }
+
+  /* record */
+  .record__finding {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    width: max-content;
+    max-width: 100%;
+    margin-inline: auto;
+    padding: 12px 20px 12px 12px;
+  }
+
+  .record__finding strong {
+    display: block;
+    font-weight: var(--fw-medium);
+  }
+
+  .record__finding p span {
+    color: var(--muted);
+  }
+
+  .record__tree {
+    display: block;
+    width: 100%;
+    height: 44px;
+    fill: none;
+    stroke: var(--line-strong);
+    stroke-width: 1.5;
+    stroke-dasharray: 4 5;
+    stroke-linecap: round;
+  }
+
+  .record__dest {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .record__dest li {
+    display: grid;
+    justify-items: center;
+    gap: 10px;
+    font-weight: var(--fw-medium);
+    text-align: center;
+  }
+
+  .record__dest .tile {
+    width: 52px;
+    height: 52px;
+  }
+
+  @media (max-width: 479px) {
+    .contract__sheet {
+      width: 64%;
+    }
+
+    .contract__pills li {
+      font-size: 0.9375rem;
+    }
+  }
+</style>

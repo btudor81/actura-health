@@ -5,7 +5,7 @@
   --navy-soft: #23189a; /* top of the button gradient: 12.6 with white text */
   --navy-base: #150a7a; /* bottom of the button gradient */
   --navy-deep: #0a0047;
-  /* Brand gold: icon glyphs, tick discs and data marks. At 2.3:1 on white it never
+  /* Brand gold: icon glyphs and data marks. Ticks are navy. At 2.3:1 on white it never
      carries text or a control on its own; navy on gold is 7.6:1. */
   --gold: #d89b00;
 
@@ -15,8 +15,10 @@
   --tint-2: #e5f0fd;
   --tint-3: #d3e5fb;
   --tint-4: #c0d9f8; /* deepest arc only */
-  --grey: #eceef2; /* secondary button */
-  --grey-hover: #e1e4ea;
+  /* Secondary button and slider arrows: a see-through ink wash, so the control is
+     always the same step darker than whatever it sits on (white, tint or panel). */
+  --grey: rgba(20, 52, 110, 0.13);
+  --grey-hover: rgba(20, 52, 110, 0.2);
   --card: #ffffff;
 
   /* Text */

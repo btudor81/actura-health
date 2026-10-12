@@ -221,22 +221,22 @@
     "sub": "Every engagement ends with something you can act on and something you can show.",
     "items": [
       {
-        "icon": "file-search",
+        "visual": "read",
         "title": "An objective read on your vendor",
         "text": "Monitoring built from your own records shows performance as it is, not as reported."
       },
       {
-        "icon": "route",
+        "visual": "path",
         "title": "A path to NCCHC accreditation",
         "text": "Know where you stand against the standards and what to fix before the survey."
       },
       {
-        "icon": "writing-sign",
+        "visual": "contract",
         "title": "Stronger contracts and RFPs",
         "text": "Measurable requirements, real remedies and terms your team can enforce after the award."
       },
       {
-        "icon": "shield-check",
+        "visual": "record",
         "title": "Documentation that holds up",
         "text": "Dated, sourced findings ready for litigation, consent decrees and oversight bodies."
       }

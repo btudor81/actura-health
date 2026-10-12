@@ -1,37 +1,38 @@
 ---
 // Horizontal card row. Without JS it is a plain scrollable list with a native
-// scrollbar; with JS it gains arrow buttons and a progress bar.
+// scrollbar; with JS it gains arrows and a row of dashes (CarouselBar).
 // The parent passes the <li> slides and sets their width.
-import Icon from './Icon.astro';
+//   bleed: the row runs past the wrap to both viewport edges, so the next card shows.
+//   split: an "aside" slot (heading) sits left with the controls, cards run off the right edge.
+import CarouselBar from './CarouselBar.astro';
 
 interface Props {
   /** Names the scrollable region for assistive tech, e.g. "Services". */
   label: string;
-  /** Run the row out to the viewport edges instead of clipping it at the wrap. */
   bleed?: boolean;
+  split?: boolean;
 }
 
-const { label, bleed = false } = Astro.props;
+const { label, bleed = false, split = false } = Astro.props;
 ---
 
-<div class:list={['carousel', { 'carousel--bleed': bleed }]} data-carousel>
+<div class:list={['carousel', { 'carousel--bleed': bleed, 'carousel--split': split }]} data-carousel data-label={label}>
+  {
+    split && (
+      <div class="carousel__aside">
+        <slot name="aside" />
+        <CarouselBar label={label} />
+      </div>
+    )
+  }
+
   <div class="carousel__view" tabindex="0" role="region" aria-label={`${label}, scrollable`}>
     <ul role="list" class="carousel__track">
       <slot />
     </ul>
   </div>
 
-  <div class:list={['carousel__bar', { wrap: bleed }]}>
-    <div class="carousel__progress" aria-hidden="true"><span></span></div>
-    <div class="carousel__nav">
-      <button type="button" class="carousel__btn" data-dir="-1" aria-label={`Previous ${label.toLowerCase()}`}>
-        <Icon name="arrow-left" size={22} />
-      </button>
-      <button type="button" class="carousel__btn" data-dir="1" aria-label={`Next ${label.toLowerCase()}`}>
-        <Icon name="arrow-right" size={22} />
-      </button>
-    </div>
-  </div>
+  {!split && <CarouselBar label={label} class={bleed ? 'wrap' : undefined} />}
 </div>
 
 <script>
@@ -40,9 +41,13 @@ const { label, bleed = false } = Astro.props;
   document.querySelectorAll<HTMLElement>('[data-carousel]').forEach((root) => {
     const view = root.querySelector<HTMLElement>('.carousel__view');
     const track = root.querySelector<HTMLElement>('.carousel__track');
-    const thumb = root.querySelector<HTMLElement>('.carousel__progress span');
+    const dots = root.querySelector<HTMLElement>('.carousel__dots');
     const buttons = root.querySelectorAll<HTMLButtonElement>('.carousel__btn');
-    if (!view || !track || !thumb) return;
+    if (!view || !track || !dots) return;
+
+    const label = root.dataset.label ?? 'Slide';
+    const behavior = (): ScrollBehavior => (calm.matches ? 'auto' : 'smooth');
+    const reach = () => view.scrollWidth - view.clientWidth;
 
     const step = () => {
       const slide = track.firstElementChild;
@@ -50,13 +55,33 @@ const { label, bleed = false } = Astro.props;
       return slide.getBoundingClientRect().width + (parseFloat(getComputedStyle(track).columnGap) || 0);
     };
 
+    // One dash per place the row can rest.
+    const build = () => {
+      const count = Math.max(1, Math.round(reach() / step()) + 1);
+      root.classList.toggle('is-static', count < 2);
+      if (dots.childElementCount === count) return;
+      dots.replaceChildren(
+        ...Array.from({ length: count }, (_, index) => {
+          const dot = document.createElement('button');
+          dot.type = 'button';
+          dot.className = 'carousel__dot';
+          dot.setAttribute('aria-label', `${label}: position ${index + 1} of ${count}`);
+          dot.addEventListener('click', () => {
+            view.scrollTo({ left: index === count - 1 ? reach() : index * step(), behavior: behavior() });
+          });
+          return dot;
+        }),
+      );
+    };
+
     const update = () => {
-      const max = view.scrollWidth - view.clientWidth;
-      const share = view.clientWidth / view.scrollWidth;
-      const done = max > 0 ? view.scrollLeft / max : 0;
-      thumb.style.width = `${share * 100}%`;
-      thumb.style.transform = `translateX(${done * (1 / share - 1) * 100}%)`;
-      root.classList.toggle('is-static', max <= 1);
+      const max = reach();
+      const last = dots.childElementCount - 1;
+      const current = view.scrollLeft >= max - 1 ? last : Math.min(last, Math.round(view.scrollLeft / step()));
+      Array.from(dots.children).forEach((dot, index) => {
+        if (index === current) dot.setAttribute('aria-current', 'true');
+        else dot.removeAttribute('aria-current');
+      });
       buttons.forEach((button) => {
         const back = button.dataset.dir === '-1';
         const end = back ? view.scrollLeft <= 1 : view.scrollLeft >= max - 1;
@@ -67,17 +92,25 @@ const { label, bleed = false } = Astro.props;
     buttons.forEach((button) => {
       button.addEventListener('click', () => {
         if (button.getAttribute('aria-disabled') === 'true') return;
-        view.scrollBy({ left: Number(button.dataset.dir) * step(), behavior: calm.matches ? 'auto' : 'smooth' });
+        view.scrollBy({ left: Number(button.dataset.dir) * step(), behavior: behavior() });
       });
     });
 
     view.addEventListener('scroll', update, { passive: true });
-    window.addEventListener('resize', update);
+    window.addEventListener('resize', () => {
+      build();
+      update();
+    });
+    build();
     update();
   });
 </script>
 
 <style>
+  .carousel {
+    --edge: max(var(--gutter), calc((100% - var(--maxw)) / 2));
+  }
+
   .carousel__view {
     /* Room for card shadows and the focus ring inside the scroll box. */
     margin-block: -12px;
@@ -93,6 +126,14 @@ const { label, bleed = false } = Astro.props;
     border-radius: var(--r-md);
   }
 
+  :global(html.js) .carousel__view {
+    scrollbar-width: none;
+  }
+
+  :global(html.js) .carousel__view::-webkit-scrollbar {
+    display: none;
+  }
+
   .carousel__track {
     display: flex;
     gap: 20px;
@@ -105,83 +146,53 @@ const { label, bleed = false } = Astro.props;
 
   /* Bleed: the first card lines up with the wrap, the row runs off both edges. */
   .carousel--bleed .carousel__view {
-    scroll-padding-inline: max(var(--gutter), calc((100% - var(--maxw)) / 2));
+    scroll-padding-inline: var(--edge);
   }
 
   .carousel--bleed .carousel__track {
     width: max-content;
-    padding-inline: max(var(--gutter), calc((100% - var(--maxw)) / 2));
+    padding-inline: var(--edge);
   }
 
-  .carousel__bar {
-    display: none;
-    align-items: center;
-    gap: 32px;
-    margin-top: 28px;
-  }
-
-  :global(html.js) .carousel__bar {
-    display: flex;
-  }
-
-  :global(html.js) .carousel.is-static .carousel__bar {
-    display: none;
-  }
-
-  :global(html.js) .carousel__view {
-    scrollbar-width: none;
-  }
-
-  :global(html.js) .carousel__view::-webkit-scrollbar {
-    display: none;
-  }
-
-  .carousel__progress {
-    flex: 1;
-    height: 3px;
-    overflow: hidden;
-    border-radius: 999px;
-    background: var(--tint-3);
-  }
-
-  .carousel__progress span {
-    display: block;
-    height: 100%;
-    border-radius: inherit;
-    background: var(--navy);
-  }
-
-  .carousel__nav {
-    display: flex;
-    gap: 8px;
-  }
-
-  .carousel__btn {
+  /* Split: heading and controls hold the left column, cards leave by the right edge. */
+  .carousel--split {
     display: grid;
-    place-items: center;
-    width: 48px;
-    height: 48px;
-    padding: 0;
-    border: 0;
-    border-radius: var(--r-sm);
-    background: var(--grey);
-    color: var(--ink);
-    cursor: pointer;
-    transition:
-      background-color 0.2s var(--ease),
-      opacity 0.2s var(--ease);
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    align-items: center;
+    gap: clamp(32px, 5vw, 72px);
+    padding-left: var(--edge);
   }
 
-  .carousel__btn:hover {
-    background: var(--grey-hover);
+  .carousel--split .carousel__track {
+    width: max-content;
+    padding-right: var(--gutter);
   }
 
-  .carousel__btn[aria-disabled='true'] {
-    opacity: 0.4;
-    cursor: default;
+  .carousel--split .carousel__aside :global(.section__head) {
+    margin-bottom: 0;
   }
 
-  .carousel__btn[aria-disabled='true']:hover {
-    background: var(--grey);
+  .carousel--split .carousel__aside :global(.carousel__bar) {
+    justify-content: flex-start;
+  }
+
+  @media (max-width: 1099px) {
+    .carousel--split {
+      display: block;
+      padding-left: 0;
+    }
+
+    .carousel--split .carousel__aside {
+      margin-bottom: clamp(40px, 5vw, 64px);
+      padding-inline: var(--gutter);
+    }
+
+    .carousel--split .carousel__view {
+      scroll-padding-inline: var(--gutter);
+    }
+
+    .carousel--split .carousel__track {
+      padding-inline: var(--gutter);
+    }
   }
 </style>

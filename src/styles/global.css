@@ -58,9 +58,19 @@ h4 {
   text-wrap: balance;
 }
 
-h1 {
+h1,
+.h1 {
   font-size: var(--fs-h1);
   line-height: 1.06;
+}
+
+/* Heading look without the heading role (review duplicates only). */
+.h1 {
+  margin: 0;
+  color: var(--ink);
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--tracking-head);
+  text-wrap: balance;
 }
 
 h2 {
@@ -197,7 +207,7 @@ a {
   filter: brightness(1.14);
 }
 
-/* Secondary: plain grey, no gradient, no edge. */
+/* Secondary: flat ink wash, no gradient, no edge. */
 .btn--ghost {
   background: var(--grey);
   color: var(--ink);
@@ -243,7 +253,7 @@ a {
   color: var(--gold);
 }
 
-/* Tick: gold disc, navy check. Marks a benefit, a credential or a commitment. */
+/* Tick: navy disc, white check. Marks a benefit, a credential or a commitment. */
 .tick {
   display: grid;
   place-items: center;
@@ -251,8 +261,21 @@ a {
   width: 26px;
   height: 26px;
   border-radius: 50%;
-  background: var(--gold);
-  color: var(--navy);
+  background: var(--navy);
+  color: var(--on-navy);
+}
+
+/* Review label on a section that exists in more than one version. Remove with the losers. */
+.option-tag {
+  display: inline-flex;
+  padding: 4px 12px;
+  border: 1.5px dashed var(--line-strong);
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--ink);
+  font-size: var(--fs-small);
+  font-weight: var(--fw-medium);
+  line-height: 1.4;
 }
 
 /* Pale panel that holds a visual or a group of cards. */

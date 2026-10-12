@@ -31,12 +31,17 @@ const organization = {
 ---
 
 <Base title={home.seo.title} description={home.seo.description} path="/" jsonLd={[organization]}>
-  <Hero />
+  {/* REVIEW: three hero backgrounds and three Team layouts are stacked so one of each can be picked. */}
+  <Hero variant="gradient" option="Hero A: soft gradient" />
+  <Hero variant="motion" option="Hero B: animated background" duplicate />
+  <Hero variant="arcs" option="Hero C: circles (current)" duplicate />
   <TrustBar />
   <Problem />
   <Services />
   <Benefits />
-  <Team />
+  <Team variant="slider" option="Team A: slider, cards run off the edges" />
+  <Team variant="split" option="Team B: heading left, cards slide right" anchor={false} />
+  <Team variant="roster" option="Team C: list, no slider" anchor={false} />
   <About />
   <Contact />
 </Base>

@@ -1,4 +1,5 @@
 ---
+import BenefitVisual from './BenefitVisual.astro';
 import Icon from './Icon.astro';
 import { getHomepage } from '../lib/content';
 import { flag, headline } from '../lib/text';
@@ -9,26 +10,26 @@ const { commitments } = benefits;
 
 <section class="section benefits" data-nav="light" aria-labelledby="benefits-title">
   <div class="wrap">
-    <div class="panel benefits__panel">
-      <div class="section__head section__head--center">
-        <h2 id="benefits-title" set:html={headline(benefits.headline)} />
-        <p class="lead" set:html={flag(benefits.sub)} />
-      </div>
+    <div class="section__head section__head--center">
+      <h2 id="benefits-title" set:html={headline(benefits.headline)} />
+      <p class="lead" set:html={flag(benefits.sub)} />
+    </div>
 
-      <ul role="list" class="benefits__list">
-        {
-          benefits.items.map((item, index) => (
-            <li class="reveal" style={`--i:${index}`}>
-              <span class="tile">
-                <Icon name={item.icon} />
-              </span>
+    <ul role="list" class="benefits__list">
+      {
+        benefits.items.map((item, index) => (
+          <li class="reveal" style={`--i:${index % 2}`}>
+            <div class="benefit__visual">
+              <BenefitVisual kind={item.visual} />
+            </div>
+            <div class="benefit__copy">
               <h3>{item.title}</h3>
               <p set:html={flag(item.text)} />
-            </li>
-          ))
-        }
-      </ul>
-    </div>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
 
     <div class="panel commit">
       <div class="commit__copy">
@@ -59,45 +60,46 @@ const { commitments } = benefits;
 </section>
 
 <style>
-  .benefits .wrap {
-    display: grid;
-    gap: 20px;
-  }
-
-  /* A lighter dome at the top of the panel, behind the heading. */
-  .benefits__panel {
-    padding: clamp(40px, 5vw, 72px) clamp(24px, 3vw, 40px) clamp(24px, 3vw, 40px);
-    background:
-      radial-gradient(90% 250px at 50% 0%, #ffffff 0%, #ffffff 99.6%, transparent 100%),
-      linear-gradient(180deg, var(--tint) 0%, var(--tint-2) 100%);
-  }
-
+  /* Four cards, two by two: a pale stage holding a small coded illustration,
+     then the benefit in words. */
   .benefits__list {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 16px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+    margin-bottom: 20px;
   }
 
-  .benefits__list li {
+  .benefits__list > li {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    background: var(--card);
+  }
+
+  .benefit__visual {
+    display: grid;
+    place-items: center;
+    min-height: 300px;
+    padding: 36px clamp(20px, 4vw, 48px);
+    background: linear-gradient(180deg, var(--tint) 0%, var(--tint-2) 100%);
+  }
+
+  .benefit__copy {
     display: grid;
     align-content: start;
     gap: 10px;
-    padding: 28px 24px;
-    border: 1px solid rgba(255, 255, 255, 0.9);
-    border-radius: var(--r-md);
-    background: rgba(255, 255, 255, 0.6);
+    padding: 28px clamp(24px, 3vw, 36px) 32px;
   }
 
-  .benefits__list .tile {
-    margin-bottom: 14px;
-  }
-
-  .benefits__list h3 {
+  .benefit__copy h3 {
     font-size: var(--fs-h4);
     line-height: 1.25;
   }
 
-  .benefits__list p {
+  .benefit__copy p {
+    max-width: 44ch;
     color: var(--muted);
   }
 
@@ -149,22 +151,23 @@ const { commitments } = benefits;
     margin-top: 4px;
   }
 
-  @media (max-width: 1099px) {
-    .benefits__list {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-  }
-
   @media (max-width: 1023px) {
     .commit {
       grid-template-columns: 1fr;
     }
   }
 
-  @media (max-width: 599px) {
+  @media (max-width: 767px) {
     .benefits__list {
       grid-template-columns: 1fr;
     }
+
+    .benefit__visual {
+      min-height: 260px;
+    }
+  }
+
+  @media (max-width: 599px) {
 
     .commit__list li {
       grid-template-columns: auto 1fr;

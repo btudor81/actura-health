@@ -26,10 +26,19 @@ Node 22.12 or newer.
 | `src/styles/tokens.css` | Colors, type scale, spacing, radii. Contrast ratio noted beside every text color |
 | `src/styles/global.css` | Base styles, buttons, focus ring, reveal on scroll |
 | `src/layouts/Base.astro` | Head tags, SEO, JSON-LD, nav, footer |
-| `src/components/` | One file per homepage section, plus `Icon`, `Scorecard` (sample monitoring summary), `Carousel` (Services + Team rows), `CapabilityLink` |
+| `src/components/` | One file per homepage section, plus `Icon`, `Scorecard` (sample monitoring summary), `Carousel` + `CarouselBar` (Services + Team sliders), `BenefitVisual` (four coded illustrations), `CapabilityLink` |
 | `public/files/` | Capability statement PDF |
 | `public/img/service-[slug].*` | One photo per service card (880x1100, webp + jpg) |
 | `PRODUCT.md` | Audience, purpose, brand personality, design principles |
+
+## Options under review (remove before launch)
+
+The homepage currently stacks three heroes and three Team layouts so one of each can be picked. Each carries a dashed `.option-tag` label.
+
+- `Hero.astro` prop `variant`: `gradient` (A), `motion` (B, animated), `arcs` (C, the earlier look). Copies after the first take `duplicate` so the page keeps one `h1`.
+- `Team.astro` prop `variant`: `slider` (A), `split` (B), `roster` (C). Copies after the first take `anchor={false}` so `#team` stays unique.
+
+Once chosen: keep one `<Hero />` and one `<Team />` in `src/pages/index.astro`, delete the unused branches, the `option` / `duplicate` / `anchor` props and `.option-tag` in `global.css`.
 
 ## Content rules
 
