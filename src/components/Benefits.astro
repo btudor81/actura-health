@@ -1,17 +1,17 @@
 ---
-// REVIEW: three stage backgrounds are on the page so one can be chosen. Keep the
-// winner, delete the other two, the `option` / `duplicate` / `commitments` props
-// and the option tag.
-//   photo:  a clinical photo behind the illustration, which sits on a white plate
-//   lines:  concentric rings and dashed guide lines
-//   window: the illustration floats in front of a larger app window
+// REVIEW: two stage backgrounds are on the page so one can be chosen. Keep the
+// winner, delete the other, the `option` / `duplicate` / `commitments` props and
+// the option tag.
+//   rails: faint vertical hairlines
+//   dots:  faint dot grid
+// Rejected earlier, do not bring back: photo behind, rings + guides, app window.
 import BenefitVisual from './BenefitVisual.astro';
 import Icon from './Icon.astro';
 import { getHomepage } from '../lib/content';
 import { flag, headline } from '../lib/text';
 
 interface Props {
-  stage?: 'photo' | 'lines' | 'window';
+  stage?: 'rails' | 'dots';
   /** Review label. */
   option?: string;
   /** A repeat of the card grid: no section heading. */
@@ -20,7 +20,7 @@ interface Props {
   commitments?: boolean;
 }
 
-const { stage = 'lines', option, duplicate = false, commitments: showCommitments = true } = Astro.props;
+const { stage = 'rails', option, duplicate = false, commitments: showCommitments = true } = Astro.props;
 const { benefits } = await getHomepage();
 const { commitments } = benefits;
 ---
@@ -47,19 +47,6 @@ const { commitments } = benefits;
         benefits.items.map((item, index) => (
           <li class="reveal" style={`--i:${index % 2}`}>
             <div class="benefit__visual">
-              {stage === 'photo' && (
-                <picture>
-                  <source srcset={`/img/benefit-${item.visual}.webp`} type="image/webp" />
-                  <img
-                    src={`/img/benefit-${item.visual}.jpg`}
-                    alt=""
-                    width="1280"
-                    height="640"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </picture>
-              )}
               <BenefitVisual kind={item.visual} />
             </div>
             <div class="benefit__copy">
@@ -73,13 +60,13 @@ const { commitments } = benefits;
 
     {
       showCommitments && (
-        <div class="panel commit">
+        <div class="panel panel--deep commit">
           <div class="commit__copy">
             <h3 id="commit-title">{commitments.title}</h3>
             <p class="commit__note" set:html={flag(commitments.note)} />
           </div>
 
-          <ul role="list" class="mock commit__list reveal" aria-labelledby="commit-title">
+          <ul role="list" class="inset commit__list reveal" aria-labelledby="commit-title">
             {
               commitments.items.map((item) => (
                 <li>
@@ -151,85 +138,25 @@ const { commitments } = benefits;
     width: min(100%, 440px);
   }
 
-  /* A. Photo: the stage is a real clinical scene, the illustration a white plate on it. */
-  .benefit__visual picture,
-  .benefit__visual img {
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .benefits--photo .benefit__visual > :global(.bv) {
-    padding: 18px;
-    border: 1px solid rgba(255, 255, 255, 0.9);
-    border-radius: 22px;
-    background: rgba(255, 255, 255, 0.82);
-    box-shadow: 0 24px 48px -28px rgba(20, 52, 110, 0.6);
-  }
-
-  /* B. Lines: fine concentric rings fading outward, crossed by dashed guides. */
-  .benefits--lines .benefit__visual::before,
-  .benefits--lines .benefit__visual::after {
+  .benefit__visual::before {
     content: '';
     position: absolute;
     inset: 0;
     z-index: -1;
   }
 
-  .benefits--lines .benefit__visual::before {
-    background:
-      repeating-radial-gradient(circle at 50% 50%, transparent 0 25px, rgba(255, 255, 255, 0.95) 25px 27px),
-      repeating-radial-gradient(circle at 50% 50%, transparent 0 51px, rgba(20, 52, 110, 0.07) 51px 52px);
-    -webkit-mask-image: radial-gradient(closest-side, #000 35%, transparent 100%);
-    mask-image: radial-gradient(closest-side, #000 35%, transparent 100%);
+  /* A. Rails: vertical hairlines, fading out at the top and the foot. */
+  .benefits--rails .benefit__visual::before {
+    background: repeating-linear-gradient(90deg, rgba(20, 52, 110, 0.1) 0 1px, transparent 1px 44px) center / 100% 100%;
+    -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 22%, #000 78%, transparent 100%);
+    mask-image: linear-gradient(180deg, transparent 0%, #000 22%, #000 78%, transparent 100%);
   }
 
-  .benefits--lines .benefit__visual::after {
-    background:
-      repeating-linear-gradient(90deg, rgba(20, 52, 110, 0.2) 0 5px, transparent 5px 11px) center / 100% 1px no-repeat,
-      repeating-linear-gradient(180deg, rgba(20, 52, 110, 0.2) 0 5px, transparent 5px 11px) center / 1px 100% no-repeat;
-  }
-
-  /* C. Window: a larger app window runs off the right and bottom edges; the
-     illustration is the piece of it pulled forward. */
-  .benefits--window .benefit__visual {
-    padding: 76px 40px 40px 76px;
-    background: linear-gradient(160deg, var(--tint-2) 0%, var(--tint-3) 100%);
-  }
-
-  .benefits--window .benefit__visual::before,
-  .benefits--window .benefit__visual::after {
-    content: '';
-    position: absolute;
-    z-index: -1;
-    left: 36px;
-    right: -2px;
-  }
-
-  .benefits--window .benefit__visual::before {
-    top: 36px;
-    bottom: -2px;
-    border: 1px solid #ffffff;
-    border-radius: var(--r-md) 0 0 0;
-    background:
-      radial-gradient(circle, rgba(20, 52, 110, 0.16) 1px, transparent 1.5px) 0 0 / 20px 20px,
-      rgba(255, 255, 255, 0.62);
-    box-shadow: -16px -16px 40px -28px rgba(20, 52, 110, 0.4);
-  }
-
-  .benefits--window .benefit__visual::after {
-    top: 37px;
-    height: 38px;
-    border-bottom: 1px solid var(--line);
-    border-radius: var(--r-md) 0 0 0;
-    background:
-      radial-gradient(circle at 22px 50%, var(--tint-4) 4.5px, transparent 5px),
-      radial-gradient(circle at 40px 50%, var(--tint-4) 4.5px, transparent 5px),
-      radial-gradient(circle at 58px 50%, var(--tint-4) 4.5px, transparent 5px),
-      rgba(255, 255, 255, 0.85);
+  /* B. Dots: an even dot grid, thinning toward the edges. */
+  .benefits--dots .benefit__visual::before {
+    background: radial-gradient(circle, rgba(20, 52, 110, 0.24) 1px, rgba(20, 52, 110, 0) 1.6px) center / 22px 22px;
+    -webkit-mask-image: radial-gradient(120% 120% at 50% 50%, #000 40%, transparent 100%);
+    mask-image: radial-gradient(120% 120% at 50% 50%, #000 40%, transparent 100%);
   }
 
   .benefit__copy {

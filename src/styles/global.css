@@ -58,9 +58,19 @@ h4 {
   text-wrap: balance;
 }
 
-h1 {
+h1,
+.h1 {
   font-size: var(--fs-h1);
   line-height: 1.06;
+}
+
+/* Heading look without the heading role (review duplicates only). */
+.h1 {
+  margin: 0;
+  color: var(--ink);
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--tracking-head);
+  text-wrap: balance;
 }
 
 h2 {
@@ -132,28 +142,21 @@ a {
   text-align: center;
 }
 
+/* Eyebrow: a small squared chip, fill, edge and type all in the brand blue. */
 .eyebrow {
   display: inline-flex;
-  align-items: center;
   align-self: start;
   justify-self: start;
-  gap: 12px;
-  color: var(--ink);
+  padding: 6px 12px;
+  border: 1px solid rgba(15, 0, 104, 0.14);
+  border-radius: 8px;
+  background: var(--tint-2);
+  color: var(--navy);
   font-size: var(--fs-small);
   font-weight: var(--fw-medium);
-  letter-spacing: 0.1em;
+  letter-spacing: 0.06em;
   line-height: 1.4;
   text-transform: uppercase;
-}
-
-/* Short gold rule, as on the client's printed section labels. */
-.eyebrow::before {
-  content: '';
-  flex: none;
-  width: 24px;
-  height: 2px;
-  border-radius: 1px;
-  background: var(--gold);
 }
 
 .section__head--center .eyebrow {
@@ -297,6 +300,18 @@ a {
 
 .panel > * {
   position: relative;
+}
+
+/* Block inside a block (commitments, contact form): one treatment everywhere.
+   The outer panel takes the deeper wash, the inner block is glass in the same color. */
+.panel--deep {
+  background: linear-gradient(160deg, var(--tint-2) 0%, var(--tint-3) 100%);
+}
+
+.inset {
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: var(--r-md);
+  background: rgba(255, 255, 255, 0.45);
 }
 
 /* White card that reads as a piece of interface or a document. */

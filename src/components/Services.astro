@@ -88,7 +88,7 @@ const cards = services.clusters.flatMap((cluster, clusterIndex) =>
     object-fit: cover;
   }
 
-  /* Scrim under the copy: one long eased ramp of deep ink blue. No blur.
+  /* Scrim under the copy: one long eased ramp, near black with a trace of blue. No blur.
      0.74 where the copy starts keeps white text above 4.5:1 even on a white photo. */
   .svc::after {
     content: '';
@@ -97,13 +97,13 @@ const cards = services.clusters.flatMap((cluster, clusterIndex) =>
     z-index: -1;
     background: linear-gradient(
       180deg,
-      rgba(16, 14, 64, 0) 18%,
-      rgba(16, 14, 64, 0.1) 29%,
-      rgba(16, 14, 64, 0.32) 40%,
-      rgba(16, 14, 64, 0.56) 49%,
-      rgba(16, 14, 64, 0.74) 57%,
-      rgba(16, 14, 64, 0.84) 72%,
-      rgba(16, 14, 64, 0.9) 100%
+      rgba(9, 11, 24, 0) 18%,
+      rgba(9, 11, 24, 0.1) 29%,
+      rgba(9, 11, 24, 0.32) 40%,
+      rgba(9, 11, 24, 0.56) 49%,
+      rgba(9, 11, 24, 0.74) 57%,
+      rgba(9, 11, 24, 0.84) 72%,
+      rgba(9, 11, 24, 0.9) 100%
     );
   }
 

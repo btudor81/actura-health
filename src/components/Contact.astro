@@ -12,7 +12,7 @@ const { form } = contact;
 
 <section id="contact" class="section contact" data-nav="light" aria-labelledby="contact-title">
   <div class="wrap">
-    <div class="panel contact__panel">
+    <div class="panel panel--deep contact__panel">
       <div class="contact__copy">
         <h2 id="contact-title" set:html={headline(contact.headline)} />
         <p class="lead" set:html={flag(contact.sub)} />
@@ -54,7 +54,7 @@ const { form } = contact;
       </div>
 
       <form
-        class="mock form"
+        class="inset form"
         name="contact"
         method="POST"
         action="/contact/thanks/"
@@ -123,7 +123,6 @@ const { form } = contact;
     align-items: start;
     gap: clamp(32px, 5vw, 80px);
     padding: clamp(24px, 4.5vw, 64px);
-    background: linear-gradient(160deg, var(--tint-2) 0%, var(--tint-3) 100%);
   }
 
   .contact__copy {
@@ -220,14 +219,10 @@ const { form } = contact;
     display: block;
   }
 
-  /* The form sits in the panel's own color: a faint lift, not a white slab. */
   .form {
     display: grid;
     gap: 22px;
     padding: clamp(24px, 3vw, 40px);
-    border-color: rgba(255, 255, 255, 0.85);
-    background: rgba(255, 255, 255, 0.4);
-    box-shadow: none;
   }
 
   .form__trap {
