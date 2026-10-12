@@ -40,6 +40,7 @@ Nothing is under review on the page. Decided with Filip on 2026-10-12, do not re
 - Benefit illustrations: a few very faint vertical hairlines behind them. Rejected: photo behind, rings and guides, app window, dot grid, an empty stage.
 - Service cards: scrim is a color gradient, near black with a trace of blue. Rejected: blur layer, ink-blue scrim.
 - Eyebrow: squared chip in the brand blue, label with a subtle bottom-to-top gradient. Rejected: white pill, tracked caps with a gold rule.
+- No all-caps text anywhere (eyebrows and the trust bar label are sentence case). Only the logo wordmark is capitals, because the logo is.
 - Secondary controls: white with a hairline edge. Rejected: grey fill, see-through ink wash.
 - Block inside a block (commitments, contact form): plain `.panel` outside, `.inset` glass inside, the same in both places.
 

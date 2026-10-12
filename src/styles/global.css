@@ -132,7 +132,8 @@ a {
   text-align: center;
 }
 
-/* Eyebrow: a small squared chip, fill, edge and type all in the brand blue. */
+/* Eyebrow: a small squared chip, fill, edge and type all in the brand blue. Sentence case:
+   no all-caps text anywhere on this site (the logo wordmark is the one exception). */
 .eyebrow {
   display: inline-flex;
   align-self: start;
@@ -144,9 +145,7 @@ a {
   color: var(--navy);
   font-size: var(--fs-small);
   font-weight: var(--fw-medium);
-  letter-spacing: 0.06em;
   line-height: 1.4;
-  text-transform: uppercase;
 }
 
 /* The label is lit from above like the buttons: navy at the foot, a lighter blue at the top. */
