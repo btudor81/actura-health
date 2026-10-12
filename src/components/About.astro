@@ -10,7 +10,7 @@ const { about } = await getHomepage();
   <div class="wrap">
     <div class="about__grid">
       <div class="about__copy">
-        <p class="eyebrow">{about.eyebrow}</p>
+        <p class="eyebrow"><span>{about.eyebrow}</span></p>
         <h2 id="about-title" set:html={headline(about.headline)} />
         {about.body.map((paragraph) => <p class="lead" set:html={flag(paragraph)} />)}
 

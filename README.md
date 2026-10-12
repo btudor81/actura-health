@@ -31,16 +31,17 @@ Node 22.12 or newer.
 | `public/img/service-[slug].*` | One photo per service card (880x1100, webp + jpg) |
 | `PRODUCT.md` | Audience, purpose, brand personality, design principles |
 
-## Options under review (remove before launch)
+## Settled design decisions
 
-The homepage currently stacks three heroes and two copies of the benefit cards so one of each can be picked. Each carries a dashed `.option-tag` label.
+Nothing is under review on the page. Decided with Filip on 2026-10-12, do not reopen without him:
 
-- `Hero.astro` prop `variant`: `rails` (A, vertical hairlines + glow), `dots` (B, dot grid, second headline row fades), `arcs` (C, the circles used until now). Copies after the first take `duplicate` so the page keeps one `h1`.
-- `Benefits.astro` prop `stage`: `rails` (A, vertical hairlines), `dots` (B, dot grid). The copy after the first takes `duplicate` (no section heading); only the last copy shows the commitments panel.
-
-Once chosen: keep one `<Hero />` and one `<Benefits />` in `src/pages/index.astro`, delete the unused branches and rules, the `option` / `duplicate` / `commitments` props, and `.option-tag` + `.h1` in `global.css`.
-
-Rejected, do not bring back: hero grain texture, plain gradient hero, animated hero; benefit stages with a photo, rings and guides, or an app window; Team sliders (Team = ruled list).
+- Hero background: nested circles. Rejected: grain texture, plain gradient, animated fields, vertical rails, dot grid.
+- Team: ruled list. Rejected: both slider layouts.
+- Benefit illustrations: a few very faint vertical hairlines behind them. Rejected: photo behind, rings and guides, app window, dot grid, an empty stage.
+- Service cards: scrim is a color gradient, near black with a trace of blue. Rejected: blur layer, ink-blue scrim.
+- Eyebrow: squared chip in the brand blue, label with a subtle bottom-to-top gradient. Rejected: white pill, tracked caps with a gold rule.
+- Secondary controls: white with a hairline edge. Rejected: grey fill, see-through ink wash.
+- Block inside a block (commitments, contact form): plain `.panel` outside, `.inset` glass inside, the same in both places.
 
 ## Content rules
 

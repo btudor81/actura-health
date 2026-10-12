@@ -58,19 +58,9 @@ h4 {
   text-wrap: balance;
 }
 
-h1,
-.h1 {
+h1 {
   font-size: var(--fs-h1);
   line-height: 1.06;
-}
-
-/* Heading look without the heading role (review duplicates only). */
-.h1 {
-  margin: 0;
-  color: var(--ink);
-  font-weight: var(--fw-medium);
-  letter-spacing: var(--tracking-head);
-  text-wrap: balance;
 }
 
 h2 {
@@ -157,6 +147,17 @@ a {
   letter-spacing: 0.06em;
   line-height: 1.4;
   text-transform: uppercase;
+}
+
+/* The label is lit from above like the buttons: navy at the foot, a lighter blue at the top. */
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .eyebrow > span {
+    background: linear-gradient(0deg, var(--navy) 10%, #4f4bd0 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
 }
 
 .section__head--center .eyebrow {
@@ -275,19 +276,6 @@ a {
   color: var(--on-navy);
 }
 
-/* Review label on a section that exists in more than one version. Remove with the losers. */
-.option-tag {
-  display: inline-flex;
-  padding: 4px 12px;
-  border: 1.5px dashed var(--line-strong);
-  border-radius: 999px;
-  background: var(--card);
-  color: var(--ink);
-  font-size: var(--fs-small);
-  font-weight: var(--fw-medium);
-  line-height: 1.4;
-}
-
 /* Pale panel that holds a visual or a group of cards. */
 .panel {
   position: relative;
@@ -303,15 +291,11 @@ a {
 }
 
 /* Block inside a block (commitments, contact form): one treatment everywhere.
-   The outer panel takes the deeper wash, the inner block is glass in the same color. */
-.panel--deep {
-  background: linear-gradient(160deg, var(--tint-2) 0%, var(--tint-3) 100%);
-}
-
+   The outer block is a plain .panel, the inner block is glass in the same color. */
 .inset {
-  border: 1px solid rgba(255, 255, 255, 0.85);
+  border: 1px solid #ffffff;
   border-radius: var(--r-md);
-  background: rgba(255, 255, 255, 0.45);
+  background: rgba(255, 255, 255, 0.6);
 }
 
 /* White card that reads as a piece of interface or a document. */

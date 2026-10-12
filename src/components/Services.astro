@@ -17,7 +17,7 @@ const cards = services.clusters.flatMap((cluster, clusterIndex) =>
 <section id="services" class="section services" data-nav="light" aria-labelledby="services-title">
   <div class="wrap">
     <div class="section__head section__head--center">
-      <p class="eyebrow">{services.eyebrow}</p>
+      <p class="eyebrow"><span>{services.eyebrow}</span></p>
       <h2 id="services-title" set:html={headline(services.headline)} />
       <p class="lead" set:html={flag(services.sub)} />
       <CapabilityLink />
