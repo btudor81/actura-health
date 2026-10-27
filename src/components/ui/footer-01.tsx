@@ -36,7 +36,7 @@ export function Footer01({ site, year, copy }: Footer01Props) {
 
           <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:justify-items-end">
             <nav aria-label="Footer">
-              <h3 className="text-base font-medium tracking-normal">Explore</h3>
+              <h3 className="text-base font-medium tracking-normal">{site.footerNavTitle}</h3>
               <ul className="mt-3 flex flex-col">
                 {site.nav.map((item) => (
                   <li key={item.label}>
@@ -48,7 +48,7 @@ export function Footer01({ site, year, copy }: Footer01Props) {
               </ul>
             </nav>
             <div>
-              <h3 className="text-base font-medium tracking-normal">Contact</h3>
+              <h3 className="text-base font-medium tracking-normal">{site.footerContactTitle}</h3>
               <ul className="mt-3 flex flex-col">
                 <li className="flex flex-wrap items-center gap-x-3">
                   <a href={`mailto:${site.contactEmail}`} className={`${linkClass} [overflow-wrap:anywhere]`}>

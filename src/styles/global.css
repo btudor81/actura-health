@@ -485,6 +485,8 @@ li {
 .rail-card--turn > .rail-x {
   position: absolute;
   inset: 0;
+  /* Drawn over the card: let clicks reach the text and the button under it. */
+  pointer-events: none;
 }
 
 .rail-card--turn h3 {

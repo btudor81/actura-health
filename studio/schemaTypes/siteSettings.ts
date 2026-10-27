@@ -58,6 +58,9 @@ export const siteSettings = defineType({
       description: 'Shown in the contact block only. Leave empty to hide.',
     }),
 
+    {...line({name: 'footerNavTitle', title: 'Footer menu heading'}), group: 'nav'},
+    {...line({name: 'footerContactTitle', title: 'Footer contact heading'}), group: 'nav'},
+
     {...line({name: 'primaryCta', title: 'Main button label'}), group: 'buttons'},
     {...line({name: 'secondaryCta', title: 'Capability statement button label'}), group: 'buttons'},
     defineField({
