@@ -3,7 +3,8 @@ import '../styles/global.css';
 import Nav from '../components/Nav.astro';
 import { Footer01 } from '../components/ui/footer-01';
 import { CopyButton } from '../components/ui/copy-button';
-import { getSite } from '../lib/content';
+import VisualEditing from '../components/VisualEditing';
+import { getSite, visualEditing } from '../lib/content';
 
 interface Props {
   title: string;
@@ -83,5 +84,6 @@ const indexable = import.meta.env.PUBLIC_INDEXABLE === 'true' && !noindex;
         targets.forEach((el) => el.classList.add('is-in'));
       }
     </script>
+    {visualEditing && <VisualEditing client:only="react" />}
   </body>
 </html>

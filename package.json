@@ -12,12 +12,15 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/netlify": "^8.2.10",
     "@astrojs/react": "^7.0.1",
+    "@netlify/blobs": "^11.1.7",
     "@radix-ui/react-label": "^2.1.17",
     "@radix-ui/react-separator": "^1.2.0",
     "@radix-ui/react-slot": "^1.5.0",
     "@radix-ui/react-tabs": "^1.2.0",
     "@sanity/client": "^8.12.0",
+    "@sanity/visual-editing": "^6.2.0",
     "@tabler/icons": "^3.49.0",
     "@tabler/icons-react": "^3.49.0",
     "astro": "^7.3.7",

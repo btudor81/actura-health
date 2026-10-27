@@ -1,12 +1,23 @@
 import {defineConfig} from 'sanity'
 import {structureTool} from 'sanity/structure'
 import {visionTool} from '@sanity/vision'
+import {presentationTool, defineDocuments, defineLocations} from 'sanity/presentation'
 import {HomeIcon} from '@sanity/icons/Home'
 import {CogIcon} from '@sanity/icons/Cog'
 import {schemaTypes, SINGLETONS} from './schemaTypes'
 
 // Publishing a change triggers a Netlify rebuild (Sanity webhook to a Netlify build
-// hook). The live site updates about two minutes later.
+// hook). The live site updates about a minute later.
+//
+// "Edit on page" (Presentation) shows the edit site: the same repo built as a
+// server-rendered Netlify site that reads drafts, so a click on any text opens its
+// field and changes show before they are published.
+const EDIT_SITE = 'https://actura-health-edit.netlify.app'
+
+const onHomepage = defineLocations({
+  select: {_id: '_id'},
+  resolve: () => ({locations: [{title: 'Homepage', href: '/'}]}),
+})
 export default defineConfig({
   name: 'default',
   title: 'Actura Health',
@@ -15,6 +26,14 @@ export default defineConfig({
   dataset: 'production',
 
   plugins: [
+    presentationTool({
+      title: 'Edit on page',
+      previewUrl: {initial: EDIT_SITE},
+      resolve: {
+        mainDocuments: defineDocuments([{route: '/', filter: `_id == "homepage"`}]),
+        locations: {homepage: onHomepage, siteSettings: onHomepage},
+      },
+    }),
     structureTool({
       structure: (S) =>
         S.list()

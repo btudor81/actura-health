@@ -13,6 +13,7 @@ import { FeatureBento } from './ui/feature-bento';
 import { TeamList } from './ui/team-list';
 import { SplitContent } from './ui/split-content';
 import { ContactForm } from './ui/contact-form';
+import { stegaClean } from '@sanity/client/stega';
 import { getHomepage, getSite } from '../lib/content';
 
 const home = await getHomepage();
@@ -45,7 +46,7 @@ const organization = {
 };
 ---
 
-<Base title={home.seo.title} description={home.seo.description} keywords={keywords} path={path} noindex={path !== '/'} jsonLd={[organization]}>
+<Base title={home.seo.title} description={home.seo.description} keywords={keywords} path={path} noindex={path !== '/'} jsonLd={[stegaClean(organization)]}>
   {/* Hero option A, with the closed-loop card (client round 2, 2026-10-22). Option B is gone. */}
   <Hero02 hero={home.hero} site={site}>
     <LoopTracker loop={home.hero.loop} />
