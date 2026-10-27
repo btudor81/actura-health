@@ -1,17 +1,17 @@
 @import './tokens.css';
 
+@tailwind base;
+@tailwind components;
+
+/* Site styles sit after Tailwind's reset and before its utilities, so a utility
+   on an element always wins over the defaults below. */
+
 @font-face {
   font-family: 'Outfit';
   src: url('/fonts/outfit-latin-wght.woff2') format('woff2');
   font-weight: 100 900;
   font-style: normal;
   font-display: swap;
-}
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
 }
 
 html {
@@ -35,16 +35,6 @@ body {
   font-size: var(--fs-body);
   line-height: var(--lh-body);
   -webkit-font-smoothing: antialiased;
-}
-
-img,
-svg {
-  display: block;
-  max-width: 100%;
-}
-
-img {
-  height: auto;
 }
 
 h1,
@@ -79,24 +69,8 @@ h4 {
 }
 
 p,
-ul,
-ol {
-  margin: 0;
-}
-
-p,
 li {
   text-wrap: pretty;
-}
-
-ul[role='list'],
-ol[role='list'] {
-  padding: 0;
-  list-style: none;
-}
-
-a {
-  color: inherit;
 }
 
 :focus-visible {
@@ -113,6 +87,13 @@ a {
 
 .section {
   padding-block: var(--section);
+}
+
+/* Sections alternate white and a very light navy tint (client round 2, 2026-10-22),
+   so each transition shows without extra white space. Order below the white trust
+   bar: Problem tint, Services white, Benefits tint, About white, Team tint, Contact white. */
+.section--tint {
+  background: var(--tint);
 }
 
 .lead {
@@ -132,16 +113,16 @@ a {
   text-align: center;
 }
 
-/* Eyebrow: a small squared chip, fill, edge and type all in the brand blue. Sentence case:
-   no all-caps text anywhere on this site (the logo wordmark is the one exception). */
+/* Eyebrow: a small squared chip, outline only. No fill (Filip 2026-10-12), so the
+   edge is a step stronger than it was on the filled chip. */
 .eyebrow {
   display: inline-flex;
   align-self: start;
   justify-self: start;
   padding: 6px 12px;
-  border: 1px solid rgba(15, 0, 104, 0.14);
+  border: 1px solid rgba(15, 0, 104, 0.22);
   border-radius: 8px;
-  background: var(--tint-2);
+  background: transparent;
   color: var(--navy);
   font-size: var(--fs-small);
   font-weight: var(--fw-medium);
@@ -156,96 +137,6 @@ a {
     background-clip: text;
     color: transparent;
     -webkit-text-fill-color: transparent;
-  }
-}
-
-.section__head--center .eyebrow {
-  justify-self: center;
-}
-
-.small {
-  font-size: var(--fs-small);
-  line-height: 1.5;
-}
-
-/* Buttons: lit from above. An inner highlight on the top edge, an inner shade
-   on the bottom edge, and a short tinted drop shadow. */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  min-height: 54px;
-  padding: 12px 24px;
-  border: 1px solid transparent;
-  border-radius: var(--r-sm);
-  font: inherit;
-  font-weight: var(--fw-medium);
-  line-height: 1.2;
-  text-decoration: none;
-  white-space: nowrap;
-  cursor: pointer;
-  transition:
-    filter 0.2s var(--ease),
-    box-shadow 0.2s var(--ease),
-    transform 0.2s var(--ease);
-}
-
-.btn:active {
-  transform: translateY(1px);
-}
-
-.btn--primary {
-  border-color: var(--navy);
-  background: linear-gradient(180deg, var(--navy-soft) 0%, var(--navy-base) 100%);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.2),
-    inset 0 -1px 0 rgba(4, 0, 40, 0.25),
-    0 1px 2px rgba(15, 0, 104, 0.25),
-    0 8px 16px -10px rgba(15, 0, 104, 0.5);
-  color: var(--on-navy);
-}
-
-.btn--primary:hover {
-  filter: brightness(1.14);
-}
-
-/* Secondary: white, hairline edge, short shadow. */
-.btn--ghost {
-  border-color: var(--control-edge);
-  background: var(--control);
-  box-shadow: var(--shadow-control);
-  color: var(--ink);
-  transition:
-    background-color 0.2s var(--ease),
-    border-color 0.2s var(--ease),
-    transform 0.2s var(--ease);
-}
-
-.btn--ghost:hover {
-  border-color: var(--control-edge-hover);
-  background: var(--control-hover);
-}
-
-.btn--sm {
-  min-height: 48px;
-  padding: 10px 20px;
-}
-
-.btn.is-pending {
-  flex-wrap: wrap;
-  row-gap: 6px;
-  cursor: default;
-}
-
-.btn--ghost.is-pending:hover {
-  border-color: var(--control-edge);
-  background: var(--control);
-}
-
-@media (max-width: 599px) {
-  .btn {
-    padding-inline: 18px;
   }
 }
 
@@ -273,6 +164,22 @@ a {
   border-radius: 50%;
   background: var(--navy);
   color: var(--on-navy);
+}
+
+/* PDSA phase tag on the closed-loop steps (hero tracker + first Evidence card).
+   Gold only as a faint edge and wash, the word itself in navy. */
+.pdsa {
+  display: inline-flex;
+  width: fit-content;
+  padding: 0 8px;
+  border: 1px solid rgba(216, 155, 0, 0.45);
+  border-radius: 6px;
+  background: transparent; /* no fill, the gold edge is enough (Filip 2026-10-27) */
+  color: var(--navy);
+  font-size: var(--fs-small);
+  font-weight: var(--fw-medium);
+  line-height: 1.5;
+  letter-spacing: 0;
 }
 
 /* Pale panel that holds a visual or a group of cards. */
@@ -319,18 +226,6 @@ a {
   white-space: nowrap;
 }
 
-.visually-hidden {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  margin: -1px;
-  padding: 0;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  white-space: nowrap;
-  border: 0;
-}
-
 .skip-link {
   position: absolute;
   top: 8px;
@@ -352,6 +247,498 @@ a {
 @media (max-width: 1023px) {
   .br-d {
     display: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  h1 .row {
+    white-space: nowrap;
+  }
+}
+
+/* Hero: a blue field in the tint family, deeper toward the foot where the arcs sit,
+   with a soft lift behind the headline. Never navy (rejected as too saturated) and
+   no texture. Text on it: ink 12:1+, body 10:1+. */
+.hero-color {
+  background:
+    radial-gradient(62% 58% at 24% 26%, rgba(255, 255, 255, 0.6), transparent 72%),
+    linear-gradient(180deg, #e3eefd 0%, #d6e6fc 46%, #c8ddfa 100%);
+}
+
+/* Hero height. From 1024px up it is exactly one screen: the copy keeps its height
+   and the asset takes what is left. The floor stops the copy from being squeezed on
+   a very short window. Below 1024px the copy alone nearly fills a screen, so the
+   hero is at least one screen and grows to show a slice of the asset. */
+.hero {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+.hero__inner {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
+}
+
+@media (min-width: 1024px) {
+  .hero {
+    height: 100vh;
+    height: 100dvh;
+    min-height: 760px;
+  }
+}
+
+/* Hero asset: the box is the full container width and reaches the end of the
+   section. The card fills it and runs --cut past it, so the section clips the card
+   and no padding sits under it. The gradient is INSIDE the card and white: solid
+   white on the section edge, so the card melts into the white section below.
+   The card itself stays opaque (no mask). */
+.asset-fade {
+  --cut: 36px;
+  position: relative;
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  width: 100%;
+  height: 340px;
+}
+
+.asset-fade .mock {
+  flex: 1 0 auto;
+  margin-bottom: calc(-1 * var(--cut));
+}
+
+.asset-fade::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0;
+  height: 112px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #ffffff 100%);
+  pointer-events: none;
+}
+
+/* One-screen hero: the asset shows up to 334px (the card, less its cut) and gives
+   way first on a short window. Spare height on a tall window goes around the copy
+   (.hero__copy), never into an empty stretch of card. */
+@media (min-width: 1024px) {
+  .asset-fade {
+    flex: 0 1 334px;
+    height: auto;
+    min-height: 0;
+  }
+
+  .hero__copy {
+    margin-block: auto;
+  }
+}
+
+/* Footer: the same blue field as the hero, so the page opens and closes on color. */
+.footer-color {
+  background: linear-gradient(180deg, #e3eefd 0%, #d3e4fb 100%);
+}
+
+/* Benefit card, same as ../website: a pale stage holding a small coded illustration,
+   then the benefit in words on white. Stage background settled 2026-10-12: a few
+   very faint vertical hairlines, fading out at the top and the foot. Rejected, do
+   not bring back: photo behind, rings + guides, app window, dot grid, empty stage. */
+.benefit-card {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  background: var(--card);
+}
+
+.benefit-stage {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 340px;
+  padding: 40px clamp(20px, 4vw, 48px);
+  overflow: hidden;
+  background: linear-gradient(180deg, var(--tint) 0%, var(--tint-2) 100%);
+  isolation: isolate;
+}
+
+.benefit-stage > .bv {
+  position: relative;
+  width: min(100%, 440px);
+}
+
+.benefit-stage::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: repeating-linear-gradient(90deg, rgba(20, 52, 110, 0.055) 0 1px, transparent 1px 96px) center / 100% 100%;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 26%, #000 74%, transparent 100%);
+  mask-image: linear-gradient(180deg, transparent 0%, #000 26%, #000 74%, transparent 100%);
+}
+
+.benefit-copy {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  padding: 28px clamp(24px, 3vw, 36px) 32px;
+}
+
+@media (max-width: 767px) {
+  .benefit-stage {
+    min-height: 260px;
+  }
+}
+
+/* Two by two: every stage as tall as the tallest one (the PDSA card), so the pale
+   parts line up across a row (Filip 2026-10-27). Measured: that stage needs 453px at
+   768, 410 at 1024, 392 from 1280. Recheck if the "read" visual grows. */
+@media (min-width: 768px) {
+  .benefit-stage {
+    min-height: 456px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .benefit-stage {
+    min-height: 412px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .benefit-stage {
+    min-height: 396px;
+  }
+}
+
+/* Phone slider (Services): native swipe, no JS. Layout lives in the Tailwind classes
+   on the list; this hides the scrollbar and keeps cards outside the viewport from
+   waiting on the reveal. */
+@media (max-width: 767px) {
+  .slider {
+    scrollbar-width: none;
+  }
+
+  .slider::-webkit-scrollbar {
+    display: none;
+  }
+
+  html.js .slider > .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Feature rails (Problem): hairlines run past each card into the gaps, with a
+   survey mark on two corners. */
+.rail-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 32px 24px 28px;
+  background: radial-gradient(60% 80% at 20% 0%, var(--tint-2), transparent);
+}
+
+.rail-card::before,
+.rail-card::after,
+.rail-card > .rail-x::before,
+.rail-card > .rail-x::after {
+  content: '';
+  position: absolute;
+  background: var(--line);
+  pointer-events: none;
+}
+
+.rail-card::before {
+  inset: -16px auto -16px -1px;
+  width: 1px;
+}
+
+.rail-card::after {
+  inset: -16px -1px -16px auto;
+  width: 1px;
+}
+
+.rail-card > .rail-x::before {
+  inset: -1px -16px auto -16px;
+  height: 1px;
+}
+
+.rail-card > .rail-x::after {
+  inset: auto -16px -1px -16px;
+  height: 1px;
+}
+
+/* Closing band: solid brand navy, white text, gold only on the small arrow disc
+   (client round 2). Gold never fills anything larger. */
+.rail-card--turn {
+  padding-block: 28px;
+  background: var(--navy);
+  color: var(--on-navy);
+}
+
+/* Out of the flex flow, so the column gap on a phone does not add 24px above the
+   content (top and bottom padding read the same, Filip 2026-10-27). */
+.rail-card--turn > .rail-x {
+  position: absolute;
+  inset: 0;
+}
+
+.rail-card--turn h3 {
+  color: var(--on-navy);
+}
+
+.rail-card--turn .tick {
+  background: var(--gold);
+  color: var(--navy);
+}
+
+/* Coded illustrations in the benefit cards (BenefitVisual). Pictures, not content. */
+.bv {
+  width: min(100%, 420px);
+  color: var(--ink);
+  font-size: var(--fs-small);
+  line-height: 1.35;
+}
+
+.bv .mock {
+  box-shadow:
+    inset 0 1px 0 #ffffff,
+    0 1px 2px rgba(20, 52, 110, 0.06),
+    0 14px 28px -20px rgba(20, 52, 110, 0.3);
+}
+
+.bv .tile {
+  width: 40px;
+  height: 40px;
+}
+
+.bv-read {
+  padding: 20px 24px 22px;
+}
+
+.bv-read__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--line);
+  font-weight: var(--fw-medium);
+}
+
+.bv-read__status {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 10px 2px 8px;
+  border-radius: 8px;
+  background: var(--tint-2);
+  color: var(--navy);
+}
+
+/* The loop the finding went round: gold stops on a faint rail, all of them reached. */
+.bv-read__loop {
+  position: relative;
+  display: grid;
+  gap: 12px;
+  padding-top: 16px;
+}
+
+.bv-read__loop::before {
+  content: '';
+  position: absolute;
+  top: 28px;
+  bottom: 12px;
+  left: 6px;
+  width: 1.5px;
+  background: var(--tint-3);
+}
+
+.bv-read__loop li {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.bv-read__loop i {
+  width: 13px;
+  height: 13px;
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 0 1px var(--line);
+}
+
+.bv-read__loop li:last-child {
+  font-weight: var(--fw-medium);
+}
+
+.bv-read__cycle {
+  padding-top: 12px;
+  color: var(--muted);
+}
+
+.bv-path {
+  display: grid;
+  gap: 8px;
+}
+
+.bv-path > .mock {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 16px 10px 10px;
+  font-weight: var(--fw-medium);
+}
+
+.bv-path .tick {
+  width: 24px;
+  height: 24px;
+}
+
+.bv-path__link {
+  justify-self: center;
+  width: 1.5px;
+  height: 20px;
+  background: var(--line-strong);
+  opacity: 0.6;
+}
+
+/* The open step: a ring, one quarter drawn in gold. */
+.bv-path__ring {
+  width: 24px;
+  height: 24px;
+  border: 2.5px solid var(--tint-3);
+  border-top-color: var(--gold);
+  border-radius: 50%;
+  transform: rotate(45deg);
+}
+
+.bv-contract {
+  position: relative;
+  display: grid;
+  align-items: center;
+  min-height: 216px;
+}
+
+.bv-contract__sheet {
+  display: grid;
+  align-content: center;
+  gap: 13px;
+  width: 58%;
+  height: 216px;
+  margin-left: auto;
+  padding: 22px;
+}
+
+.bv-contract__sheet i {
+  height: 8px;
+  border-radius: 4px;
+  background: var(--tint-2);
+}
+
+.bv-contract__sheet i:nth-child(3n + 2) {
+  width: 72%;
+}
+
+.bv-contract__sheet i.is-marked {
+  background: var(--gold);
+  opacity: 0.55;
+}
+
+.bv-contract__pills {
+  position: absolute;
+  left: 0;
+  display: grid;
+  gap: 10px;
+  justify-items: start;
+}
+
+.bv-contract__pills li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 18px 6px 6px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--card);
+  box-shadow: 0 8px 20px -12px rgba(20, 52, 110, 0.4);
+  font-weight: var(--fw-medium);
+  white-space: nowrap;
+}
+
+.bv-contract__pills span {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--tint-2);
+  color: var(--navy);
+}
+
+.bv-record__finding {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: max-content;
+  max-width: 100%;
+  margin-inline: auto;
+  padding: 12px 20px 12px 12px;
+}
+
+.bv-record__finding strong {
+  display: block;
+  font-weight: var(--fw-medium);
+}
+
+.bv-record__finding p span {
+  color: var(--muted);
+}
+
+.bv-record__tree {
+  display: block;
+  width: 100%;
+  height: 44px;
+  fill: none;
+  stroke: var(--line-strong);
+  stroke-width: 1.5;
+  stroke-dasharray: 4 5;
+  stroke-linecap: round;
+}
+
+.bv-record__dest {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.bv-record__dest li {
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  font-weight: var(--fw-medium);
+  text-align: center;
+}
+
+.bv-record__dest .tile {
+  width: 52px;
+  height: 52px;
+}
+
+@media (max-width: 479px) {
+  .bv-contract__sheet {
+    width: 64%;
+  }
+
+  .bv-contract__pills li {
+    font-size: 0.9375rem;
   }
 }
 
@@ -382,3 +769,5 @@ a {
     scroll-behavior: auto !important;
   }
 }
+
+@tailwind utilities;

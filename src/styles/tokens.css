@@ -53,7 +53,7 @@
   /* Layout */
   --maxw: 1280px;
   --gutter: clamp(24px, 5vw, 80px);
-  --section: clamp(72px, 9vw, 128px);
+  --section: clamp(48px, 6vw, 84px); /* cut by a third, client round 2 (was 72-128px) */
   --nav-h: 72px;
 
   /* Shape: inputs and buttons 10, cards 16, panels 24 */

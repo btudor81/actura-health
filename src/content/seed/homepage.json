@@ -1,77 +1,162 @@
 {
   "seo": {
     "title": "Correctional Healthcare Consulting | Actura Health",
-    "description": "Independent oversight of jail and prison healthcare vendors: QA audits, NCCHC accreditation readiness and contract monitoring. Book a conversation."
+    "description": "Where Accountability Meets Action in Correctional Healthcare. Independent quality oversight, NCCHC accreditation readiness and vendor performance review for jails and prisons.",
+    "keywords": [
+      {
+        "category": "Audit and review",
+        "terms": [
+          "correctional health audit",
+          "correctional healthcare auditor",
+          "jail medical audit",
+          "prison healthcare audit",
+          "healthcare vendor audit",
+          "NCCHC audit",
+          "jail health services audit"
+        ]
+      },
+      {
+        "category": "Oversight and monitoring",
+        "terms": [
+          "jail healthcare oversight",
+          "correctional healthcare contract monitoring",
+          "healthcare vendor oversight",
+          "jail medical contract compliance",
+          "independent healthcare monitor jail"
+        ]
+      },
+      {
+        "category": "Accreditation",
+        "terms": [
+          "NCCHC accreditation consultant",
+          "NCCHC mock survey",
+          "NCCHC accreditation readiness",
+          "CCHP consultant"
+        ]
+      },
+      {
+        "category": "Behavioral health",
+        "terms": [
+          "jail suicide prevention consultant",
+          "correctional mental health quality review",
+          "jail mortality review"
+        ]
+      },
+      {
+        "category": "Procurement",
+        "terms": [
+          "jail healthcare RFP consultant",
+          "correctional medical services RFP",
+          "inmate healthcare contract"
+        ]
+      },
+      {
+        "category": "EHR",
+        "terms": [
+          "correctional EHR consultant",
+          "jail EMR implementation",
+          "correctional health records"
+        ]
+      },
+      {
+        "category": "Medicaid and reentry",
+        "terms": [
+          "CalAIM justice-involved",
+          "Section 1115 reentry waiver",
+          "jail Medicaid enrollment"
+        ]
+      },
+      {
+        "category": "Common search phrasing",
+        "terms": [
+          "inmate healthcare consultant",
+          "inmate medical care quality",
+          "sheriff medical oversight",
+          "correctional healthcare consultant"
+        ]
+      },
+      {
+        "category": "Leadership",
+        "terms": [
+          "interim correctional health administrator",
+          "interim jail health services leadership"
+        ]
+      }
+    ]
   },
   "hero": {
     "eyebrow": "Correctional healthcare consulting",
     "headline": "Independent oversight for\njail and prison healthcare",
-    "sub": "We audit and monitor your healthcare vendor and prepare you for NCCHC accreditation, using your own data, not theirs.",
+    "tagline": "Where Accountability Meets Action in Correctional Healthcare",
+    "sub": "We review and monitor your healthcare vendor and prepare you for NCCHC accreditation, using your own records, reviewed independently against NCCHC standards and your contract requirements.",
     "chips": [
       {
         "icon": "link-off",
-        "text": "No vendor conflicts"
+        "text": "No financial ties to the vendors we review"
       },
       {
-        "icon": "database",
-        "text": "Built on your own data"
+        "icon": "files",
+        "text": "Built on your own records"
       },
       {
-        "icon": "receipt",
-        "text": "Fixed-scope pricing"
+        "icon": "list-check",
+        "text": "Scoped, deliverable-based engagements"
       }
     ],
-    "scorecard": {
-      "title": "Sample monitoring summary",
-      "columns": [
-        "Indicator",
-        "Vendor report",
-        "Independent review"
+    "loop": {
+      "title": "Closed-loop follow-through",
+      "tag": "Sample tracker",
+      "steps": [
+        {
+          "icon": "book",
+          "label": "Standard",
+          "note": "NCCHC and contract requirement",
+          "phase": "Plan"
+        },
+        {
+          "icon": "file-search",
+          "label": "Finding",
+          "note": "Documented from the record",
+          "phase": "Plan"
+        },
+        {
+          "icon": "calendar-user",
+          "label": "Corrective action",
+          "note": "Owner and date",
+          "phase": "Do"
+        },
+        {
+          "icon": "refresh",
+          "label": "Re-review",
+          "note": "Records checked again",
+          "phase": "Study"
+        },
+        {
+          "icon": "circle-check",
+          "label": "Verified",
+          "note": "Closed once it holds",
+          "phase": "Act"
+        }
       ],
       "rows": [
         {
-          "indicator": "Receiving screening completed on time",
-          "vendor": "met",
-          "review": "met"
+          "item": "Receiving screening completed on time",
+          "stage": 4
         },
         {
-          "indicator": "Sick call requests triaged on time",
-          "vendor": "met",
-          "review": "not-met"
+          "item": "Sick call requests triaged on time",
+          "stage": 3
         },
         {
-          "indicator": "Chronic care visits on schedule",
-          "vendor": "met",
-          "review": "partial"
+          "item": "Chronic care visits on schedule",
+          "stage": 2
         },
         {
-          "indicator": "Medications continued at intake",
-          "vendor": "met",
-          "review": "met"
-        },
-        {
-          "indicator": "Mental health referrals completed",
-          "vendor": "met",
-          "review": "not-met"
+          "item": "Mental health referrals completed",
+          "stage": 1
         }
       ],
-      "views": {
-        "vendor": {
-          "label": "Vendor report",
-          "source": "Vendor self-report",
-          "sourceNote": "Its data, its definitions",
-          "status": "Self-reported",
-          "caption": "By the vendor's own count"
-        },
-        "review": {
-          "label": "Independent review",
-          "source": "Your own records",
-          "sourceNote": "Monthly record review",
-          "status": "Independent",
-          "caption": "Against your own records"
-        }
-      },
-      "measure": "Indicators confirmed"
+      "cycle": "Plan-Do-Study-Act (PDSA) cycle"
     }
   },
   "trust": {
@@ -95,124 +180,108 @@
       },
       {
         "icon": "presentation",
-        "text": "Returning NCCHC\nconference presenters"
+        "text": "Returning NCCHC conference\npresenters and moderators"
       }
     ]
   },
   "problem": {
     "headline": "You answer for care\nyou cannot verify",
-    "sub": "The county carries the liability. The vendor holds the data. Most of the help on offer leaves that gap exactly where it is.",
+    "sub": "Custody carries the responsibility. The healthcare vendor holds the data. Too often, no one is positioned to connect the two, so problems surface late and leadership can't independently verify the care being delivered.",
+    "lead": "Sound familiar? Challenges we hear from custody and health leaders, and how independent quality oversight helps.",
+    "helpLabel": "How we help",
     "items": [
       {
         "icon": "checkup-list",
-        "title": "Vendors grading their own work",
-        "text": "Your compliance picture comes from the company you pay, measured with its own data and its own definitions."
+        "title": "Performance measured only from the inside",
+        "text": "Every vendor should run its own QA and CQI program, and we support that. We add an unbiased, expert review that measures performance against NCCHC standards and applicable state and contract requirements."
       },
       {
         "icon": "compass",
-        "title": "Consultants who do not know jails",
-        "text": "Generalist healthcare advisors miss how custody operations and correctional standards shape every clinical decision."
+        "title": "Consultants who don't know jails",
+        "text": "Custody and clinical care delivery (medical and behavioral health) have to work in lock-step. Our recommendations meet standards and requirements without creating barriers between them."
       },
       {
         "icon": "archive",
         "title": "Reports that sit on a shelf",
-        "text": "You pay for a thick assessment, then nothing changes because no one owns the corrective actions."
+        "text": "We stay through the corrective action: clear owners, due dates, and follow-up review to confirm compliance is sustained and improvement continues."
       },
       {
         "icon": "table",
         "title": "Compliance tracked in spreadsheets",
-        "text": "Staff rebuild the same metrics by hand every month, and nobody fully trusts the numbers."
+        "text": "We make clear what's measured and how, so the data is transparent and translated into terms custody, clinical teams, and leadership all understand."
       },
       {
         "icon": "alert-triangle",
         "title": "Surprises you hear about last",
-        "text": "A survey finding, an in-custody death review or a lawsuit shows you the gap when it is too late to close it."
+        "text": "Regular review and early reporting shift the culture from reactive to proactive. Leadership hears about issues first, with a plan already attached."
       }
     ],
-    "transition": "Independent oversight closes that gap."
+    "transition": "Independent quality oversight closes that gap."
   },
   "services": {
     "eyebrow": "Our services",
     "headline": "Independent support at every\nstage of your healthcare contract",
-    "sub": "From writing the RFP to verifying the monthly numbers, each engagement is fixed in scope and led by a senior practitioner.",
-    "clusters": [
+    "sub": "From writing the RFP to verifying the monthly numbers, each engagement is scoped and deliverable-based, and led by an experienced practitioner.",
+    "items": [
       {
-        "key": "oversight",
-        "title": "Oversight",
-        "items": [
-          {
-            "slug": "quality-assurance-compliance-auditing",
-            "icon": "clipboard-check",
-            "title": "Quality assurance and compliance auditing",
-            "text": "Independent audits of your contracted health vendor against the contract, NCCHC standards and Title 15."
-          },
-          {
-            "slug": "continuous-quality-improvement",
-            "icon": "refresh",
-            "title": "Continuous quality improvement",
-            "text": "CQI program design and ongoing monitoring, so problems are measured, assigned and closed."
-          },
-          {
-            "slug": "contract-performance-monitoring",
-            "icon": "chart-line",
-            "title": "Contract performance monitoring",
-            "text": "Independent verification of KPIs, liquidated damages and corrective action plans."
-          },
-          {
-            "slug": "behavioral-health-oversight",
-            "icon": "brain",
-            "title": "Behavioral health oversight",
-            "text": "Quality review of mental health and psychiatric services, including suicide prevention programs."
-          }
-        ]
+        "slug": "quality-oversight",
+        "icon": "clipboard-check",
+        "title": "Quality Oversight (QA + CQI)",
+        "text": "Ongoing independent review of contracted health services, combining record review, onsite observation, corrective action tracking and ongoing vendor performance review."
       },
       {
-        "key": "accreditation",
-        "title": "Accreditation",
-        "items": [
-          {
-            "slug": "ncchc-accreditation-readiness",
-            "icon": "award",
-            "title": "NCCHC accreditation readiness",
-            "text": "Gap analysis, mock surveys and policy review, so everything is in order before the surveyors arrive."
-          }
-        ]
+        "slug": "behavioral-health-quality-oversight",
+        "icon": "brain",
+        "title": "Behavioral Health Quality Oversight",
+        "text": "The same QA and CQI model applied to mental health and substance use care, including suicide prevention and medication treatment continuity."
       },
       {
-        "key": "procurement",
-        "title": "Procurement and policy",
-        "items": [
-          {
-            "slug": "rfp-procurement-support",
-            "icon": "file-text",
-            "title": "RFP and procurement support",
-            "text": "Health services RFP development and procurement support, written so performance can be measured after the award."
-          },
-          {
-            "slug": "medicaid-1115-calaim",
-            "icon": "building-bank",
-            "title": "Medicaid 1115 and CalAIM",
-            "text": "Support for Section 1115 demonstration waivers nationwide, including California's CalAIM Justice-Involved framework."
-          }
-        ]
+        "slug": "risk-management-compliance-review",
+        "icon": "scale",
+        "title": "Risk Management & Compliance Review",
+        "text": "Review against contracts, policies, NCCHC standards, state regulatory requirements and consent decrees, including mortality and critical-incident review."
       },
       {
-        "key": "systems",
-        "title": "Systems and leadership",
-        "items": [
-          {
-            "slug": "ehr-advisory",
-            "icon": "device-desktop-analytics",
-            "title": "EHR advisory",
-            "text": "Implementation support, clinical champion services and reporting design for correctional health records."
-          },
-          {
-            "slug": "interim-correctional-health-leadership",
-            "icon": "user-check",
-            "title": "Interim correctional health leadership",
-            "text": "Experienced leaders who step in during a vacancy, a transition or a turnaround."
-          }
-        ]
+        "slug": "ncchc-accreditation-readiness",
+        "icon": "award",
+        "title": "NCCHC Accreditation Readiness",
+        "text": "Gap assessments, mock surveys and standard-by-standard preparation before the surveyors arrive."
+      },
+      {
+        "slug": "staffing-operational-analysis",
+        "icon": "users",
+        "title": "Staffing & Operational Analysis",
+        "text": "Studies of staffing levels, hours, overtime, agency and locum use, and workflow throughput."
+      },
+      {
+        "slug": "care-coordination-case-management",
+        "icon": "route",
+        "title": "Care Coordination & Case Management",
+        "text": "Design of intake, transfer, release, discharge and reentry workflows, including Medicaid enrollment, community care linkage and medication bridge supply."
+      },
+      {
+        "slug": "data-analytics-custom-reporting",
+        "icon": "chart-line",
+        "title": "Data Analytics & Custom Reporting",
+        "text": "Analytics built on data facilities already collect, with documentation for consent decree and oversight obligations."
+      },
+      {
+        "slug": "ehr-emr-advisory",
+        "icon": "device-desktop-analytics",
+        "title": "EHR / EMR Advisory",
+        "text": "Guidance on correctional EHR selection, implementation, clinical champion support and go-live readiness."
+      },
+      {
+        "slug": "rfp-procurement-support",
+        "icon": "file-text",
+        "title": "RFP & Procurement Support",
+        "text": "RFP development, performance measures, vendor cost analysis and ongoing vendor performance review, written so performance can be measured after the award."
+      },
+      {
+        "slug": "interim-fractional-leadership",
+        "icon": "user-check",
+        "title": "Interim & Fractional Leadership",
+        "text": "Experienced executives for healthcare operations, clinical programs, and quality, risk and compliance during a vacancy, transition or turnaround."
       }
     ]
   },
@@ -223,7 +292,7 @@
       {
         "visual": "read",
         "title": "An objective read on your vendor",
-        "text": "Monitoring built from your own records shows performance as it is, not as reported."
+        "text": "Monitoring built from your own records gives an objective, verified picture of performance."
       },
       {
         "visual": "path",
@@ -233,7 +302,7 @@
       {
         "visual": "contract",
         "title": "Stronger contracts and RFPs",
-        "text": "Measurable requirements, real remedies and terms your team can enforce after the award."
+        "text": "Measurable requirements, clear remedies and accountable terms that hold after the award."
       },
       {
         "visual": "record",
@@ -245,14 +314,14 @@
       "title": "What we commit to on every engagement",
       "items": [
         {
-          "icon": "receipt",
-          "title": "Fixed, deliverable-based pricing",
-          "text": "You approve a scope and a price before work starts. No surprise hourly billing."
+          "icon": "list-check",
+          "title": "Scoped, deliverable-based engagements",
+          "text": "You approve a scope and a price before work starts."
         },
         {
           "icon": "scale",
           "title": "Full independence",
-          "text": "We do not sell care, staffing or software to the vendors we evaluate."
+          "text": "We do not deliver care, and we take no revenue from the vendors we review."
         },
         {
           "icon": "database",
@@ -260,73 +329,59 @@
           "text": "Every finding traces to a source record, so it stands when it is challenged."
         }
       ],
-      "note": "We do not guarantee accreditation or legal outcomes. Those decisions belong to NCCHC and the courts."
+      "note": "Accreditation and legal determinations rest with NCCHC and the courts. Our role is to prepare you, give you objective evidence, and stand behind our findings."
     }
   },
   "team": {
-    "headline": "Senior practitioners do the\nwork, not junior analysts",
-    "sub": "Each engagement is staffed by people who have surveyed, run or led correctional and hospital health systems.",
-    "members": [
-      {
-        "icon": "building-skyscraper",
-        "role": "Managing Director",
-        "credentials": [
-          "Hospital C-suite leadership experience"
-        ]
-      },
-      {
-        "icon": "clipboard-check",
-        "role": "Managing Clinical Advisor",
-        "credentials": [
-          "Active NCCHC surveyor",
-          "Certified Correctional Health Professional (CCHP)",
-          "5+ years of correctional healthcare consulting"
-        ]
-      },
+    "eyebrow": "Our team",
+    "headline": "Experienced practitioners\non every engagement",
+    "sub": "Each engagement is staffed by people who understand correctional healthcare, have provided quality oversight, and have led correctional and hospital health systems.",
+    "groups": [
       {
         "icon": "stethoscope",
-        "role": "Physician Advisor",
-        "credentials": [
-          "Former Deputy Medical Executive, California Correctional Health Care Services"
+        "title": "Clinical",
+        "items": [
+          "Physicians in internal medicine and psychiatry",
+          "Psychiatric-mental health nurse practitioner expertise",
+          "Correctional and rehabilitation nursing",
+          "Access to other medical specialties"
         ]
       },
       {
-        "icon": "scale",
-        "role": "Quality and Risk Advisor",
-        "credentials": [
-          "Doctorate",
-          "Legal studies training",
-          "Multi-hospital system leadership"
+        "icon": "building-skyscraper",
+        "title": "Leadership & Operations",
+        "items": [
+          "Former hospital C-suite executives",
+          "State correctional health system medical leadership",
+          "Multi-hospital quality, risk, and compliance leadership",
+          "Health plan case management, utilization management, and state regulatory review",
+          "Clinical informatics and EHR implementation"
         ]
       },
       {
-        "icon": "heartbeat",
-        "role": "Nurse Advisor",
-        "credentials": [
-          "Certified Correctional Health Professional (CCHP)"
-        ]
-      },
-      {
-        "icon": "device-desktop-analytics",
-        "role": "Technical and Operations Team",
-        "credentials": [
-          "Clinical informatics",
-          "EHR implementation",
-          "Reporting design"
+        "icon": "certificate",
+        "title": "Standards & Credentials",
+        "items": [
+          "CCHP-certified advisors",
+          "Active NCCHC surveyor",
+          "Board certification in clinical informatics",
+          "Certifications: PMHNP-BC, CRRN, Lean Six Sigma",
+          "Degrees: MD, DHA, MBA, MHA, MSHA, MSN, MLS"
         ]
       }
     ]
   },
   "about": {
     "eyebrow": "About Actura Health",
-    "headline": "Where accountability meets action\nin correctional healthcare",
+    "headline": "Partners in quality",
+    "tagline": "Where Accountability Meets Action in Correctional Healthcare",
     "body": [
-      "People in custody are owed constitutional-level care, and the agencies responsible for them need an objective way to know whether they are getting it. We are the independent layer between the jail or prison and its healthcare vendor."
+      "People in custody are entitled to constitutionally adequate healthcare, and the agencies responsible for them need an objective way to know whether it is being delivered. We provide independent quality oversight alongside the jail or prison and its healthcare vendor."
     ],
     "values": [
       {
         "title": "Independent",
-        "text": "No care, staffing or software revenue from the companies we review."
+        "text": "No care delivery, and no revenue from the vendors we review."
       },
       {
         "title": "Credible",
@@ -335,10 +390,15 @@
       {
         "title": "Collaborative",
         "text": "We work alongside custody staff, health staff and your vendor to fix what the data shows."
+      },
+      {
+        "title": "Experience",
+        "text": "Deep California experience (CCHCS, CDCR, DMHC, DHCS, Title 15, CalAIM) and correctional healthcare work with agencies across the country."
       }
     ]
   },
   "contact": {
+    "eyebrow": "Contact us",
     "headline": "Start with a conversation\nabout what you oversee",
     "sub": "Tell us about your facility, your vendor and what concerns you most. A senior member of the team will reply.",
     "friction": "No pitch deck. Tell us what you are responsible for and we will tell you plainly where we can help.",
@@ -347,7 +407,8 @@
       "agency": "Agency or organization",
       "email": "Work email",
       "message": "How can we help?",
-      "submit": "Send message"
+      "submit": "Start a conversation",
+      "privacy": "We collect only what you enter here: your name, agency, work email and message. It goes to the Actura Health team at connect@acturahealth.com, is used only to reply to you, and is never shared."
     }
   }
 }

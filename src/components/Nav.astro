@@ -1,7 +1,11 @@
 ---
+// Same navbar as ../website (Filip 2026-10-12: keep the original floating glass bar,
+// the 21st.dev header was dropped). Only the button classes differ: this build
+// styles buttons through the shadcn Button variants.
 // The bar always takes a color close to the ground it sits on: navy glass over
 // navy sections, white over light ones. Sections declare data-nav="dark|light".
 import Icon from './Icon.astro';
+import { buttonVariants } from './ui/button';
 import { getSite } from '../lib/content';
 
 interface Props {
@@ -27,17 +31,17 @@ const ctaHref = site.bookingUrl || '/#contact';
       </ul>
     </nav>
 
-    <a class="btn btn--primary btn--sm nav__cta" href={ctaHref} data-event="booking_click">{site.primaryCta}</a>
+    <a class:list={[buttonVariants({ size: 'sm' }), 'nav__cta']} href={ctaHref} data-event="booking_click">{site.primaryCta}</a>
 
     <details class="nav__menu">
       <summary>
         <Icon name="menu-2" size={26} />
-        <span class="visually-hidden">Menu</span>
+        <span class="sr-only">Menu</span>
       </summary>
       <nav aria-label="Primary, mobile">
         <ul role="list">
           {site.nav.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
-          <li><a class="btn btn--primary nav__cta" href={ctaHref} data-event="booking_click">{site.primaryCta}</a></li>
+          <li><a class:list={[buttonVariants(), 'btn nav__cta']} href={ctaHref} data-event="booking_click">{site.primaryCta}</a></li>
         </ul>
       </nav>
     </details>
@@ -141,6 +145,11 @@ const ctaHref = site.bookingUrl || '/#contact';
     text-decoration: none;
     text-transform: uppercase;
     white-space: nowrap;
+  }
+
+  /* Typed name in brand navy to match the logo (client round 2). */
+  .nav--light .brand {
+    color: var(--navy);
   }
 
   .brand__mark {

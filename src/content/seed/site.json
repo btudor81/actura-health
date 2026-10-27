@@ -7,8 +7,8 @@
   "linkedinUrl": "",
   "bookingUrl": "",
   "capabilityStatementUrl": "/files/actura-health-capability-statement.pdf",
-  "primaryCta": "Book a conversation",
-  "secondaryCta": "Download capability statement",
+  "primaryCta": "Start a conversation",
+  "secondaryCta": "Download our capability statement (one-page overview, PDF)",
   "nav": [
     {
       "label": "Services",
@@ -26,5 +26,6 @@
       "label": "Contact",
       "href": "/#contact"
     }
-  ]
+  ],
+  "tagline": "Where Accountability Meets Action in Correctional Healthcare"
 }

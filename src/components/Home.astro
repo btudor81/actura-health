@@ -1,0 +1,60 @@
+---
+// Homepage, rebuilt from 21st.dev components (see README, "21st.dev components").
+// Sections are React components rendered to static HTML at build time. Only the
+// contact block hydrates (copy button). Section order follows the nav:
+// Services, About, Team, Contact (client change list 2026-10-19).
+import Base from '../layouts/Base.astro';
+import { Hero02 } from './ui/hero-02';
+import { LoopTracker } from './ui/loop-tracker';
+import { TrustBar } from './ui/trust-bar';
+import { FeatureRails } from './ui/feature-rails';
+import { ServicesSection } from './ui/services-section';
+import { FeatureBento } from './ui/feature-bento';
+import { TeamList } from './ui/team-list';
+import { SplitContent } from './ui/split-content';
+import { ContactForm } from './ui/contact-form';
+import { getHomepage, getSite } from '../lib/content';
+
+const home = await getHomepage();
+const site = await getSite();
+
+interface Props {
+  path?: string;
+}
+
+const { path = '/' } = Astro.props;
+
+// Search terms the visible copy avoids on purpose ("audit" above all). They go only
+// into the keywords meta tag and knowsAbout, never into hidden text.
+const keywords = home.seo.keywords.flatMap((group) => group.terms);
+
+const organization = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  '@id': `${site.url}/#organization`,
+  name: site.name,
+  url: site.url,
+  logo: `${site.url}/img/logo-mark.png`,
+  image: `${site.url}/og.png`,
+  description: home.seo.description,
+  email: site.contactEmail,
+  slogan: site.tagline,
+  areaServed: { '@type': 'Country', name: 'United States' },
+  knowsAbout: [...home.services.items.map((item) => item.title), ...keywords],
+  ...(site.linkedinUrl ? { sameAs: [site.linkedinUrl] } : {}),
+};
+---
+
+<Base title={home.seo.title} description={home.seo.description} keywords={keywords} path={path} noindex={path !== '/'} jsonLd={[organization]}>
+  {/* Hero option A, with the closed-loop card (client round 2, 2026-10-22). Option B is gone. */}
+  <Hero02 hero={home.hero} site={site}>
+    <LoopTracker loop={home.hero.loop} />
+  </Hero02>
+  <TrustBar trust={home.trust} />
+  <FeatureRails problem={home.problem} site={site} />
+  <ServicesSection services={home.services} />
+  <FeatureBento benefits={home.benefits} />
+  <SplitContent about={home.about} />
+  <TeamList team={home.team} />
+  <ContactForm client:visible contact={home.contact} site={site} />
+</Base>

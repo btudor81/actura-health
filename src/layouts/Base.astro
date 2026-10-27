@@ -1,7 +1,8 @@
 ---
 import '../styles/global.css';
 import Nav from '../components/Nav.astro';
-import Footer from '../components/Footer.astro';
+import { Footer01 } from '../components/ui/footer-01';
+import { CopyButton } from '../components/ui/copy-button';
 import { getSite } from '../lib/content';
 
 interface Props {
@@ -9,12 +10,11 @@ interface Props {
   description: string;
   path?: string;
   noindex?: boolean;
+  keywords?: string[];
   jsonLd?: Record<string, unknown>[];
-  /** Ground under the nav at the top of the page. */
-  navTheme?: 'dark' | 'light';
 }
 
-const { title, description, path = '/', noindex = false, jsonLd = [], navTheme = 'light' } = Astro.props;
+const { title, description, path = '/', noindex = false, keywords = [], jsonLd = [] } = Astro.props;
 const site = await getSite();
 const canonical = new URL(path, site.url).href;
 const ogImage = new URL('/og.png', site.url).href;
@@ -30,6 +30,7 @@ const indexable = import.meta.env.PUBLIC_INDEXABLE === 'true' && !noindex;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    {keywords.length > 0 && <meta name="keywords" content={keywords.join(', ')} />}
     <link rel="canonical" href={canonical} />
     {!indexable && <meta name="robots" content="noindex, nofollow" />}
 
@@ -45,7 +46,6 @@ const indexable = import.meta.env.PUBLIC_INDEXABLE === 'true' && !noindex;
 
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <link rel="preload" href="/fonts/outfit-latin-wght.woff2" as="font" type="font/woff2" crossorigin />
     <meta name="theme-color" content="#0f0068" />
 
     {jsonLd.map((item) => <script type="application/ld+json" set:html={JSON.stringify(item)} />)}
@@ -55,11 +55,15 @@ const indexable = import.meta.env.PUBLIC_INDEXABLE === 'true' && !noindex;
       document.documentElement.classList.add('js');
     </script>
     <a class="skip-link" href="#main">Skip to main content</a>
-    <Nav theme={navTheme} />
+    <Nav />
     <main id="main">
       <slot />
     </main>
-    <Footer />
+    <Footer01 site={site} year={new Date().getFullYear()}>
+      {/* client:idle, not client:visible: the button renders nothing until it hydrates,
+          and an empty island never becomes "visible". */}
+      <CopyButton client:idle slot="copy" value={site.contactEmail} />
+    </Footer01>
     <script>
       const targets = document.querySelectorAll('.reveal');
       if ('IntersectionObserver' in window) {
@@ -72,7 +76,7 @@ const indexable = import.meta.env.PUBLIC_INDEXABLE === 'true' && !noindex;
               }
             }
           },
-          { rootMargin: '0px 0px -8% 0px', threshold: 0.08 },
+          { threshold: 0 },
         );
         targets.forEach((el) => observer.observe(el));
       } else {
