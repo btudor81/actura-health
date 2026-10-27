@@ -28,7 +28,8 @@ export default defineConfig({
   plugins: [
     presentationTool({
       title: 'Edit on page',
-      previewUrl: {initial: EDIT_SITE},
+      // The edit site is locked: "/" with a Studio-made secret sets its session.
+      previewUrl: {initial: EDIT_SITE, previewMode: {enable: '/'}},
       resolve: {
         mainDocuments: defineDocuments([{route: '/', filter: `_id == "homepage"`}]),
         locations: {homepage: onHomepage, siteSettings: onHomepage},
