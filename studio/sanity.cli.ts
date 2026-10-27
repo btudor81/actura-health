@@ -7,6 +7,7 @@ export default defineCliConfig({
   },
   studioHost: 'actura-health',
   deployment: {
+    appId: 'zk71s15pui7lhqy7dghhzw0h',
     /**
      * Enable auto-updates for studios.
      * Learn more at https://www.sanity.io/docs/studio/latest-version-of-sanity#k47faf43faf56
