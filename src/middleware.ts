@@ -60,6 +60,8 @@ export const onRequest = defineMiddleware(async (context, next) => {
   if (!visualEditing) return next();
 
   const { url, request } = context;
+  // TEMP debug 2026-10-28: remove after the Studio iframe issue is found.
+  console.log('[edit-lock]', JSON.stringify({ path: url.pathname, secret: url.searchParams.has(urlSearchParamPreviewSecret), cookie: /actura_edit=/.test(request.headers.get('cookie') ?? ''), dest: request.headers.get('sec-fetch-dest'), site: request.headers.get('sec-fetch-site'), storage: request.headers.get('sec-fetch-storage-access'), referer: request.headers.get('referer') }));
   if (url.searchParams.has(urlSearchParamPreviewSecret)) {
     const { isValid, redirectTo } = await validatePreviewUrl(secretClient, url.toString());
     if (!isValid) return locked();
