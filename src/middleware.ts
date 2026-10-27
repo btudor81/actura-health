@@ -2,7 +2,7 @@
 //
 // The edit site shows unpublished drafts, so only the Studio may open it. When the
 // Studio's "Edit on page" tool loads the site, it first creates a short-lived
-// secret in Sanity and opens /?sanity-preview-secret=...; the secret is checked
+// secret in Sanity and opens /preview/enable?sanity-preview-secret=...; the secret is checked
 // against Sanity with the read token, and a signed session cookie is set. Any
 // request without that cookie gets the "private preview" page.
 import { defineMiddleware } from 'astro:middleware';
@@ -12,6 +12,9 @@ import { urlSearchParamPreviewSecret, validatePreviewUrl } from '@sanity/preview
 import { sanity, visualEditing } from './lib/content';
 
 const COOKIE = 'actura_edit';
+// Must differ from every page path: the Studio treats the frame as "on the enable
+// URL" only while it is here, and reloads it in a loop if the two match.
+const ENABLE_PATH = '/preview/enable';
 const SESSION_S = 8 * 60 * 60;
 const token = import.meta.env.SANITY_API_READ_TOKEN ?? '';
 // Signing key derived from the read token: rotating the token signs everyone out.
@@ -60,7 +63,8 @@ export const onRequest = defineMiddleware(async (context, next) => {
   if (!visualEditing) return next();
 
   const { url, request } = context;
-  if (url.searchParams.has(urlSearchParamPreviewSecret)) {
+  if (url.pathname === ENABLE_PATH || url.pathname === `${ENABLE_PATH}/`) {
+    if (!url.searchParams.has(urlSearchParamPreviewSecret)) return locked();
     const { isValid, redirectTo } = await validatePreviewUrl(secretClient, url.toString());
     if (!isValid) return locked();
     // The Studio passes its current preview URL as the target, and that URL can
