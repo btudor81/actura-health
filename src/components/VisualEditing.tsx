@@ -6,6 +6,7 @@
 // typed while the page loads. So after a short pause in typing the page fetches
 // itself again and patches the changed text into place: scroll position, nav and
 // form scripts and the overlay connection all stay.
+import { useEffect } from 'react';
 import { VisualEditing as Overlays } from '@sanity/visual-editing/react';
 
 const REGIONS = ['body > header', '#main', 'body > footer'];
@@ -76,6 +77,17 @@ function refreshSoon(): Promise<void> {
   });
 }
 
+// The Studio sends no refresh when a draft is discarded (there is no draft left to
+// report), so the page also checks itself every few seconds while it is on screen.
+// Nothing changed means nothing is patched.
+const RECHECK_MS = 10_000;
+
 export default function VisualEditing() {
+  useEffect(() => {
+    const id = window.setInterval(() => {
+      if (!document.hidden) void refreshSoon();
+    }, RECHECK_MS);
+    return () => window.clearInterval(id);
+  }, []);
   return <Overlays portal zIndex={1000} refresh={refreshSoon} />;
 }
